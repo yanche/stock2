@@ -4,6 +4,16 @@
   "description": "",
   "main": "",
   "dependencies": {
+    "@angular/common": "~2.3.0",
+    "@angular/compiler": "~2.3.0",
+    "@angular/core": "~2.3.0",
+    "@angular/forms": "~2.3.0",
+    "@angular/http": "~2.3.0",
+    "@angular/platform-browser": "~2.3.0",
+    "@angular/platform-browser-dynamic": "~2.3.0",
+    "@angular/router": "~3.3.0",
+    "rxjs": "5.0.0-rc.4",
+    "zone.js": "^0.7.2",
     "azure-storage": "^0.5.0",
     "bluebird": "^3.4.0",
     "co": "^4.6.0",
@@ -17,7 +27,16 @@
     "mongodb": "^2.0.42"
   },
   "devDependencies": {
-    "typescript": "^2.1.0-dev.20160816"
+    "grunt": "^1.0.1",
+    "grunt-concurrent": "^1.0.1",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-exec": "^1.0.1",
+    "grunt-html2js": "^0.3.6"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
