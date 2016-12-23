@@ -1,0 +1,58 @@
+﻿
+@import 'variables';
+
+th {
+    font-weight: normal;
+    text-align: left;
+}
+
+td {
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+tbody td {
+    padding: 5px 5px;
+}
+
+table.selectable tbody tr {
+    cursor: pointer;
+
+    &:hover {
+        background-color: $color_selectable_hover;
+    }
+
+    &.selected {
+        background-color: $color_selectable_selected;
+        cursor: auto;
+        color: white;
+    }
+}
+
+.datacell {
+    padding: 5px 10px
+}
+
+.dataline:hover {
+    background-color: $color_selectable_hover;
+    cursor: pointer;
+}
+
+.dataline.selected {
+    background-color: $color_selectable_selected;
+    cursor: auto;
+    color: white;
+
+    .flatbtn {
+        color: white;
+    }
+    
+    &:hover {
+        background-color: $color_selectable_selected;
+        cursor: auto;
+    }
+}

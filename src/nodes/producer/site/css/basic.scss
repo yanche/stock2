@@ -1,0 +1,32 @@
+﻿
+@import 'variables';
+
+body {
+    font-family: 'Segoe UI';
+    color: $color_font_dark;
+    font-size: 14px;
+}
+
+* {
+    outline: none;
+}
+
+.vert-mid {
+    vertical-align: middle;
+}
+
+.label {
+    font-size: 16px;
+    color: $color_font_light;
+    margin-top: 10px;
+    margin-bottom: 2px;
+}
+
+.lightfont {
+    color: $color_font_light;
+}
+
+.compact-label {
+    font-size: 14px;
+    color: $color_font_light;
+}

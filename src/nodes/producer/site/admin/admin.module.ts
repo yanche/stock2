@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 import { QueryPageComponent } from '../common/components/querypage.component';
+import { ActionButtonComponent } from '../common/components/actionbutton.component';
 
 import { AppComponent } from './components/app.component';
 import { MonitorComponent } from './components/monitor.component';
@@ -38,7 +39,8 @@ import { ResourcesComponent } from './components/resources.component';
     MonitorComponent,
     ProduceComponent,
     ResourcesComponent,
-    QueryPageComponent
+    QueryPageComponent,
+    ActionButtonComponent
   ],
   bootstrap: [AppComponent]
 })

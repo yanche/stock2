@@ -30,7 +30,7 @@ const libCopyList = angularLibs.map(name => {
     expand: true,
     cwd: 'bower_components/font-awesome/fonts',
     src: ['**'],
-    dest: 'static/libs/font',
+    dest: 'static/libs/fonts',
     filter: 'isFile'
 }]);
 
@@ -77,6 +77,26 @@ module.exports = function (grunt) {
             },
             libs: {
                 files: libCopyList
+            },
+            css: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= srcpath %>/site/css',
+                    src: ['**/*.css'],
+                    dest: 'static/site/css',
+                    filter: 'isFile'
+                }]
+            }
+        },
+        sass: {
+            common: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= srcpath %>/site/css',
+                    src: ['*.scss'],
+                    dest: '<%= srcpath %>/site/css',
+                    ext: '.css'
+                }]
             }
         }
     });
@@ -91,7 +111,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-html2js');
     grunt.loadNpmTasks('grunt-jade');
     grunt.loadNpmTasks('grunt-exec');
-    grunt.registerTask('dev', ['exec:jadeCompile', 'copy']);
+    grunt.registerTask('dev', ['exec:jadeCompile', 'sass', 'copy']);
     //grunt.registerTask('prod', ['clean:all', 'sass', 'copy', 'html2js', 'concat:js', 'uglify', 'clean:html2js']);
-    grunt.registerTask('default', ['prod', 'concurrent:def']);
+    //grunt.registerTask('default', ['prod', 'concurrent:def']);
 };

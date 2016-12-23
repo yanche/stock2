@@ -3,7 +3,7 @@ import { LogService } from '../services/log.service';
 import { UtilityService } from '../services/utility.service';
 
 @Component({
-    selector: 'querypage',
+    selector: 'query-page',
     moduleId: module.id,
     templateUrl: './querypage.component.html',
 })
@@ -32,8 +32,9 @@ export class QueryPageComponent implements OnInit, OnChanges {
         orderby: string;
     };
 
-    private _querying: boolean;
-    private _pageInfo: PageInfo;
+    querying: boolean;
+
+    pageInfo: PageInfo;
 
     private get _query(): QueryData {
         return {
@@ -68,8 +69,8 @@ export class QueryPageComponent implements OnInit, OnChanges {
                 default: fval = this.utility.convParamStr(val);
             }
             q.filter[field] = fval;
-            this.queryRaw.filter = JSON.stringify(q.filter[field]);
         }
+        this.queryRaw.filter = JSON.stringify(q.filter);
     }
 
     validFilter(): boolean {
@@ -81,13 +82,13 @@ export class QueryPageComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this._querying = false;
+        this.querying = false;
         this.reset();
         const inits = <Options>((this.options || {}).inits || {});
-        if (inits.filter) this.queryRaw.filter = inits.filter;
-        if (inits.orderby) this.queryRaw.orderby = inits.orderby;
+        if (inits.filter) this.queryRaw.filter = JSON.stringify(inits.filter);
+        if (inits.orderby) this.queryRaw.orderby = JSON.stringify(inits.orderby);
         if (this.runOnInit) this.submitQuery();
-        this._pageInfo = {
+        this.pageInfo = {
             page: 1,
             pageSize: 15,
             total: 0,
@@ -105,52 +106,52 @@ export class QueryPageComponent implements OnInit, OnChanges {
 
     reset(): void {
         const defaults = <Options>((this.options || {}).defaults || {});
-        this.queryRaw = { pageSize: 15, page: 1, filter: defaults.filter || '', orderby: defaults.orderby || '' };
+        this.queryRaw = { pageSize: 15, page: 1, filter: JSON.stringify(defaults.filter || {}), orderby: JSON.stringify(defaults.orderby || {}) };
     }
 
     submitQuery(): void {
-        if (this._querying || !this.validFilter() || !this.validOrderby()) return;
-        this._querying = true;
+        if (this.querying || !this.validFilter() || !this.validOrderby()) return;
+        this.querying = true;
         this.queryFn(this._query)
             .then(data => {
                 this.onPageDataChange.emit(data.list);
-                this._pageInfo.page = data.page;
-                this._pageInfo.pageSize = data.pageSize;
-                this._pageInfo.total = data.total;
-                this._pageInfo.total = Math.ceil(data.total / data.pageSize);
+                this.pageInfo.page = data.page;
+                this.pageInfo.pageSize = data.pageSize;
+                this.pageInfo.total = data.total;
+                this.pageInfo.total = Math.ceil(data.total / data.pageSize);
             })
             .catch(err => {
                 this._log.error(err);
             })
             .then(() => {
-                this._querying = false;
+                this.querying = false;
             });
     }
 
     firstPage(): void {
-        if (this._pageInfo.page !== 1) {
-            this._pageInfo.page = 1;
+        if (this.pageInfo.page !== 1) {
+            this.pageInfo.page = 1;
             this.submitQuery();
         }
     }
 
     lastPage(): void {
-        if (this._pageInfo.page < this._pageInfo.totalPages) {
-            this._pageInfo.page = this._pageInfo.totalPages;
+        if (this.pageInfo.page < this.pageInfo.totalPages) {
+            this.pageInfo.page = this.pageInfo.totalPages;
             this.submitQuery();
         }
     }
 
     prevPage(): void {
-        if (this._pageInfo.page > 1) {
-            this._pageInfo.page--;
+        if (this.pageInfo.page > 1) {
+            this.pageInfo.page--;
             this.submitQuery();
         }
     }
 
     nextPage(): void {
-        if (this._pageInfo.page < this._pageInfo.totalPages) {
-            this._pageInfo.page++;
+        if (this.pageInfo.page < this.pageInfo.totalPages) {
+            this.pageInfo.page++;
             this.submitQuery();
         }
     }
@@ -176,8 +177,8 @@ export enum QFilterDefType {
 }
 
 interface Options {
-    filter: string;
-    orderby: string;
+    filter: { [key: string]: any };
+    orderby: { [key: string]: any };
 }
 
 interface PageInfo {

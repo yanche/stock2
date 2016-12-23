@@ -6,3 +6,5 @@
 *.log
 /bower_components
 /static
+*.css
+.sass-cache

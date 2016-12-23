@@ -1,0 +1,120 @@
+﻿
+$width_base: 100 / 12;
+
+.col {
+    float: left;
+    box-sizing: border-box;
+}
+
+.col-12 {
+    @extend .col;
+    width: $width_base * 12%;
+}
+
+.col-11 {
+    @extend .col;
+    width: $width_base * 11%;
+}
+
+.col-10 {
+    @extend .col;
+    width: $width_base * 10%;
+}
+
+.col-9 {
+    @extend .col;
+    width: $width_base * 9%;
+}
+
+.col-8 {
+    @extend .col;
+    width: $width_base * 8%;
+}
+
+.col-7 {
+    @extend .col;
+    width: $width_base * 7%;
+}
+
+.col-6 {
+    @extend .col;
+    width: $width_base * 6%;
+}
+
+.col-5 {
+    @extend .col;
+    width: $width_base * 5%;
+}
+
+.col-4 {
+    @extend .col;
+    width: $width_base * 4%;
+}
+
+.col-3 {
+    @extend .col;
+    width: $width_base * 3%;
+}
+
+.col-2 {
+    @extend .col;
+    width: $width_base * 2%;
+}
+
+.col-1 {
+    @extend .col;
+    width: $width_base * 1%;
+}
+
+.pl20 {
+    padding-left: 20px;
+}
+
+.pr20 {
+    padding-right: 20px;
+}
+
+.p20 {
+    padding: 20px;
+}
+
+.p5 {
+    padding: 5px;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.mt20 {
+    margin-top: 20px;
+}
+
+.mt50 {
+    margin-top: 50px;
+}
+
+.ml5 {
+    margin-left: 5px;
+}
+
+.mr5 {
+    margin-right: 5px;
+}
+
+.ml10 {
+    margin-left: 10px;
+}
+
+.ml20 {
+    margin-left: 20px;
+}
+
+.mb20 {
+    margin-bottom: 20px;
+}
+
+.mtb2 {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}

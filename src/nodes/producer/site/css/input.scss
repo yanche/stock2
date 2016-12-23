@@ -1,0 +1,75 @@
+﻿
+@import 'variables';
+
+input[type='text'] {
+    height: 24px;
+    padding-left: 5px;
+    padding-right: 5px;
+    box-sizing: border-box;
+    width: 100%;
+
+    &:focus {
+        border: 1px $color_selectable_selected solid;
+    }
+}
+
+.flatbtn {
+    cursor: pointer;
+    color: $color_btn_normal;
+    display: inline-block;
+
+    &:hover{
+        color: darken($color_btn_hover, 10%);
+    }
+
+    &.disabled {
+        cursor: auto;
+        color: $color_btn_disabled;
+    }
+
+    &.add {
+        color: $color_input_success;
+
+        &:hover{
+            color: darken($color_input_success, 10%);
+        }
+    }
+
+    &.remove {
+        color: $color_msg_error;
+
+        &:hover{
+            color: darken($color_msg_error, 10%);
+        }
+    }
+}
+
+.btn {
+    cursor: pointer;
+    color: white;
+    background-color: $color_btn_normal;
+    padding: 8px 16px;
+    display: inline-block;
+
+    &:hover{
+        background-color: lighten($color_btn_hover, 20%);
+    }
+
+    &.btn-danger {
+        background-color: $color_input_error;
+        
+        &:hover{
+            background-color: lighten($color_input_error, 20%);
+        }
+    }
+
+    &.small {
+        padding: 5px 12px;
+    }
+
+    &.disabled {
+        cursor: auto;
+        background-color: $color_btn_disabled;
+        color: $color_font_dark;
+    }
+}

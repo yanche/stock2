@@ -40,9 +40,9 @@
         </div>
     </div>
     <div class="col-12 mt20">
-        <action-button waiting="querying" word="'Submit'" (click)="submitQuery()"></action-button>
+        <action-button [waiting]="querying" [word]="'Submit'" (click)="submitQuery()"></action-button>
         <span class="btn small ml20" (click)="reset()">Reset</span>
-        <span class="btn small ml20" *ngFor="let b of options.buttons" (click)="b.onclick(query)">{{b.name}}</span>
+        <span *ngIf="options && options.buttons"><span class="btn small ml20" *ngFor="let b of options.buttons" (click)="b.onclick(query)">{{b.name}}</span></span>
     </div>
     <div class="col-12 mt20">
         <div class="col-12">

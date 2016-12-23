@@ -1,0 +1,28 @@
+﻿@import 'variables';
+
+._pagination {
+	padding: 5px 0px;
+
+    ._pagination_item {
+        cursor: pointer;
+		padding: 0px 5px;
+
+        &:hover {
+            color: $color_btn_normal;
+        }
+
+        &._pagination_item_disabled {
+            cursor: auto;
+            color: $color_btn_disabled;
+
+            &:hover {
+            color: $color_btn_disabled;
+            }
+        }
+
+        &._pagination_item_active{
+            color: $color_btn_normal;
+            cursor: auto;
+        }
+    }
+}

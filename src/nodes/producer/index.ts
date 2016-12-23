@@ -12,8 +12,8 @@ export function init(port: number) {
     log.info(`static file dir: ${sdir}`);
 
     http.createServer((req: http.IncomingMessage, res: http.ServerResponse) => {
-        let p = url.parse(req.url).path;
-        log.info(`${new Date()}: ${p}`);
+        const p = url.parse(req.url).pathname;
+        log.info(`${new Date().toLocaleTimeString()}: ${p}`);
         if (p.indexOf('favicon.ico') >= 0) {
             res.writeHead(404);
             res.end();
@@ -21,13 +21,12 @@ export function init(port: number) {
         else {
             // site/admin
             let filename = path.join(sdir, config.dev && p.indexOf('/site') === 0 ? '../src/nodes/producer' : '', p);
-            console.info(filename);
             fs.readFile(filename, (err, data) => {
                 if (err) {
                     returnAdminHtml(sdir, res);
                 }
                 else {
-                    res.setHeader('content-type', mime.lookup(p));
+                    res.setHeader('Content-Type', mime.lookup(p));
                     res.writeHead(200);
                     res.end(data);
                 }
@@ -45,7 +44,7 @@ function returnAdminHtml(sdir: string, res: http.ServerResponse) {
             res.end();
         }
         else {
-            res.setHeader('content-type', 'text/html');
+            res.setHeader('Content-Type', 'text/html');
             res.writeHead(200);
             res.end(data);
         }
