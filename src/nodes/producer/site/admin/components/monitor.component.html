@@ -1,2 +1,2 @@
 <h1>2Hello {{name}}</h1>
-<query-page [qfilter]="qfilter" [queryFn]="queryFn"></query-page>
+<query-page [qfilter]="qfilter" [queryFn]="queryFn" [refreshTs]="refreshTs" [options]="queryOpt" onPageDataChange="setPageData($event)"></query-page>

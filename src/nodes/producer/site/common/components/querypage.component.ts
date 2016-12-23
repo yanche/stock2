@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange } from '@angular/core';
 import { LogService } from '../services/log.service';
 import { UtilityService } from '../services/utility.service';
+import { GetMulReturn } from '../services/request.service';
 
 @Component({
     selector: 'query-page',
@@ -177,8 +178,8 @@ export enum QFilterDefType {
 }
 
 interface Options {
-    filter: { [key: string]: any };
-    orderby: { [key: string]: any };
+    filter?: { [key: string]: any };
+    orderby?: { [key: string]: any };
 }
 
 interface PageInfo {
@@ -198,10 +199,5 @@ export interface OptionsPack {
 }
 
 export interface QueryFn {
-    (query: QueryData): Promise<{
-        list: Array<any>;
-        page: number;
-        pageSize: number;
-        total: number;
-    }>;
+    (query: QueryData): Promise<GetMulReturn<any>>;
 }

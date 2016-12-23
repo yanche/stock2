@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { HttpModule } from '@angular/http';
 
 import { QueryPageComponent } from '../common/components/querypage.component';
 import { ActionButtonComponent } from '../common/components/actionbutton.component';
@@ -15,6 +16,7 @@ import { ResourcesComponent } from './components/resources.component';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpModule,
     RouterModule.forRoot([
       {
         path: 'monitor',

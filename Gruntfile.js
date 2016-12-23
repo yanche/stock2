@@ -40,6 +40,9 @@ module.exports = function (grunt) {
         exec: {
             jadeCompile: {
                 cmd: 'node <%= srcpath %>/jadecompile.js',
+            },
+            jadeCompileDev: {
+                cmd: 'node <%= srcpath %>/jadecompile.js -d',
             }
         },
         copy: {
@@ -111,7 +114,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-html2js');
     grunt.loadNpmTasks('grunt-jade');
     grunt.loadNpmTasks('grunt-exec');
-    grunt.registerTask('dev', ['exec:jadeCompile', 'sass', 'copy']);
+    grunt.registerTask('dev', ['exec:jadeCompileDev', 'sass', 'copy']);
     //grunt.registerTask('prod', ['clean:all', 'sass', 'copy', 'html2js', 'concat:js', 'uglify', 'clean:html2js']);
     //grunt.registerTask('default', ['prod', 'concurrent:def']);
 };

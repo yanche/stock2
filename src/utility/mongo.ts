@@ -53,7 +53,7 @@ export class CollClient<T> {
             .then(col => new bb<{ updated: number, insertedId: mongodb.ObjectID }>((res, rej) => {
                 col.updateMany(filter, update, { upsert: upsert }, (err: Error, ret: mongodb.UpdateWriteOpResult) => {
                     if (err != null) rej(err);
-                    else res({ updated: ret.modifiedCount, insertedId: ret.upsertedId._id });
+                    else res({ updated: ret.modifiedCount, insertedId: ret.upsertedId && ret.upsertedId._id });
                 });
             }));
     }

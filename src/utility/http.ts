@@ -88,7 +88,7 @@ export class HttpPack {
         this._headers.set(name, value);
         return this;
     }
-    get method(): string { return this.getReqHeader('method').toUpperCase(); };
+    get method(): string { return this._req.method.toUpperCase(); };
     get reqbody(): any {
         if (this._reqbody != null) return this._reqbody;
         const ct = this.getReqHeader('content-type');

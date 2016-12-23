@@ -8,3 +8,5 @@
 /static
 *.css
 .sass-cache
+/src/nodes/producer/admin.html
+/src/nodes/producer/user.html
