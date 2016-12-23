@@ -1,0 +1,60 @@
+<div class="col-12">
+    <div class="col-12 label">Page</div>
+    <div class="col-12">
+        <input type="number" style="width: 150px;" [(ngModel)]="queryRaw.page" />
+    </div>
+    <div class="col-12 label">Page Size</div>
+    <div class="col-12">
+        <input type="number" [(ngModel)]="queryRaw.pageSize" style="width: 150px;" />
+    </div>
+    <div class="col-12 label">Query</div>
+    <div class="col-12">
+        <input [(ngModel)]="queryRaw.filter" style="width: 400px;" />
+        <span class="ml20" *ngIf="!validFilter()">bad format</span>
+    </div>
+    <div class="col-12 label">Sort</div>
+    <div class="col-12">
+        <input [(ngModel)]="queryRaw.orderby" style="width: 400px;" />
+        <span class="ml20" *ngIf="!validOrderby()">bad format</span>
+    </div>
+    <div class="col-12" *ngIf="qfilter.length > 0">
+        <div class="col-12 label">Filter Quick Setter</div>
+        <div class="col-12" *ngFor="let def of qfilter">
+            <span>{{def.name}}</span>
+            <span *ngIf="(def.type || qFilterTypes.NORMAL) === qFilterTypes.NORMAL">
+                <input [(ngModel)]="def.__datainput" />
+                <span class="flatbtn" (click)="setMongoFilter(def.prop, def.__datainput)">eq</span>
+                <span class="flatbtn" (click)="setMongoFilter(def.prop, def.__datainput, '$ne')">ne</span>
+                <span class="flatbtn" (click)="setMongoFilter(def.prop)">unset</span>
+            </span>
+            <span *ngIf="def.type === qFilterTypes.EXISTS">
+                <span class="flatbtn" (click)="setMongoFilter(def.prop, true, '$exists')">ex</span>
+                <span class="flatbtn" (click)="setMongoFilter(def.prop, false, '$exists')">nex</span>
+                <span class="flatbtn" (click)="setMongoFilter(def.prop)">unset</span>
+            </span>
+            <span *ngIf="def.type === qFilterTypes.BOOL">
+                <span class="flatbtn" (click)="setMongoFilter(def.prop, true)">true</span>
+                <span class="flatbtn" (click)="setMongoFilter(def.prop, false)">false</span>
+                <span class="flatbtn" (click)="setMongoFilter(def.prop)">unset</span>
+            </span>
+        </div>
+    </div>
+    <div class="col-12 mt20">
+        <action-button waiting="querying" word="'Submit'" (click)="submitQuery()"></action-button>
+        <span class="btn small ml20" (click)="reset()">Reset</span>
+        <span class="btn small ml20" *ngFor="let b of options.buttons" (click)="b.onclick(query)">{{b.name}}</span>
+    </div>
+    <div class="col-12 mt20">
+        <div class="col-12">
+            <span>Total </span>
+            <span>{{pageInfo.total}}</span>
+        </div>
+        <div class="col-12">
+            <i class="fa fa-angle-double-left" [ngClass]="{flatbtn: pageInfo.page > 1}" (click)="pageInfo.page > 1 && firstPage()"></i>
+            <i class="fa fa-angle-left ml5" [ngClass]="{flatbtn: pageInfo.page > 1}" (click)="pageInfo.page > 1 && prevPage()"></i>
+            <span class="lightfont ml5 mr5">{{pageInfo.page}}/{{pageInfo.totalPages}}</span>
+            <i class="fa fa-angle-right mr5" [ngClass]="{flatbtn: pageInfo.page < pageInfo.totalPages}" (click)="pageInfo.page < pageInfo.totalPages && nextPage()"></i>
+            <i class="fa fa-angle-double-right" [ngClass]="{flatbtn: pageInfo.page < pageInfo.totalPages}" (click)="pageInfo.page < pageInfo.totalPages && lastPage()"></i>
+        </div>
+    </div>
+</div>

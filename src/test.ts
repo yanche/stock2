@@ -1,7 +1,7 @@
 
-import * as dps from 'datapvd';
+import * as dps from './datapvd';
 import * as co from 'co';
-import * as utility from 'utility';
+import * as utility from './utility';
 
 co(function* (): any {
   const edp = yield dps.literal.resolve({type: 'r.end', pack: '000001.XSHE'});
