@@ -5,7 +5,7 @@ import { LogService } from '../../common/services/log.service';
 
 @Component({
   moduleId: module.id,
-  templateUrl: './monitor.component.html',
+  templateUrl: './monitor.component.html'
 })
 export class MonitorComponent {
   constructor(private _task: TaskService, private _log: LogService) { }
@@ -50,5 +50,13 @@ export class MonitorComponent {
         .then(res => this.refreshTs = new Date().getTime())
         .catch(err => this._log.error(err));
     }
+  }
+
+  showingTask: Task = null;
+  prevShowingTask: Task = null;
+  showTask(task: Task) {
+    console.info(task);
+    this.prevShowingTask = this.showingTask;
+    this.showingTask = ((this.showingTask === task) ? null : task);
   }
 }

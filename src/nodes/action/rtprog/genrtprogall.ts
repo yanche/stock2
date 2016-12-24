@@ -28,7 +28,7 @@ export interface GenRtProgAllOutput {
 export const action = new Action<GenRtProgAllInput, GenRtProgAllInput, GenRtProgAllOutput>({
     refine: utility.id,
     validate: (input: GenRtProgAllInput): boolean => {
-        return Array.isArray(input.targets) && input.targets.every(utility.validate.valueStr) && (input.rtplanId == null || utility.validate.valueStr(input.rtplanId));
+        return (input.targets == null || (Array.isArray(input.targets) && input.targets.every(utility.validate.valueStr))) && (input.rtplanId == null || utility.validate.valueStr(input.rtplanId));
     },
     resolve: (input: GenRtProgAllInput): bb<GenRtProgAllOutput> => {
         const rtpCount = new Array<{ rtplanId: string, ct: number }>();

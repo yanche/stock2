@@ -56,3 +56,7 @@ table.selectable tbody tr {
         cursor: auto;
     }
 }
+
+.dataline.prev-selected {
+	background-color: $color_selectable_hover;
+}

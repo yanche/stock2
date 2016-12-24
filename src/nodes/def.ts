@@ -12,7 +12,7 @@ export interface Task {
     comments?: string;
     statusId?: number;
     createdTs?: number;
-    processLog?: Array<{ msg: string; ts: number; err: string }>;
+    processLog?: Array<{ msg: string; ts: number; err?: string }>;
     lastProcessTs?: number;
     nextConditionCheckTs?: number;
     lastConditionCheckTs?: number;

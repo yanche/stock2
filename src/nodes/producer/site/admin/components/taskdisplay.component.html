@@ -1,7 +1,7 @@
 <div *ngIf="displayLog">
     <display-log [log]="log"></display-log>
 </div>
-<div>
+<div *ngIf="!displayLog">
     <rawinspect-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.rawInspect"></rawinspect-task-display>
     <rawsync-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.rawSync"></rawsync-task-display>
     <rawdata-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.rawData"></rawdata-task-display>

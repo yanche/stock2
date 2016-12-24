@@ -34,3 +34,27 @@ body {
     font-size: 14px;
     color: $color_font_light;
 }
+
+#mainnav {
+    .navitem {
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        float: left;
+        margin: 5px 20px;
+        color: $color_font_light;
+
+        &:hover {
+            color: $color_selectable_selected;
+        }
+
+        &.current {
+            color: $color_selectable_selected;
+            cursor: auto;
+        }
+    }
+}
+
+#maincontent {
+    padding: 0px 20px;
+}

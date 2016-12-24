@@ -19,6 +19,10 @@ export function handler(h: utility.http.HttpPack) {
     });
 }
 
+function newTaskStatusByCondition(taskcond: { type: string, pack?: any }) {
+    return taskcond.type === constant.dispatcherCond.ok ? constant.task.status.prepared : constant.task.status.new;
+};
+
 class TaskCreateModel implements hutil.HandlerDataModel {
     private _valid: boolean;
     private _mongodoc: d.Task;
@@ -32,7 +36,13 @@ class TaskCreateModel implements hutil.HandlerDataModel {
             constraints: httpbody.constraints,
             action: httpbody.action,
             comments: httpbody.comments || '',
-            locality: httpbody.locality || null
+            locality: httpbody.locality || null,
+            statusId: newTaskStatusByCondition(httpbody.condition),
+            createdTs: new Date().getTime(),
+            processLog: [{ msg: 'newly created', ts: new Date().getTime() }],
+            lastProcessTs: null,
+            priority: 0,
+            assigned: 0
         };
         this._valid = this._mongodoc._id != null && condition.validate(this._mongodoc.condition) && action.validate(this._mongodoc.action)
             && utility.validate.isObj(this._mongodoc.constraints) && utility.validate.isInt(this._mongodoc.constraints.timeoutLevel)

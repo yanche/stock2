@@ -14,7 +14,6 @@ export class TargetsInputComponent {
     private _targets: string = '';
     get targets() { return this._targets; }
     set targets(v: string) {
-        console.log(v);
         const targets = (v || '').split(';').map(m => m.trim()).filter(m => m.length > 0);
         this.total = targets.length;
         this.onTargetsChange.emit(targets);
