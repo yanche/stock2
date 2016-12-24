@@ -1,0 +1,20 @@
+<div class="col-12 mt20">
+    <div class="col-12">
+        <div class="col-12 label">Targets</div>
+        <targets-input class="col-12" (onTargetsChange)="targets = $event"></targets-input>
+    </div>
+    <div class="col-12" *ngFor="let i of inputList">
+        <div *ngIf="!i.hidden">
+            <div class="col-12 label">{{i.title}}</div>
+            <input [(ngModel)]="i.__raw" *ngIf="i.type !== inputTypes.bool" />
+            <input [(ngModel)]="i.__raw" *ngIf="i.type === inputTypes.bool" type="checkbox" />
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="col-12 label">Comments</div>
+        <input [(ngModel)]="comments" />
+    </div>
+    <div class="col-12 mt20">
+        <action-button [waiting]="submitting" [word]="'Submit'" (click)="submit()"></action-button>
+    </div>
+</div>

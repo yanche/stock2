@@ -46,7 +46,7 @@ const rsiFac: IFactory<RSIFacPack, number> = {
                 }));
             });
     },
-    validate: (pack: RSIFacPack): boolean => utility.validate.posInt(pack.N) && utility.validate.nonEmptyStr(pack.target),
+    validate: (pack: RSIFacPack): boolean => utility.validate.posInt(pack.N) && utility.validate.valueStr(pack.target),
     dpid: dpid,
     weakDepts: (pack: RSIFacPack): Array<string> => [pack.target]
 };

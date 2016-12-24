@@ -34,8 +34,8 @@ class RtprogOutCreateModel implements hutil.HandlerDataModel {
             lts: httpbody.lts || null,
             lp: httpbody.lp || null
         };
-        this._valid = utility.validate.nonEmptyStr(this._mongodoc.target) && utility.validate.isBool(this._mongodoc.glong)
-            && utility.validate.nonEmptyStr(this._mongodoc.rtplanId) && utility.validate.isObj(this._mongodoc.rtprog)
+        this._valid = utility.validate.valueStr(this._mongodoc.target) && utility.validate.isBool(this._mongodoc.glong)
+            && utility.validate.valueStr(this._mongodoc.rtplanId) && utility.validate.isObj(this._mongodoc.rtprog)
             && utility.validate.posInt(this._mongodoc.sts) && utility.validate.posNum(this._mongodoc.sp)
             && ((utility.validate.posInt(this._mongodoc.hts) && utility.validate.posNum(this._mongodoc.hp)) || (this._mongodoc.hts == null && this._mongodoc.hp == null))
             && ((utility.validate.posInt(this._mongodoc.lts) && utility.validate.posNum(this._mongodoc.lp)) || (this._mongodoc.lts == null && this._mongodoc.lp == null));

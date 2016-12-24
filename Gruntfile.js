@@ -27,6 +27,9 @@ const libCopyList = angularLibs.map(name => {
     src: 'bower_components/font-awesome/css/font-awesome.min.css',
     dest: 'static/libs/css/font-awesome.min.css'
 }, {
+    src: 'node_modules/moment/moment.js',
+    dest: 'static/libs/js/moment.js'
+}, {
     expand: true,
     cwd: 'bower_components/font-awesome/fonts',
     src: ['**'],

@@ -28,8 +28,8 @@ class RtprogCreateModel implements hutil.HandlerDataModel {
             rtprog: httpbody.rtprog,
             createdTs: new Date().getTime()
         };
-        this._valid = utility.validate.nonEmptyStr(this._mongodoc.target) && utility.validate.isBool(this._mongodoc.glong)
-            && utility.validate.nonEmptyStr(this._mongodoc.rtplanId) && utility.validate.isObj(this._mongodoc.rtprog);
+        this._valid = utility.validate.valueStr(this._mongodoc.target) && utility.validate.isBool(this._mongodoc.glong)
+            && utility.validate.valueStr(this._mongodoc.rtplanId) && utility.validate.isObj(this._mongodoc.rtprog);
     }
 }
 

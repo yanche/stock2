@@ -27,7 +27,7 @@ export function dpTransform<P extends TransformPackBase<TdpIn>, TdpIn, TdpOut>(o
     stored?: boolean
 }): IFactory<P, TdpOut> {
     var inputlist = options.inputlist || [];
-    if (!utility.validate.nonEmptyStr(options.prefix) || inputlist.some(item => !utility.validate.nonEmptyStr(item.name)))
+    if (!utility.validate.valueStr(options.prefix) || inputlist.some(item => !utility.validate.valueStr(item.name)))
         throw new Error(`bad input for dpTransform`);
     inputlist = inputlist.map(item => { return { name: item.name, validate: item.validate || utility.validate.alwaysTrue, tostr: item.tostr || utility.toStr }; });
     function dpid(pack: P): string {
@@ -69,7 +69,7 @@ export function dpUnion<P extends UnionPackBase<TdpIn>, TdpIn, TdpOut>(options: 
     max?: number
 }): IFactory<P, TdpOut> {
     const min = options.min || 1, max = options.max;
-    if (!utility.validate.nonEmptyStr(options.prefix) || !utility.validate.posInt(min) || (!utility.validate.posInt(max) && max != null))
+    if (!utility.validate.valueStr(options.prefix) || !utility.validate.posInt(min) || (!utility.validate.posInt(max) && max != null))
         throw new Error('bad input for dpUnion');
     function dpid(pack: P) {
         return `${options.prefix}_${pack.defidx}_${pack.list.map(l => literal.dpid(l)).join('_')}`;

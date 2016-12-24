@@ -28,11 +28,10 @@ export class MonitorComponent {
 
   pageData: Task[];
   setPageData(list: Task[]) {
-    console.info(list);
+    this.pageData = list;
   }
 
   queryFn: QueryFn = (query: QueryData) => {
-    console.info(query);
     return this._task.getMul(query.page, query.pageSize, query.filter, null, query.orderby);
   }
 

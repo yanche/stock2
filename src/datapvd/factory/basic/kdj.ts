@@ -94,7 +94,7 @@ const kdjFac: IFactory<KDJFacPack, KDJRet> = {
                 });
             });
     },
-    validate: (pack: KDJFacPack): boolean => utility.validate.posInt(pack.N) && utility.validate.posInt(pack.Nk) && utility.validate.posInt(pack.Nd) && utility.validate.nonEmptyStr(pack.target),
+    validate: (pack: KDJFacPack): boolean => utility.validate.posInt(pack.N) && utility.validate.posInt(pack.Nk) && utility.validate.posInt(pack.Nd) && utility.validate.valueStr(pack.target),
     dpid: dpid,
     weakDepts: (pack: KDJFacPack): Array<string> => [pack.target]
 };

@@ -24,7 +24,7 @@ function facOfFac(ref: string): IFactory<string, number> {
                     return utility.prog.genProg('prop', utility.prog.genProg('ref', target), ref);
                 }
             })),
-        validate: utility.validate.nonEmptyStr,
+        validate: utility.validate.valueStr,
         dpid: dpid,
         weakDepts: (target: string) => [target]
     }

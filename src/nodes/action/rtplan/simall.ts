@@ -15,7 +15,7 @@ export interface SimAllInput {
     targets: Array<string>;
     rtplanId: string;
     redo: boolean;
-    genrtprog: boolean;
+    genrtprog?: boolean;
 }
 
 export interface SimAllOutput {

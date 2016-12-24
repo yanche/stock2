@@ -1,0 +1,8 @@
+<div>
+    <div>
+        <span>标的</span><span class="ml5">{{task.action.target}}</span>
+    </div>
+    <div *ngFor="let n of quickview.drops">
+        <span>{{n.name}}</span><drop class="ml5" [drop]="n.drop"></drop>
+    </div>
+</div>

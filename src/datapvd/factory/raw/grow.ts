@@ -31,7 +31,7 @@ const growFac: IFactory<string, number> = {
                 weakdepts: epvd.weakdepts
             })));
     },
-    validate: utility.validate.nonEmptyStr,
+    validate: utility.validate.valueStr,
     dpid: dpid,
     weakDepts: (target: string) => [target]
 };

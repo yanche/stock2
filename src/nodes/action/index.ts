@@ -34,6 +34,6 @@ actmap.set(constant.action.simAll, rtplan.simall.action);
 actmap.set(constant.action.hypoTest, hypo.test.action);
 actmap.set(constant.action.hypoTestAggr, hypo.aggr.action);
 actmap.set(constant.action.genRtProg, rtprog.genrtprog.action);
-actmap.set(constant.action.genRtProgall, rtprog.genrtprogall.action);
+actmap.set(constant.action.genRtProgAll, rtprog.genrtprogall.action);
 actmap.set(constant.action.afterRawInspect, daily.afterRawInspect.action);
 actmap.set(constant.action.delay, ctrl.delay.action);

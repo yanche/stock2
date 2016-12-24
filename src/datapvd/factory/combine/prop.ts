@@ -11,7 +11,7 @@ interface PropFacPack extends facutil.TransformPackBase<any> {
 
 const propFac: IFactory<PropFacPack, any> = facutil.dpTransform<PropFacPack, any, any>({
     prefix: 'PROP',
-    inputlist: [{ name: 'prop', validate: utility.validate.nonEmptyStr }],
+    inputlist: [{ name: 'prop', validate: utility.validate.valueStr }],
     gen: (pack: PropFacPack, dp: def.DataPvd<any>, ts: number): any => {
         return dp.get(ts)[pack.prop];
     },

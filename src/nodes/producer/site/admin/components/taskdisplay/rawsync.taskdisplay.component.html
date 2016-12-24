@@ -1,0 +1,15 @@
+<div>
+    <div>
+        <span>标的</span><span class="ml5">{{task.action.target}}</span>
+    </div>
+    <div *ngIf="quickview.nodata">没有数据</div>
+    <div *ngIf="!quickview.nodata">
+        <div>
+            <span>复权比率</span><span class="ml5">{{quickview.ratio}}</span>
+            <span>原开始时间</span><span class="ml5">{{quickview.origin.minDay}}</span>
+            <span>原结束时间</span><span class="ml5">{{quickview.origin.maxDay}}</span>
+            <span>新数据开始时间</span><span class="ml5">{{quickview.delta.minDay}}</span>
+            <span>新数据结束时间</span><span class="ml5">{{quickview.delta.maxDay}}</span>
+        </div>
+    </div>
+</div>

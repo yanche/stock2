@@ -38,7 +38,7 @@ const ampFac: IFactory<string, number> = {
                 });
             });
     },
-    validate: utility.validate.nonEmptyStr,
+    validate: utility.validate.valueStr,
     dpid: dpid,
     weakDepts: (target: string) => [target]
 };

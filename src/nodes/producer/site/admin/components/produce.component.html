@@ -1,1 +1,16 @@
-<h1>3Hello {{name}}</h1>
+<div class="col-12" style="margin-bottom: 100px;">
+    <select [(ngModel)]="selectedTaskType">
+        <option *ngFor="let type of taskTypes">{{type}}</option>
+    </select>
+    <!--<hypothesis-testaggr ng-show="selectedTaskType.type == constant.taskType.hypothesis.testaggr"></hypothesis-testaggr>
+    <wind-raw ng-show="selectedTaskType.type == constant.taskType.wind.raw"></wind-raw>
+    <wind-conv ng-show="selectedTaskType.type == constant.taskType.wind.conv"></wind-conv>
+    <wind-mig ng-show="selectedTaskType.type == constant.taskType.raw.mig"></wind-mig>
+    <raw-inspect ng-show="selectedTaskType.type == constant.taskType.raw.inspect"></raw-inspect>
+    <raw-merge ng-show="selectedTaskType.type == constant.taskType.raw.merge"></raw-merge>
+    <wmcloud-raw ng-show="selectedTaskType.type == constant.taskType.wmcloud.raw"></wmcloud-raw>
+    <maintain-stocklist ng-show="selectedTaskType.type == constant.taskType.datamaintain.stocklist"></maintain-stocklist>
+    <lhb-ondate ng-show="selectedTaskType.type == constant.taskType.lhb.ondate"></lhb-ondate>-->
+    <targets-action [inputList]="actConfig.simulate.inputList" [action]="actConfig.simulate.action" [options]="actConfig.simulate.options" [ngClass]="{hidden: selectedTaskType !== constant.action.simulate}"></targets-action>
+    <targets-action [inputList]="actConfig.rtprog.inputList" [action]="actConfig.rtprog.action" [options]="actConfig.rtprog.options" [ngClass]="{hidden: selectedTaskType !== constant.action.genRtProg}"></targets-action>
+</div>

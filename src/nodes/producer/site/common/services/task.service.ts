@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { UrlService } from './url.service';
 import { RequestService } from './request.service';
+import { ConstService } from './const.service';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
@@ -23,6 +24,10 @@ export class TaskService {
     getMul(page: number, pageSize: number, filter?: Object, fields?: Object, orderby?: Object) {
         return this._req.getMul<Task>('task', page, pageSize, filter, fields, orderby);
     }
+
+    create(task: TaskCreation) {
+        return this._req.create<TaskCreation, { _id: string }>('task', refineTaskCreationArg(task));
+    }
 }
 
 export interface Task {
@@ -35,11 +40,29 @@ export interface Task {
     comments?: string;
     statusId?: number;
     createdTs?: number;
-    processLog?: Array<Object>;
+    processLog?: Array<{ msg: string; ts: number; err: string }>;
     lastProcessTs?: number;
     nextConditionCheckTs?: number;
     lastConditionCheckTs?: number;
     quickview?: Object;
     priority?: number;
     assigned?: number;
+}
+
+export interface TaskCreation {
+    action: { type: string, pack?: any };
+    locality?: { target: string };
+    condition?: { type: string, pack?: any };
+    constraints?: { timeoutLevel: number, conditionCheckInterval: number, ttl: number };
+    comments?: string;
+}
+
+function refineTaskCreationArg(task: TaskCreation): TaskCreation {
+    return {
+        action: task.action,
+        locality: task.locality,
+        condition: task.condition || { type: 'ok' },
+        constraints: task.constraints || { timeoutLevel: 3, conditionCheckInterval: 1, ttl: 1 },
+        comments: task.comments
+    }
 }

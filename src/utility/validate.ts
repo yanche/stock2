@@ -15,7 +15,6 @@ export function nonNegNum(num: number, int?: boolean): boolean {
 export function nonPosNum(num: number, int?: boolean): boolean {
     return !isNaN(num) && num <= 0 && (!int || Math.ceil(num) === num);
 }
-export function nonEmptyStr(str: string): boolean { return str.trim().length > 0; }
 export function isInt(num: number): boolean {
     return Math.ceil(num) === num;
 }

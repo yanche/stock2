@@ -11,7 +11,7 @@ export class UrlService {
         return `http://${environment.dispatcher.host}${port}/${resource}`;
     }
 
-    blob(blobname: string) {
-        return `http://${environment.azurestorage}/${environment.containers.static}/${blobname}`;
+    blob(blobname: string, container?: string) {
+        return `http://${environment.azurestorage}/${container || environment.containers.static}/${blobname}`;
     }
 }

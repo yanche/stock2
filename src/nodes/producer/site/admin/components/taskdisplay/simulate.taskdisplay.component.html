@@ -1,0 +1,12 @@
+<div>
+    <div>
+        <span>标的</span><span class="ml5">{{task.action.target}}</span>
+        <span>Rtplan Id</span><span class="ml5">{{task.action.rtplanId}}</span>
+    </div>
+    <div *ngIf="!quickview.run">未执行</div>
+    <div *ngIf="quickview.run">
+        <span>已存在模拟个数</span><span class="ml5">{{quickview.old}}</span>
+        <span>新增模拟个数</span><span class="ml5">{{quickview.new}}</span>
+        <span>模拟结束个数</span><span class="ml5">{{quickview.closed}}</span>
+    </div>
+</div>

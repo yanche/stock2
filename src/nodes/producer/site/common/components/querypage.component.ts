@@ -75,11 +75,11 @@ export class QueryPageComponent implements OnInit, OnChanges {
     }
 
     validFilter(): boolean {
-        return this.utility.valid.json(this.queryRaw.filter);
+        return this.utility.validate.json(this.queryRaw.filter);
     }
 
     validOrderby(): boolean {
-        return this.utility.valid.json(this.queryRaw.orderby);
+        return this.utility.validate.json(this.queryRaw.orderby);
     }
 
     ngOnInit(): void {

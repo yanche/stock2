@@ -1,2 +1,27 @@
-<h1>2Hello {{name}}</h1>
-<query-page [qfilter]="qfilter" [queryFn]="queryFn" [refreshTs]="refreshTs" [options]="queryOpt" onPageDataChange="setPageData($event)"></query-page>
+<query-page [qfilter]="qfilter" [queryFn]="queryFn" [refreshTs]="refreshTs" [options]="queryOpt" (onPageDataChange)="setPageData($event)"></query-page>
+<div class="col-12">
+    <div class="col-2 datacell">Action Type</div>
+    <div class="col-2 datacell">Status</div>
+    <div class="col-2 datacell">Created On</div>
+    <div class="col-2 datacell">Comments</div>
+    <div class="col-3 datacell">Actions</div>
+    <div class="col-1 datacell">Priority</div>
+</div>
+<div *ngFor="let t of pageData">
+    <div class="col-12 dataline" [ngClass]="{selected: showingTask === t, 'prev-selected': prevShowingTask === t}" (click)="showTask(t)">
+        <div class="col-2 datacell">{{t.action.type}}</div>
+        <div class="col-2 datacell">{{t.statusId | status}}</div>
+        <div class="col-2 datacell">{{t.createdTs | datetime}}</div>
+        <div class="col-2 datacell">{{t.comments}}</div>
+        <div class="col-3 datacell">
+            <span class="flatbtn" (click)="closeTask(t)">close</span>
+            <span class="flatbtn" (click)="renewTask(t)">renew</span>
+            <span class="flatbtn" (click)="makereadyTask(t)">make-ready</span>
+            <span class="flatbtn" (click)="upgradeTask(t)" [ngClass]="{hidden: t.priority}">upgrade</span>
+        </div>
+        <div class="col-1 datacell">{{t.priority}}</div>
+    </div>
+    <div [ngClass]="{hidden: showingTask !== t}">
+        <task-display [task]="t"></task-display>
+    </div>
+</div>

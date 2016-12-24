@@ -15,9 +15,13 @@ export interface GenRtProgAllInput {
 }
 
 export interface GenRtProgAllOutput {
+    //标的数量
     targetsCount: number;
+    //rtplan数量
     rtplansCount: number;
+    //每个rtplan对应的标的数量
     rtplansMatch: Array<{ ct: number; rtplanId: string }>;
+    //总数
     total: number;
 }
 

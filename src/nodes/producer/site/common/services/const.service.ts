@@ -1,6 +1,9 @@
 
-export const task = {
-    status: {
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class ConstService {
+    status = {
         new: 1,
         conditionCheckInterval: 2,
         prepared: 3,
@@ -10,12 +13,13 @@ export const task = {
         timeout: 7,
         closed: 8,
         abandoned: 9
-    },
-    constraints: {
+    };
+
+    constraints = {
         timeoutLevel: {
             short: {
                 code: 1,
-                ms: 1000*60 //1 min
+                ms: 1000 * 60 //1 min
             },
             medium: {
                 code: 2,
@@ -33,7 +37,7 @@ export const task = {
         conditionCheckInterval: {
             short: {
                 code: 1,
-                ms: 1000* 5 //5 sec
+                ms: 1000 * 5 //5 sec
             },
             medium: {
                 code: 2,
@@ -48,36 +52,42 @@ export const task = {
                 ms: 1000 * 60 * 60 //1 hour
             }
         }
-    }
-};
+    };
 
-export const action = {
-    rawInspect: 'rawinspect',
-    rawSync: 'rawsync',
-    rawData: 'rawdata',
-    stockList: 'stocklist',
-    simulate: 'simulate',
-    simAll: 'simall',
-    hypoTest: 'hypotest',
-    hypoTestAggr: 'hypotestaggr',
-    genRtProg: 'genrtprog',
-    genRtProgAll: 'genrtprogall',
-    delay: 'delay',
-    afterRawInspect: 'afterrawinspect'
-}
+    http = {
+        post: 'POST',
+        get: 'GET'
+    };
 
-export const simconcern = {
-    viewtype: {
-        dropfile: 'dropfile',
-        raw: 'raw'
-    }
-};
 
-export const dispatcherCond = {
-    ok: 'ok',
-    success: 'success',
-    complete: 'complete',
-    timer: 'timer',
-    and: 'and',
-    or: 'or'
+    action = {
+        rawInspect: 'rawinspect',
+        rawSync: 'rawsync',
+        rawData: 'rawdata',
+        stockList: 'stocklist',
+        simulate: 'simulate',
+        simAll: 'simall',
+        hypoTest: 'hypotest',
+        hypoTestAggr: 'hypotestaggr',
+        genRtProg: 'genrtprog',
+        genRtProgAll: 'genrtprogall',
+        delay: 'delay',
+        afterRawInspect: 'afterrawinspect'
+    };
+
+    simconcern = {
+        viewtype: {
+            dropfile: 'dropfile',
+            raw: 'raw'
+        }
+    };
+
+    dispatcherCond = {
+        ok: 'ok',
+        success: 'success',
+        complete: 'complete',
+        timer: 'timer',
+        and: 'and',
+        or: 'or'
+    };
 }
