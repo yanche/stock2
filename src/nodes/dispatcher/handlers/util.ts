@@ -105,7 +105,7 @@ export function genCreateMulHandler<T>(colc: utility.mongo.CollClient<T>, modelg
             else {
                 return colc.bulkInsert(models.map(m => m.toMongoDoc()))
                     .then(ids => {
-                        hpack.body = { list: ids };
+                        hpack.body = { list: ids.map(x => x.toString()) };
                     });
             }
         }

@@ -26,7 +26,11 @@ export class TaskService {
     }
 
     create(task: TaskCreation) {
-        return this._req.create<TaskCreation, { _id: string }>('task', refineTaskCreationArg(task));
+        return this._req.create<TaskCreation>('task', refineTaskCreationArg(task));
+    }
+
+    createMul(tasks: Array<TaskCreation>) {
+        return this._req.createMul<TaskCreation>('task', tasks.map(refineTaskCreationArg));
     }
 }
 

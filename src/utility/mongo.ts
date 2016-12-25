@@ -109,8 +109,10 @@ export class CollClient<T> {
                 const bulk = col.initializeUnorderedBulkOp();
                 for (const item of arr) bulk.insert(item);
                 bulk.execute((err: Error, ret: mongodb.BulkWriteResult) => {
+                    console.info(ret);
+                    console.info((<any>ret.getInsertedIds()[0])._id instanceof mongodb.ObjectID);
                     if (err != null) rej(err);
-                    else res(<Array<mongodb.ObjectID>>ret.getInsertedIds());
+                    else res((<Array<{ _id: mongodb.ObjectID }>>ret.getInsertedIds()).map(x => x._id));
                 })
             }));
     }

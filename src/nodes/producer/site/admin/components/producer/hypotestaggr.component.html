@@ -1,0 +1,96 @@
+<div class="col-12 mt50">
+    <div class="col-12">
+        <div class="col-12">Standard Input</div>
+        <textarea style="min-height: 200px; width: 500px; max-width: 500px;" [(ngModel)]="standardInput"></textarea>
+        <div class="col-12">
+            <span class="flatbtn" (click)="genStandardInput()">Output</span>
+            <span class="flatbtn ml5" (click)="applyStandardInput()">Input</span>
+        </div>
+    </div>
+    <div class="col-12 mt20">
+        <span class="btn btn-danger small" (click)="reset()">Reset</span>
+        <span class="btn small" (click)="testData()">Test Data</span>
+        <action-button class="ml20" [waiting]="submitting" [word]="'Submit'" (click)="submit()"></action-button>
+    </div>
+    <div class="col-12">
+        <div class="col-12 label">Target</div>
+        <targets-input class="col-12" [targets]="targets" (onTargetsChange)="targets = $event"></targets-input>
+    </div>
+    <div class="col-12">
+        <div class="col-12 label">CP Def Reference</div>
+        <textarea [(ngModel)]="cpdefRef" style="width: 500px; max-width: 500px; min-height: 200px;"></textarea>
+    </div>
+    <div class="col-12">
+        <div class="col-12 label">
+            <span>CP-Out Def Reference(no _ in name, and no dup item)</span>
+            <span style="margin-left: 15px;" class="flatbtn" (click)="cpoutDefRefs.add()">+</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>def-ref</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let r of cpoutDefRefs.items">
+                    <td><input [(ngModel)]="r.name" /></td>
+                    <td><input [(ngModel)]="r.value" style="width: 400px;" /></td>
+                    <td class="flatbtn" (click)="cpoutDefRefs.remove(r)" [ngClass]="{hidden: cpoutDefRefs.items.length === 1}">X</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12">
+        <div class="col-12 label">
+            <span>Enums</span>
+            <span style="margin-left: 15px;" class="flatbtn" (click)="enums.add()">+</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>values</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let r of enums.items">
+                    <td><input [(ngModel)]="r.name" /></td>
+                    <td><input [(ngModel)]="r.value" style="width: 400px;" /></td>
+                    <td class="flatbtn" ng-hide="r.special" (click)="enums.remove(r)">X</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12">
+        <div class="col-12 label">
+            <span>ENV Defs</span>
+            <span style="margin-left: 15px;" class="flatbtn" (click)="envDefs.add()">+</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>def</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let r of envDefs.items">
+                    <td><input [(ngModel)]="r.name" /></td>
+                    <td><input [(ngModel)]="r.value" style="width: 400px;" /></td>
+                    <td class="flatbtn" (click)="envDefs.remove(r)">X</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12 mt10">
+        <div class="col-12">Comments</div>
+        <input type="text" [(ngModel)]="comments" style="width: 400px;" />
+    </div>
+    <div class="col-12 mt20">
+        <action-button [waiting]="submitting" [word]="'Submit'" (click)="submit()"></action-button>
+    </div>
+</div>

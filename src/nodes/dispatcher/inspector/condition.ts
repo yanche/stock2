@@ -62,10 +62,10 @@ export function checkPreCondition() {
                     .catch((err: Error) => {
                         console.error('pre-condition inspector got Error');
                         console.error(err.stack);
-                    })
-                    .then(() => {
-                        setTimeout(checkPreCondition, config.conditionCheckFreq);
                     });
             }
+        })
+        .then(() => {
+            setTimeout(checkPreCondition, config.conditionCheckFreq);
         });
 }

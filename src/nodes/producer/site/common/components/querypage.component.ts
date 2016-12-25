@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { LogService } from '../services/log.service';
 import { UtilityService } from '../services/utility.service';
 import { GetMulReturn } from '../services/request.service';
@@ -8,7 +8,7 @@ import { GetMulReturn } from '../services/request.service';
     moduleId: module.id,
     templateUrl: './querypage.component.html',
 })
-export class QueryPageComponent implements OnInit, OnChanges {
+export class QueryPageComponent implements OnInit {
     constructor(private _log: LogService, public utility: UtilityService) { }
 
     @Input()
@@ -16,7 +16,9 @@ export class QueryPageComponent implements OnInit, OnChanges {
     @Input()
     queryFn: QueryFn;
     @Input()
-    refreshTs: number;
+    set refreshTs(val: number) {
+        if (val) this.submitQuery();
+    }
     @Input()
     options: OptionsPack;
     @Input()
@@ -95,14 +97,6 @@ export class QueryPageComponent implements OnInit, OnChanges {
             total: 0,
             totalPages: 0
         };
-    }
-
-    ngOnChanges(changes: { [key: string]: SimpleChange }): void {
-        const c = changes['refreshTs'];
-        if (c) {
-            const r = <number>(c.currentValue);
-            if (r) this.submitQuery();
-        }
     }
 
     reset(): void {

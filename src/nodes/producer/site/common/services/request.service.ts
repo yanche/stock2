@@ -21,8 +21,12 @@ export class RequestService {
         });
     }
 
-    create<Ti, To>(resource: string, data: Ti): Promise<To> {
-        return this._reqJson<To>(resource, 'CREATE', data);
+    create<Ti>(resource: string, data: Ti): Promise<{ _id: string }> {
+        return this._reqJson<{ _id: string }>(resource, 'CREATE', data);
+    }
+
+    createMul<Ti>(resource: string, data: Array<Ti>): Promise<{ list: Array<string> }> {
+        return this._reqJson<{ list: Array<string> }>(resource, 'CREATEMUL', { list: data });
     }
 
     private _reqJson<T>(resource: string, verb: string, body: any) {

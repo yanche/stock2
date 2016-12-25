@@ -2,8 +2,8 @@
     <select [(ngModel)]="selectedTaskType">
         <option *ngFor="let type of taskTypes">{{type}}</option>
     </select>
-    <!--<hypothesis-testaggr ng-show="selectedTaskType.type == constant.taskType.hypothesis.testaggr"></hypothesis-testaggr>
-    <wind-raw ng-show="selectedTaskType.type == constant.taskType.wind.raw"></wind-raw>
+    <hypotestaggr-producer [ngClass]="{hidden: selectedTaskType.type == constant.action.hypoTestAggr}"></hypotestaggr-producer>
+    <!--<wind-raw ng-show="selectedTaskType.type == constant.taskType.wind.raw"></wind-raw>
     <wind-conv ng-show="selectedTaskType.type == constant.taskType.wind.conv"></wind-conv>
     <wind-mig ng-show="selectedTaskType.type == constant.taskType.raw.mig"></wind-mig>
     <raw-inspect ng-show="selectedTaskType.type == constant.taskType.raw.inspect"></raw-inspect>

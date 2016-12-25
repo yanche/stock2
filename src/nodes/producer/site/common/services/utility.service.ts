@@ -62,4 +62,29 @@ export class UtilityService {
     }
 
     private _dateMS = 60 * 60 * 24 * 1000;
+
+    private _strRef(str: string): string {
+        str = str.trim();
+        if (str.length < 4) return null;
+        else if (str.slice(0, 2) === '{{' && str.slice(-2) === '}}') return str.slice(2, -2);
+        else return null;
+    }
+
+    refReplace(input: any, map: { [key: string]: any }): any {
+        if (this.validate.isStr(input)) {
+            const ref = this._strRef(input);
+            return (ref == null || !(ref in map)) ? input : map[ref];
+        }
+        else if (this.validate.isObj(input)) {
+            const ret: { [key: string]: any } = {};
+            for (let i in input) {
+                ret[i] = this.refReplace(input[i], map);
+            }
+            return ret;
+        }
+        else if (Array.isArray(input)) {
+            return input.map(o => this.refReplace(o, map));
+        }
+        else return input;
+    }
 }

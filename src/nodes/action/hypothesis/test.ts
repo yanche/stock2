@@ -16,8 +16,8 @@ export interface HypoTestInput {
     target: string;
     penum: utility.hypo.PEnum;
     cpDefRef: datapvd.literal.LiteralDP;
-    cpoutDefRef: { [key: string]: datapvd.literal.LiteralDP };
-    envDef: { [key: string]: datapvd.literal.LiteralDP };
+    cpoutDefRefs: { [key: string]: datapvd.literal.LiteralDP };
+    envDefs: { [key: string]: datapvd.literal.LiteralDP };
 }
 
 export interface HypoTestOutput {
@@ -27,18 +27,17 @@ export interface HypoTestOutput {
 export const action = new Action<HypoTestInput, HypoTestInput, HypoTestOutput>({
     refine: utility.id,
     validate: (input: HypoTestInput): boolean => {
-        const v1 = utility.validate.isObj(input) && utility.validate.isObj(input.header) && utility.validate.isStr(input.target) && input.target.length > 0 && input.target.trim().length === input.target.length
-            && utility.hypo.isPEnum(input.penum) && utility.validate.isObj(input.cpDefRef) && utility.validate.isObj(input.cpoutDefRef) && utility.validate.isObj(input.envDef);
+        const v1 = utility.validate.isObj(input) && utility.validate.isBool(input.header) && utility.validate.isStr(input.target) && input.target.length > 0 && input.target.trim().length === input.target.length
+            && utility.hypo.isPEnum(input.penum) && utility.validate.isObj(input.cpDefRef) && utility.validate.isObj(input.cpoutDefRefs) && utility.validate.isObj(input.envDefs);
         if (v1) {
             let ct = 0;
-            for (let k in input.cpoutDefRef) {
+            for (let k in input.cpoutDefRefs) {
                 ++ct;
-                if (!utility.validate.isObj(input.cpoutDefRef[k])) return false;
+                if (!utility.validate.isObj(input.cpoutDefRefs[k])) return false;
             }
             if (ct === 0) return false;
-            for (let k in input.envDef) {
-                const e = input.envDef[k];
-                if (!utility.validate.isObj(e) || !utility.validate.isStr(e.type) || e.type.indexOf(' ') >= 0) return false;
+            for (let k in input.envDefs) {
+                if (!utility.validate.isObj(input.envDefs[k])) return false;
             }
             return true;
         }
@@ -56,7 +55,7 @@ export const action = new Action<HypoTestInput, HypoTestInput, HypoTestOutput>({
                 //part 1: calculate hypothesis
                 return utility.whileLoop(() => bb.resolve(finished < total), () => {
                     log.info(`[${input.target} hypotest] progress: ${utility.num.frac(finished / total * 100, 2)}%`)
-                    return bb.all([datapvd.literal.resolve(utility.refReplace(input.cpDefRef, p)), resolveDPs(input.cpoutDefRef, p), resolveDPs(input.envDef)])
+                    return bb.all([datapvd.literal.resolve(utility.refReplace(input.cpDefRef, p)), resolveDPs(input.cpoutDefRefs, p), resolveDPs(input.envDefs)])
                         .then(data => {
                             const mindayts = rdp.forwardTs(rdp.minTs, 20); //上市前20天忽略
                             if (mindayts == null) results.push({ params: p, hits: new Array<tester.hypo.HypoRec>() });
@@ -85,7 +84,7 @@ export const action = new Action<HypoTestInput, HypoTestInput, HypoTestOutput>({
                     //part 2: analysis calculation
                     .then(() => {
                         let outct = 0, notclosed = 0, retprms = new Array<bb<{ name: string, drop: filestorage.common.FileStorage }>>();;
-                        for (let dpoutname in input.cpoutDefRef) {
+                        for (let dpoutname in input.cpoutDefRefs) {
                             const testSumLines = new Array<string>();
                             for (let result of results) {
                                 for (let h of result.hits) {
@@ -120,7 +119,7 @@ export const action = new Action<HypoTestInput, HypoTestInput, HypoTestOutput>({
                                 }
                             }
                             let allcontent = testSumLines.join('\r\n') + '\r\n';
-                            if (input.header) allcontent = hutil.reportHeaders(input.penum, input.envDef) + '\r\n' + allcontent;
+                            if (input.header) allcontent = hutil.reportHeaders(input.penum, input.envDefs) + '\r\n' + allcontent;
                             retprms.push(filestorage.common.writeTempBytes(allcontent, `${utility.randomStr()}.csv`).then(drop => { return { drop: drop, name: dpoutname }; }));
                             ++outct;
                         }

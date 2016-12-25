@@ -1,34 +1,36 @@
-import { Component, Output, Input, EventEmitter, OnChanges, SimpleChange } from '@angular/core';
+import { Component, Output, Input, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'targets-input',
     moduleId: module.id,
     templateUrl: './targetsinput.component.html'
 })
-export class TargetsInputComponent implements OnChanges {
+export class TargetsInputComponent  {
     @Output()
     onTargetsChange = new EventEmitter<Array<string>>();
     @Input()
-    refreshTs: number;
-    //@Input()
-
-
-    total: number = 0;
-
-    private _targets: string = '';
-    get targets() { return this._targets; }
-    set targets(v: string) {
-        const targets = (v || '').split(';').map(m => m.trim()).filter(m => m.length > 0);
-        this.total = targets.length;
-        this.onTargetsChange.emit(targets);
-        this._targets = v;
+    set targets(val: Array<string>) {
+        this.resetTargets(val);
+        this._targetstr = val.join(';');
     }
 
-    ngOnChanges(changes: { [key: string]: SimpleChange }): void {
-        const c = changes['refreshTs'];
-        if (c) {
-            const r = <number>(c.currentValue);
-            if (r) this.targets = '';
+    resetTargets(val:Array<string>) {
+        const t = val.map(m => m.trim()).filter(m => m.length > 0);
+        if ( this._targets.length !== t.length ||  this._targets.some((s, idx) => s !== t[idx])) {
+            this.onTargetsChange.emit(t);
+            this._targets = t;
+            this.total = t.length;
         }
     }
+
+    private _targets: Array<string> = [];
+    private _targetstr: string = '';
+
+    get targetstr() { return this._targetstr; }
+    set targetstr(v: string) {
+        this.resetTargets((v || '').split(';'));
+        this._targetstr = v;
+    }
+
+    total: number = 0;
 }

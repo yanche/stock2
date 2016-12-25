@@ -14,6 +14,7 @@ import { ProduceComponent } from './components/produce.component';
 import { ResourcesComponent } from './components/resources.component';
 import { TargetsActionComponent } from './components/producer/targetsact.component';
 import { TargetsInputComponent } from './components/producer/targetsinput.component';
+import { HypoTestAggrProducerComponent } from './components/producer/hypotestaggr.component';
 import * as taskdisplay from './components/taskdisplay.component';
 
 import { StatusPipe } from '../common/pipes/status.pipe';
@@ -50,9 +51,11 @@ import { DateTimePipe } from '../common/pipes/datetime.pipe';
     ResourcesComponent,
     QueryPageComponent,
     ActionButtonComponent,
+    DropComponent,
+    //producer
+    HypoTestAggrProducerComponent,
     TargetsActionComponent,
     TargetsInputComponent,
-    DropComponent,
     //target displays
     taskdisplay.TaskDisplayComponent,
     taskdisplay.RawInspectTaskDisplayComponent,

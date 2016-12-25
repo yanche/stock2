@@ -42,7 +42,7 @@ function strRef(str: string): string {
 export function refReplace(input: any, map: { [key: string]: any }): any {
     if (validate.isStr(input)) {
         const ref = strRef(input);
-        return ref == null || !(ref in map) ? input : map[ref];
+        return (ref == null || !(ref in map)) ? input : map[ref];
     }
     else if (validate.isObj(input)) {
         const ret: { [key: string]: any } = {};

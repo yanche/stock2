@@ -10,9 +10,8 @@ export class ProduceComponent {
   constructor(public constant: ConstService) { }
 
   taskTypes = [
-    { type: this.constant.action.genRtProg },
-    { type: this.constant.action.hypoTest },
     { type: this.constant.action.hypoTestAggr },
+    { type: this.constant.action.genRtProg },
     { type: this.constant.action.rawData },
     { type: this.constant.action.rawInspect },
     { type: this.constant.action.rawSync },

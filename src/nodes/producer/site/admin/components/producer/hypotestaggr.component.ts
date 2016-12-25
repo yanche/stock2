@@ -1,5 +1,9 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { PreparedDataSet, HypoTestAggrService } from '../../services/hypotestaggr.service';
+import { UtilityService } from '../../../common/services/utility.service';
+import { ConstService } from '../../../common/services/const.service';
+import { Task, TaskCreation, TaskService } from '../../../common/services/task.service';
+import { LogService } from '../../../common/services/log.service';
 
 @Component({
     selector: 'hypotestaggr-producer',
@@ -7,7 +11,7 @@ import { PreparedDataSet, HypoTestAggrService } from '../../services/hypotestagg
     templateUrl: './hypotestaggr.component.html'
 })
 export class HypoTestAggrProducerComponent implements OnInit {
-    constructor(private _haggr: HypoTestAggrService) { }
+    constructor(private _haggr: HypoTestAggrService, private _utility: UtilityService, private _const: ConstService, private _task: TaskService, private _log: LogService) { }
 
     comments: string;
     targets: Array<string>;
@@ -16,19 +20,20 @@ export class HypoTestAggrProducerComponent implements OnInit {
     envDefs: GrpUtil;
     enums: GrpUtil;
     glongVal: boolean;
-    resetTargetsTs: number;
+    submitting: boolean;
 
     ngOnInit() {
         this.reset();
+        this.submitting = false;
     }
 
     reset() {
         this.cpdefRef = this.comments = '';
-        this.resetTargetsTs = new Date().getTime();
         this.enums = new GrpUtil();
         this.cpoutDefRefs = new GrpUtil();
         this.envDefs = new GrpUtil();
         this.glongVal = true;
+        this.targets = [];
     }
 
     testData() {
@@ -37,6 +42,83 @@ export class HypoTestAggrProducerComponent implements OnInit {
 
     private _setTestData(data: PreparedDataSet) {
         this.reset();
+        this.targets = ['000001.XSHE'];
+        this.cpdefRef = data.cpdefRef;
+        data.enums.forEach(e => this.enums.add(e.name, e.values));
+        data.cpoutDefRefs.forEach(c => this.cpoutDefRefs.add(c.name, c.dpref));
+        data.envRefs.forEach(e => this.envDefs.add(e.name, e.dpref));
+    }
+
+    submit() {
+        if (this.submitting) return;
+        return Promise.resolve()
+            .then(() => {
+                this.submitting = true;
+                const penum: { [key: string]: any } = {}, enumnames = this.enums.items.map(i => i.name);
+                this.enums.items.forEach(e => {
+                    penum[e.name] = e.value.split(';').map(q => q.trim()).filter(q => q.length > 0).map(this._utility.convParamStr);
+                });
+                const cpdefRef = JSON.parse(this.cpdefRef);
+                const cpoutDefRefs: { [key: string]: any } = {}, cpoutnames = this.cpoutDefRefs.items.map(i => i.name);
+                this.cpoutDefRefs.items.forEach(c => cpoutDefRefs[c.name] = JSON.parse(c.value));
+                const envDefs: { [key: string]: any } = {}, envnames = this.envDefs.items.map(i => i.name);;
+                this.envDefs.items.forEach(c => envDefs[c.name] = JSON.parse(c.value));
+                const tasks = this.targets.map((t): TaskCreation => {
+                    return {
+                        action: {
+                            type: this._const.action.hypoTest,
+                            pack: {
+                                target: t,
+                                penum: penum,
+                                cpDefRef: this._utility.refReplace(cpdefRef, { target: t }),
+                                cpoutDefRefs: this._utility.refReplace(cpoutDefRefs, { target: t }),
+                                envDefs: this._utility.refReplace(envDefs, { target: t }),
+                                header: false
+                            }
+                        },
+                        locality: { target: t },
+                        comments: `${this.comments} - ${t}`
+                    };
+                });
+                return this._task.createMul(tasks)
+                    .then(data => data.list)
+                    .then(list => this._task.create({
+                        action: {
+                            type: this._const.action.hypoTestAggr,
+                            pack: {
+                                ids: list,
+                                paramNames: enumnames,
+                                envNames: envnames,
+                                cpoutNames: cpoutnames,
+                                filename: this.comments
+                            }
+                        },
+                        condition: { type: this._const.dispatcherCond.success, pack: list },
+                        comments: this.comments
+                    }));
+            })
+            .catch(err => {
+                this._log.error(err);
+            })
+            .then(() => this.submitting = false);
+    }
+
+    standardInput: string = '';
+    genStandardInput() {
+        this.standardInput = JSON.stringify(<StandardInput>{
+            cpdefRef: this.cpdefRef,
+            cpoutDefRefs: this.cpoutDefRefs.items.map(c => { return { name: c.name, dp: c.value } }),
+            envDefs: this.envDefs.items.map(e => { return { name: e.name, dp: e.value } }),
+            enums: this.enums.items.map(e => { return { name: e.name, values: e.value } })
+        });
+    }
+    applyStandardInput() {
+        this.reset();
+        const input = <StandardInput>JSON.parse(this.standardInput);
+        this.cpdefRef = input.cpdefRef;
+        input.cpoutDefRefs.forEach(e => this.cpoutDefRefs.add(e.name, e.dp));
+        input.envDefs.forEach(e => this.envDefs.add(e.name, e.dp));
+        input.enums.forEach(e => this.enums.add(e.name, e.values));
     }
 }
 
@@ -44,7 +126,7 @@ class GrpUtil {
     items: Array<GrpItem> = [];
 
     add(name: string, value: string): this {
-        this.items.push({ name: name, value: value });
+        this.items.push({ name: name || '', value: value || '' });
         return this;
     }
     remove(item: GrpItem): this {
@@ -56,4 +138,11 @@ class GrpUtil {
 interface GrpItem {
     name: string;
     value: string;
+}
+
+interface StandardInput {
+    cpdefRef: string;
+    cpoutDefRefs: Array<{ name: string; dp: string }>;
+    envDefs: Array<{ name: string; dp: string }>;
+    enums: Array<{ name: string; values: string }>;
 }

@@ -6,6 +6,7 @@
         <div class="navitem" [ngClass]="{current: currentPage === 'resources'}" routerLink="/resources" routerLinkActive="active">Resources</div>
         <!--<div class="navitem" [ngClass]="{current: currentPage === 'help'}" ui-sref="help">Help</div>-->
     </div>
-    <div id="maincontent" class="col-12" ui-view></div>
+    <div id="maincontent" class="col-12">
+        <router-outlet></router-outlet>
+    </div>
 </div>
-<router-outlet></router-outlet>
