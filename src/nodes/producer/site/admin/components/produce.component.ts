@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Input, Action, Options, InputType } from './targetsact.component';
+import { Input, Action, Options, InputType } from './producer/targetsact.component';
 import { ConstService } from '../../common/services/const.service';
 
 @Component({

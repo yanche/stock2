@@ -12,8 +12,8 @@ import { AppComponent } from './components/app.component';
 import { MonitorComponent } from './components/monitor.component';
 import { ProduceComponent } from './components/produce.component';
 import { ResourcesComponent } from './components/resources.component';
-import { TargetsActionComponent } from './components/targetsact.component';
-import { TargetsInputComponent } from './components/targetsinput.component';
+import { TargetsActionComponent } from './components/producer/targetsact.component';
+import { TargetsInputComponent } from './components/producer/targetsinput.component';
 import * as taskdisplay from './components/taskdisplay.component';
 
 import { StatusPipe } from '../common/pipes/status.pipe';

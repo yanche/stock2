@@ -1,7 +1,7 @@
 import { Component, Input as InputC, OnInit } from '@angular/core';
-import { Task, TaskService } from '../../common/services/task.service';
-import { LogService } from '../../common/services/log.service';
-import { UtilityService } from '../../common/services/utility.service';
+import { Task, TaskService } from '../../../common/services/task.service';
+import { LogService } from '../../../common/services/log.service';
+import { UtilityService } from '../../../common/services/utility.service';
 
 @Component({
     selector: 'targets-action',
