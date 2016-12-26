@@ -1,0 +1,23 @@
+<div class="col-12 mt50">
+    <div class="col-12">
+        <span class="btn btn-danger small" (click)="reset()">Reset</span>
+        <span class="btn small" (click)="testData()">Test Data</span>
+        <action-button [disabled]="targets.length === 0" [waiting]="submitting" [word]="'Submit'" (click)="submit()"></action-button>
+    </div>
+    <div class="col-12">
+        <div class="col-12 label">Target</div>
+        <targets-input class="col-12" [targets]="targets"></targets-input>
+    </div>
+    <div class="col-12">
+        <div class="col-12 label">Start</div>
+        <input [(ngModel)]="start" placeholder="YYYYMMDD" />
+    </div>
+    <div class="col-12">
+        <div class="col-12 label">End</div>
+        <input [(ngModel)]="end" placeholder="YYYYMMDD" />
+    </div>
+    <div class="col-12">
+        <div class="col-12 label">is Index</div>
+        <input type="checkbox" [(ngModel)]="isIndex" />
+    </div>
+</div>

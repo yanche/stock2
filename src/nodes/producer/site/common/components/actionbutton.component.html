@@ -1,4 +1,4 @@
-<span class="small btn" [ngClass]="{disabled: waiting}">
+<span class="small btn" [ngClass]="{disabled: waiting || disabled}">
     <span class="fa fa-spin fa-spinner" *ngIf="waiting"></span>
     <span>{{word}}</span>
 </span>

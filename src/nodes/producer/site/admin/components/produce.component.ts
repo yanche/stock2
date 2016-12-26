@@ -36,6 +36,12 @@ export class ProduceComponent {
         { name: 'rtplanId', title: 'RtPlan Id (empty for bulk)', type: InputType.string, bulkOnEmpty: true }
       ],
       options: { locality: true }
+    },
+    rawsync: {
+      action: { type: this.constant.action.rawSync },
+      inputList: [
+        { name: 'index', title: 'is index', type: InputType.bool }
+      ]
     }
   }
 }

@@ -1,0 +1,9 @@
+<div class="col-12 mt50">
+    <div class="col-12">
+        <div class="col-12">Comments</div>
+        <input type="text" [(ngModel)]="comments" style="width: 400px;" />
+    </div>
+    <div class="col-12 mt20">
+        <action-button [waiting]="submitting" [word]="'Submit'" (click)="submit()"></action-button>
+    </div>
+</div>

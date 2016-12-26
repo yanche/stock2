@@ -10,7 +10,7 @@
     <div class="col-12 mt20">
         <span class="btn btn-danger small" (click)="reset()">Reset</span>
         <span class="btn small" (click)="testData()">Test Data</span>
-        <action-button class="ml20" [waiting]="submitting" [word]="'Submit'" (click)="submit()"></action-button>
+        <action-button class="ml20" [disabled]="targets.length === 0" [waiting]="submitting" [word]="'Submit'" (click)="submit()"></action-button>
     </div>
     <div class="col-12">
         <div class="col-12 label">Target</div>
@@ -91,6 +91,6 @@
         <input type="text" [(ngModel)]="comments" style="width: 400px;" />
     </div>
     <div class="col-12 mt20">
-        <action-button [waiting]="submitting" [word]="'Submit'" (click)="submit()"></action-button>
+        <action-button [disabled]="targets.length === 0" [waiting]="submitting" [word]="'Submit'" (click)="submit()"></action-button>
     </div>
 </div>

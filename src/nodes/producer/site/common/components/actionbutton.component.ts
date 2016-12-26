@@ -10,4 +10,6 @@ export class ActionButtonComponent {
     waiting: boolean;
     @Input()
     word: string;
+    @Input()
+    disabled: boolean;
 }

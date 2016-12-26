@@ -15,6 +15,8 @@ import { ResourcesComponent } from './components/resources.component';
 import { TargetsActionComponent } from './components/producer/targetsact.component';
 import { TargetsInputComponent } from './components/producer/targetsinput.component';
 import { HypoTestAggrProducerComponent } from './components/producer/hypotestaggr.component';
+import { SimpleProducerComponent } from './components/producer/simple.component';
+import { RawDataProducerComponent } from './components/producer/rawdata.component';
 import * as taskdisplay from './components/taskdisplay.component';
 
 import { StatusPipe } from '../common/pipes/status.pipe';
@@ -54,6 +56,8 @@ import { DateTimePipe } from '../common/pipes/datetime.pipe';
     DropComponent,
     //producer
     HypoTestAggrProducerComponent,
+    SimpleProducerComponent,
+    RawDataProducerComponent,
     TargetsActionComponent,
     TargetsInputComponent,
     //target displays

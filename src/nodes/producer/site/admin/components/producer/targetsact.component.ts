@@ -76,12 +76,27 @@ export class TargetsActionComponent implements OnInit {
                 comments: this.comments
             })
         }
-        else {
+        else if (this.action.bulkType != null) {
             inputvals['targets'] = this.targets.length === 0 ? null : this.targets;
             prm = this._task.create({
                 action: { type: this.action.bulkType, pack: inputvals },
                 comments: this.comments
             })
+        }
+        else {
+            if (this.targets.length === 0) prm = Promise.resolve();
+            else {
+                prm = this._task.createMul(this.targets.map(t => {
+                    const inputs = this._utility.clone(inputvals);
+                    inputs['target'] = t;
+                    const locality = this.options && this.options.locality ? { target: t } : null;
+                    return {
+                        action: { type: this.action.type, pack: inputs },
+                        comments: `${this.comments} - ${t}`,
+                        locality: locality
+                    };
+                }));
+            }
         }
 
         return prm.catch((err: Error) => {
@@ -103,7 +118,7 @@ export interface Options {
 
 export interface Action {
     type: string;
-    bulkType: string;
+    bulkType?: string;
 }
 
 export enum InputType {

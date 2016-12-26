@@ -5,11 +5,12 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptionsArgs } from '@angular/http';
 import { UrlService } from './url.service';
 import { ConstService } from './const.service';
+import { UtilityService } from './utility.service';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class RequestService {
-    constructor(private _http: Http, private _url: UrlService, private _const: ConstService) { }
+    constructor(private _http: Http, private _url: UrlService, private _const: ConstService, private _utility: UtilityService) { }
 
     getMul<T>(resource: string, page: number, pageSize: number, filter?: Object, fields?: Object, orderby?: Object): Promise<GetMulReturn<T>> {
         return this._reqJson<GetMulReturn<T>>(resource, 'GETMUL', {
@@ -26,7 +27,19 @@ export class RequestService {
     }
 
     createMul<Ti>(resource: string, data: Array<Ti>): Promise<{ list: Array<string> }> {
-        return this._reqJson<{ list: Array<string> }>(resource, 'CREATEMUL', { list: data });
+        let startIdx = 0, ret: Array<Array<string>> = [];
+        return this._utility.whileLoop(() => Promise.resolve(startIdx < data.length), () => {
+            const endIdx = startIdx + 200;
+            return this._reqJson<{ list: Array<string> }>(resource, 'CREATEMUL', { list: data.slice(startIdx, endIdx) })
+                .then(r => {
+                    startIdx = endIdx;
+                    ret.push(r.list);
+                });
+        })
+            .then(() => {
+                return Array.prototype.concat.call([], ret);
+            })
+
     }
 
     private _reqJson<T>(resource: string, verb: string, body: any) {

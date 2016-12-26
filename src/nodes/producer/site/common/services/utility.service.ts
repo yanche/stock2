@@ -31,6 +31,10 @@ export class UtilityService {
         valueStr: (input: any): boolean => this.validate.isStr(input) && input.trim().length === input.length && input.length > 0
     }
 
+    clone<T extends Object>(obj: T): T {
+        return JSON.parse(JSON.stringify(obj));
+    }
+
     //returns null is cannot parse
     tryParseJson(str: string) {
         try { return JSON.parse(str); }
@@ -86,5 +90,14 @@ export class UtilityService {
             return input.map(o => this.refReplace(o, map));
         }
         else return input;
+    }
+
+    whileLoop(condition: () => Promise<boolean>, body: () => Promise<any>): Promise<void> {
+        return condition()
+            .then((loop) => {
+                if (loop) return body().then(() => this.whileLoop(condition, body));
+                else return;
+            })
+            .then(() => null);
     }
 }
