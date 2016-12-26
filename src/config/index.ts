@@ -8,12 +8,12 @@ const azurestorage = {
     account: 'stockanalysis',
     key: 'DCJWuN5xcBQv/m8SHiCdhTLY5y/35eTXsGsFqLW1jjKWoz5eKHYid6rwK2aY2ypECU1q5rnruuD0+iFd9rA+gQ==',
     container: {
-        static: 'static',
-        raw: 'raw',
-        temp: 'temp',
-        profile: 'profile',
-        lhb: 'lhb',
-        simconcern: 'simconcern'
+        static: 'newsys_static',
+        raw: 'newsys_raw',
+        temp: 'newsys_temp',
+        //profile: 'newsys_profile',
+        //lhb: 'newsys_lhb',
+        simconcern: 'newsys_simconcern'
     },
     files: {
         //valid(on trade) targets
@@ -30,13 +30,13 @@ const azurestorage = {
                 txt: 'allindexes.txt',
             },
         },
-        groups: {
-            //[{group: '青海', targets: [{name: '青海明胶', target: '000606.XSHE'}]}]
-            ths: {
-                region: 'ths_meta_region.json',
-                industry: 'ths_meta_industry.json'
-            }
-        }
+        // groups: {
+        //     //[{group: '青海', targets: [{name: '青海明胶', target: '000606.XSHE'}]}]
+        //     ths: {
+        //         region: 'ths_meta_region.json',
+        //         industry: 'ths_meta_industry.json'
+        //     }
+        // }
     }
 }
 
@@ -69,12 +69,12 @@ const jobScheduleTime = {
     m: 0
 }
 
-var dev = false, useFiddler = false, scheduledTask = false, useLocalRaw = false, useLocalTempStore = false;
+let dev = false, useFiddler = false, scheduledTask = false, useLocalRaw = false, useLocalTempStore = false;
 
 const ctrl = process.argv[process.argv.length - 1];
 if (ctrl[0] == '-') {
-    for (var i = 1; i < ctrl.length; ++i) {
-        var v = ctrl[i];
+    for (let i = 1; i < ctrl.length; ++i) {
+        let v = ctrl[i];
         switch (v) {
             case 'd':
                 dev = true;
@@ -115,13 +115,16 @@ if (ctrl[0] == '-') {
 
 const wmCloudToken = 'bf1e63e10264f88d3d44541d4057e00981ced9e6042c19ce02c0b738f471c747';
 
-var hypotestaggrAnalysisPort = 8083;
-var producerPort = 8081;
-var storageServiceHost = 'yanstock2.chinacloudapp.cn';
-var storageServicePort = 8082;
-var reporterPort = 80;
-var dispatcherPort = 1000;
-var dispatcherHost = 'yanstock2.chinacloudapp.cn';
+let hypotestaggrAnalysisPort = 8083;
+let producerPort = 8081;
+let storageServiceHost = 'yanstock2.chinacloudapp.cn';
+let storageServicePort = 8082;
+let reporterPort = 80;
+let dispatcherPort = 1000;
+let dispatcherHost = 'yanstock2.chinacloudapp.cn';
+
+dev = true;
+
 if (dev) {
     reporterPort = 8080;
     storageServiceHost = '127.0.0.1';

@@ -10,7 +10,7 @@ import * as path from 'path';
 const afsHub = new mods.Hub<azurestorage.BlobService>(() => {
     const afs = azurestorage.createBlobService(config.azurestorage.account, config.azurestorage.key, config.azurestorage.host);
     return bb.all([
-        config.azurestorage.container.temp, config.azurestorage.container.static, config.azurestorage.container.raw, config.azurestorage.container.profile, config.azurestorage.container.lhb, config.azurestorage.container.simconcern
+        config.azurestorage.container.temp, config.azurestorage.container.static, config.azurestorage.container.raw, config.azurestorage.container.simconcern
     ].map(container => createContainer(afs, container)))
         .then(() => afs);
 })
