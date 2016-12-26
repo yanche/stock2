@@ -1,6 +1,8 @@
 
 import * as bb from 'bluebird';
 import * as fs from 'fs';
+import * as path from 'path';
+import * as mkdirp from 'mkdirp';
 
 export function loadFile(path: string): bb<Buffer> {
     return new bb<Buffer>((res, rej) => {
@@ -17,11 +19,16 @@ export function loadJsonFile<T>(path: string): bb<T> {
     })
 }
 
-export function writeFile(path: string, data: Buffer | string, append?: boolean): bb<void> {
+export function writeFile(filename: string, data: Buffer | string, append?: boolean): bb<void> {
     return new bb<void>((res, rej) => {
-        (append ? fs.appendFile : fs.writeFile)(path, data, err => {
-            if (err != null) rej(err);
-            else res();
+        mkdirp(path.dirname(filename), err => {
+            if (err) rej(err);
+            else {
+                (append ? fs.appendFile : fs.writeFile)(filename, data, err => {
+                    if (err != null) rej(err);
+                    else res();
+                })
+            }
         })
     });
 }
