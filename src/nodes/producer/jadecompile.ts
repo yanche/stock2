@@ -20,6 +20,10 @@ bb.resolve()
                 containers: {
                     static: config.azurestorage.container.static
                 }
+            },
+            resources: {
+                allstocks: config.azurestorage.files.stocks.all.txt,
+                allindexes: config.azurestorage.files.indexes.all.txt
             }
         })
     ))

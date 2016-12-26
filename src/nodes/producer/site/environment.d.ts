@@ -10,3 +10,7 @@ declare const environment: {
     }
 }
 
+declare const resources: {
+    allstocks: string;
+    allindexes: string;
+}

@@ -15,7 +15,8 @@ html(lang='zh-CN')
         script(src='/libs/js/system.src.js')
         script(src='/admin.systemjs.config.js')
         script.
-            environment = !{JSON.stringify(environment)}
+            environment = !{JSON.stringify(environment)};
+            resources = !{JSON.stringify(resources)};
             System.import('app').catch(function(err){ console.error(err); });
         body
             stock-Analysis
