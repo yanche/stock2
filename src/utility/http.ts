@@ -29,7 +29,7 @@ export function webreq(options: WebReqOptions, body?: Buffer | Object | Array<an
             options.host = '127.0.0.1';
             options.port = 8888;
         }
-        var req = http.request(options, (res: http.IncomingMessage) => {
+        var req = (secure ? https.request : http.request)(options, (res: http.IncomingMessage) => {
             var bufs = new Array<Buffer>();
             res.on('data', (d: Buffer) => {
                 bufs.push(d);
@@ -96,7 +96,7 @@ export class HttpPack {
         else throw new Error(`unknown content-type to process request body: ${ct}`);
         return this._reqbody;
     }
-    get path():string{
+    get path(): string {
         return this._url.pathname;
     }
     set body(value: Object | string | Buffer) {

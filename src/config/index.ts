@@ -8,12 +8,12 @@ const azurestorage = {
     account: 'stockanalysis',
     key: 'DCJWuN5xcBQv/m8SHiCdhTLY5y/35eTXsGsFqLW1jjKWoz5eKHYid6rwK2aY2ypECU1q5rnruuD0+iFd9rA+gQ==',
     container: {
-        static: 'newsys_static',
-        raw: 'newsys_raw',
-        temp: 'newsys_temp',
+        static: 'newsysstatic',
+        raw: 'newsysraw',
+        temp: 'newsystemp',
         //profile: 'newsys_profile',
         //lhb: 'newsys_lhb',
-        simconcern: 'newsys_simconcern'
+        simconcern: 'newsyssimconcern'
     },
     files: {
         //valid(on trade) targets

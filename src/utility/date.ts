@@ -1,5 +1,6 @@
 
 import * as utility from './index';
+import * as moment from 'moment';
 
 const dateMS = 1000 * 60 * 60 * 24;
 export function dateTs(year: number, month: number, date: number): number {

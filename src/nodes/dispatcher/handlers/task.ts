@@ -95,7 +95,7 @@ function dispatchFilter(limit: Object, preference: Array<Object>, searchprior: b
     }];
     if (searchprior) conds.push({ priority: 1 });
     if (limit) conds.push(limit);
-    if (!searchprior && preference) conds.push(preference);
+    if (!searchprior && preference && preference.length > 0) conds.push(preference);
     return conds.length > 1 ? { $and: conds } : conds[0];
 }
 

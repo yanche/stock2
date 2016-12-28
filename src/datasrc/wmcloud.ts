@@ -27,7 +27,7 @@ export function get<To>(url: string): bb<Array<To>> {
                 }
             }, null, true)
                 .then(reply => {
-                    if (reply.statusCode === 200) throw new Error(`bad status code from wmcloud: ${reply.statusCode}, ${url}`);
+                    if (reply.statusCode !== 200) throw new Error(`bad status code from wmcloud: ${reply.statusCode}, ${url}`);
                     const j = <WMCloudApiRet>JSON.parse(reply.data.toString('utf8'));
                     if (j.retCode === -1) return [];
                     else if (j.retCode !== 1) throw new Error(`bad return msg: ${j.retCode}, ${j.retMsg}`);

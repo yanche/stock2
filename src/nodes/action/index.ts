@@ -10,7 +10,7 @@ import * as constant from '../../const';
 import * as ctrl from './control';
 import * as daily from './daily';
 
-export function resolve(action: { type: string, pack?: any }, task: def.Task): bb<void> {
+export function resolve(action: { type: string, pack?: any }, task: def.Task): bb<any> {
     return bb.resolve()
         .then(() => {
             const acthandler = actmap.get(action.type);

@@ -52,7 +52,7 @@ export function dispatch(data: { limit: Object, preference: Array<Object> }): bb
         });
 }
 
-export function report(data: { _id: string, processTs: number, statusId: number, recoverable: boolean, errmsg?: string, quickview?: any }) {
+export function report(data: { _id: string, processTs: number, statusId: number, recoverable?: boolean, errmsg?: string, quickview?: any }) {
     return cm.req('POST', 'task', data, 0, { verb: 'REPORT' })
         .then(reply => {
             if (reply.statusCode !== 200) throw new Error(`report task status failed with statuscode: ${reply.statusCode}`);
