@@ -20,7 +20,7 @@ export class DropComponent implements OnInit {
 
     ngOnInit() {
         switch (this.drop.storage) {
-            case DropLocation.Local: {
+            case DropLocation.Azure: {
                 this.dropPath = this._url.blob(this.drop.path, this.drop.container);
                 break;
             }

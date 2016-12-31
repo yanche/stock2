@@ -20,7 +20,8 @@ export interface SyncOutput {
     ratio?: number,
     delta?: { maxDay: string, minDay: string },
     origin?: { maxDay: string, minDay: string },
-    nodata?: boolean
+    nodata: boolean,
+    newpull: boolean
 }
 
 function sync(index: boolean, target: string, rawdata: datadef.RawData): bb<SyncOutput> {
@@ -46,10 +47,12 @@ function sync(index: boolean, target: string, rawdata: datadef.RawData): bb<Sync
                 return datasrc.mine.targetData.upload(target, rawdata)
                     .then(drop => {
                         return <SyncOutput>{
+                            newpull: false,
                             drop: drop,
                             ratio: ratio,
                             delta: { maxDay: r.data.maxDay, minDay: r.data.minDay },
-                            origin: origin
+                            origin: origin,
+                            nodata: false
                         };
                     });
             }
@@ -67,15 +70,17 @@ export const action = new Action({
             .then(reply => {
                 if (reply.statusCode === 200) return sync(pack.index, pack.target, reply.data);
                 else if (reply.statusCode === 404) {
-                    return rutil.wmRaw(pack.index, pack.target, utility.date.dateTs(1990, 0, 1), utility.date.msTs2DateTs(utility.date.nowUTCTs()))
+                    return rutil.wmRaw(pack.index, pack.target, utility.date.dateTs(2000, 0, 1), utility.date.msTs2DateTs(utility.date.nowUTCTs()))
                         .then(d => {
-                            if (d == null || d.count === 0) return { nodata: true };
+                            if (d == null || d.count === 0) return { nodata: true, newpull: true };
                             else {
                                 return datasrc.mine.targetData.upload(pack.target, d.data)
                                     .then(drop => {
                                         return <SyncOutput>{
+                                            newpull: true,
                                             drop: drop,
-                                            delta: { maxDay: d.data.maxDay, minDay: d.data.minDay }
+                                            delta: { maxDay: d.data.maxDay, minDay: d.data.minDay },
+                                            nodata: false
                                         };
                                     });
                             }

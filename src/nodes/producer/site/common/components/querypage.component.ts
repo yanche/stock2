@@ -113,7 +113,7 @@ export class QueryPageComponent implements OnInit {
                 this.pageInfo.page = data.page;
                 this.pageInfo.pageSize = data.pageSize;
                 this.pageInfo.total = data.total;
-                this.pageInfo.total = Math.ceil(data.total / data.pageSize);
+                this.pageInfo.totalPages = Math.ceil(data.total / data.pageSize);
             })
             .catch(err => {
                 this._log.error(err);
@@ -125,28 +125,28 @@ export class QueryPageComponent implements OnInit {
 
     firstPage(): void {
         if (this.pageInfo.page !== 1) {
-            this.pageInfo.page = 1;
+            this.queryRaw.page = 1;
             this.submitQuery();
         }
     }
 
     lastPage(): void {
         if (this.pageInfo.page < this.pageInfo.totalPages) {
-            this.pageInfo.page = this.pageInfo.totalPages;
+            this.queryRaw.page = this.pageInfo.totalPages;
             this.submitQuery();
         }
     }
 
     prevPage(): void {
         if (this.pageInfo.page > 1) {
-            this.pageInfo.page--;
+            this.queryRaw.page = this.pageInfo.page - 1;
             this.submitQuery();
         }
     }
 
     nextPage(): void {
         if (this.pageInfo.page < this.pageInfo.totalPages) {
-            this.pageInfo.page++;
+            this.queryRaw.page = this.pageInfo.page + 1;
             this.submitQuery();
         }
     }

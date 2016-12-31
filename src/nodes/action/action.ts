@@ -1,5 +1,6 @@
 
 import * as bb from 'bluebird';
+import * as log from '../../log';
 
 // Ti: type of raw input
 // Tr: type of refined input, for resolve/validate
@@ -10,8 +11,14 @@ export default class Action<Ti, Tr, To> {
     private _resolve: (pack: Tr) => bb<To>;
 
     public validate(raw: Ti): boolean {
-        const d = this._refine(raw);
-        return this._validate(d);
+        try {
+            const d = this._refine(raw);
+            return this._validate(d);
+        }
+        catch (err) {
+            log.error(err);
+            return false;
+        }
     }
 
     public resolve(raw: Ti): bb<To> {

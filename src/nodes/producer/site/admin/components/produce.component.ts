@@ -40,7 +40,7 @@ export class ProduceComponent {
     rawsync: {
       action: { type: this.constant.action.rawSync },
       inputList: [
-        { name: 'index', title: 'is index', type: InputType.bool }
+        { name: 'index', title: 'is index', type: InputType.bool, init: false }
       ]
     }
   }

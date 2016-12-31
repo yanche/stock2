@@ -1,8 +1,8 @@
 <div>
     <div>
-        <span>标的</span><span class="ml5">{{task.action.target}}</span>
+        <span>标的</span><span class="ml5">{{task.action.pack.target}}</span>
     </div>
     <div *ngIf="quickview.nodata">无数据</div>
     <div *ngIf="!quickview.nodata && quickview.rawdata">少量数据，请查看console</div>
-    <drop *ngIf="quickview.drop" drop="quickview.drop"></drop>
+    <drop *ngIf="quickview.drop" [drop]="quickview.drop"></drop>
 </div>

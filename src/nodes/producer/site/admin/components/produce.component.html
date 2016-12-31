@@ -6,12 +6,6 @@
     <simple-producer [action]="constant.action.stockList" [ngClass]="{hidden: selectedTaskType !== constant.action.stockList}"></simple-producer>
     <simple-producer [action]="constant.action.rawInspect" [ngClass]="{hidden: selectedTaskType !== constant.action.rawInspect}"></simple-producer>
     <rawdata-producer [ngClass]="{hidden: selectedTaskType !== constant.action.rawData}"></rawdata-producer>
-    <!--<wind-raw [ngClass]="{hidden: selectedTaskType !== constant.taskType.wind.raw"></wind-raw>
-    <wind-conv [ngClass]="{hidden: selectedTaskType !== constant.taskType.wind.conv"></wind-conv>
-    <wind-mig [ngClass]="{hidden: selectedTaskType !== constant.taskType.raw.mig"></wind-mig>
-    <raw-merge [ngClass]="{hidden: selectedTaskType !== constant.taskType.raw.merge"></raw-merge>
-    <wmcloud-raw [ngClass]="{hidden: selectedTaskType !== constant.taskType.wmcloud.raw"></wmcloud-raw>
-    <lhb-ondate [ngClass]="{hidden: selectedTaskType !== constant.taskType.lhb.ondate"></lhb-ondate>-->
     <targets-action [inputList]="actConfig.rawsync.inputList" [action]="actConfig.rawsync.action" [options]="actConfig.rawsync.options" [ngClass]="{hidden: selectedTaskType !== constant.action.rawSync}"></targets-action>
     <targets-action [inputList]="actConfig.simulate.inputList" [action]="actConfig.simulate.action" [options]="actConfig.simulate.options" [ngClass]="{hidden: selectedTaskType !== constant.action.simulate}"></targets-action>
     <targets-action [inputList]="actConfig.rtprog.inputList" [action]="actConfig.rtprog.action" [options]="actConfig.rtprog.options" [ngClass]="{hidden: selectedTaskType !== constant.action.genRtProg}"></targets-action>

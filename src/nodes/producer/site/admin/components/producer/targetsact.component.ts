@@ -52,8 +52,10 @@ export class TargetsActionComponent implements OnInit {
         this.submitting = false;
         this.targets = [];
         this.inputListExt = <Array<_Input>>this.inputList.slice(0);
-        for (let i = 0; i < this.inputListExt.length; ++i)
-            this.inputListExt[i].__raw = this.inputList[i].init || this._defaultInitValue(this.inputList[i].type);
+        for (let i = 0; i < this.inputListExt.length; ++i) {
+            const init = this.inputList[i].init;
+            this.inputListExt[i].__raw = init === undefined ? this._defaultInitValue(this.inputList[i].type) : init;
+        }
     }
 
     submit() {

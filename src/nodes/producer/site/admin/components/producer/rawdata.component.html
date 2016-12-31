@@ -6,7 +6,7 @@
     </div>
     <div class="col-12">
         <div class="col-12 label">Target</div>
-        <targets-input class="col-12" [targets]="targets"></targets-input>
+        <targets-input class="col-12" [targets]="targets" (onTargetsChange)="targets = $event"></targets-input>
     </div>
     <div class="col-12">
         <div class="col-12 label">Start</div>

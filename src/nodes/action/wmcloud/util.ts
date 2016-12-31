@@ -64,13 +64,13 @@ function wmStock(target: string, startDayTs: number, endDayTs: number): bb<{
                 //     tsdata.ex = 0.0567;
                 // else if (dayts ===  16926&& pack.target === '300277.XSHE')
                 //     tsdata.ex = 0.0655;
+                const datekey = utility.date.dateTs2DateKey(dayts);
                 if (!normalNum(tsdata.ex, true) || tsdata.ex > 1 || tsdata.nr > 1 || [tsdata.s, tsdata.e, tsdata.h, tsdata.l, tsdata.v, tsdata.mv, tsdata.nr].some(r => !normalNum(r, false))) throw new Error(`bad value: ${JSON.stringify(tsdata)}`);
                 if (prevdatekey != null) {
                     const prevData = vmap[prevdatekey];
                     if (prevData.s === tsdata.s && prevData.e === tsdata.e && prevData.h === tsdata.h && prevData.l === tsdata.l)
-                        throw new Error(`exactly same data in ${prevdatekey} and ${utility.date.dateFormat(utility.date.dateTs2MsTs(dayts))}`);
+                        throw new Error(`exactly same data in ${prevdatekey} and ${datekey}`);
                 }
-                const datekey = utility.date.dateTs2DateKey(dayts);
                 vmap[datekey] = tsdata;
                 prevdts = dayts;
                 prevdatekey = datekey;
