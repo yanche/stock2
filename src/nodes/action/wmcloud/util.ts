@@ -68,8 +68,8 @@ function wmStock(target: string, startDayTs: number, endDayTs: number): bb<{
                 if (!normalNum(tsdata.ex, true) || tsdata.ex > 1 || tsdata.nr > 1 || [tsdata.s, tsdata.e, tsdata.h, tsdata.l, tsdata.v, tsdata.mv, tsdata.nr].some(r => !normalNum(r, false))) throw new Error(`bad value: ${JSON.stringify(tsdata)}`);
                 if (prevdatekey != null) {
                     const prevData = vmap[prevdatekey];
-                    if (prevData.s === tsdata.s && prevData.e === tsdata.e && prevData.h === tsdata.h && prevData.l === tsdata.l)
-                        throw new Error(`exactly same data in ${prevdatekey} and ${datekey}`);
+                    if (prevData.s === tsdata.s && prevData.e === tsdata.e && prevData.h === tsdata.h && prevData.l === tsdata.l && utility.num.numDiffLessThan(prevData.v, tsdata.v, 0.001) && !exactlySameDataExceptions(datekey, target))
+                        throw new Error(`${target}: exactly same data in ${prevdatekey} and ${datekey}`);
                 }
                 vmap[datekey] = tsdata;
                 prevdts = dayts;
@@ -113,14 +113,14 @@ function wmIndex(target: string, startDayTs: number, endDayTs: number): bb<{
                     l: utility.num.frac(d.lowestIndex, 4),
                     v: v > 0.1 ? utility.num.frac(v, 4) : v
                 };
+                const datekey = utility.date.dateTs2DateKey(dayts);
                 if ([tsdata.s, tsdata.e, tsdata.h, tsdata.l, tsdata.v].some(r => !normalNum(r, false)))
-                    throw new Error(`bad value: ${JSON.stringify(tsdata)}`);
+                    throw new Error(`${target}, ${datekey}: bad value: ${JSON.stringify(tsdata)}`);
                 if (prevdatekey != null) {
                     const prevData = vmap[prevdatekey];
                     if (prevData.s === tsdata.s && prevData.e === tsdata.e && prevData.h === tsdata.h && prevData.l === tsdata.l)
-                        throw new Error(`exactly same data in ${prevdatekey} and ${utility.date.dateFormat(utility.date.dateTs2MsTs(dayts))}`);
+                        throw new Error(`${target}: exactly same data in ${prevdatekey} and ${utility.date.dateFormat(utility.date.dateTs2MsTs(dayts))}`);
                 }
-                const datekey = utility.date.dateTs2DateKey(dayts);
                 vmap[datekey] = tsdata;
                 prevdts = dayts;
                 prevdatekey = datekey;
@@ -137,4 +137,20 @@ function wmIndex(target: string, startDayTs: number, endDayTs: number): bb<{
                 count: data.length
             };
         });
+}
+
+function exactlySameDataExceptions(datekey: string, target: string) :boolean {
+    switch(target.toLowerCase()) {
+        case '000803.xshe': {
+            if(datekey === '20051110') return true;
+            if(datekey === '20051123') return true;
+            break;
+        }
+        case '601668.xshg': {
+            if(datekey === '20111128') return true;
+            break;
+        }
+        default: return false;
+    }
+    return false;
 }

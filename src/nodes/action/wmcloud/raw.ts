@@ -39,8 +39,8 @@ export const action = new Action({
         return {
             target: (raw.target || '').trim(),
             index: raw.index,
-            startDayTs: utility.date.msTs2DateTs(raw.start == null ? Date.UTC(1991, 0, 1) : utility.date.dashDateStrParse(raw.start)),
-            endDayTs: utility.date.msTs2DateTs(raw.end == null ? utility.date.nowUTCTs() : utility.date.dashDateStrParse(raw.end))
+            startDayTs: raw.start == null ? utility.date.msTs2DateTs(Date.UTC(1991, 0, 1)) : utility.date.dateKey2DateTs(raw.start),
+            endDayTs: raw.end == null ? utility.date.msTs2DateTs(utility.date.nowUTCTs()) : utility.date.dateKey2DateTs(raw.end)
         }
     },
     validate: (pack: RawRefinedInput): boolean => {

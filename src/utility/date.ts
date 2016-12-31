@@ -73,6 +73,10 @@ export function dateKey2DateTs(datestr: string): number {
     return msTs2DateTs(Date.UTC(year, month - 1, date));
 }
 
+export function dateKey2MsTs(datestr: string): number {
+    return dateTs2MsTs(dateKey2DateTs(datestr));
+}
+
 export function dateTs2DateKey(datets: number): string {
     const date = new Date(dateTs2MsTs(datets));
     return `${put0PadString(date.getUTCFullYear().toString(), 4)}${put0PadString((date.getUTCMonth() + 1).toString(), 2)}${put0PadString(date.getUTCDate().toString(), 2)}`;
