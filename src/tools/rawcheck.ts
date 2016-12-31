@@ -13,7 +13,7 @@ datasrc.mine.meta.stock.getNames()
     .then(allstocks => {
         console.log(`check ${allstocks.length} stocks`);
         const errs: string[] = [];
-        mods.roll(allstocks, target => {
+        return mods.roll(allstocks, target => {
             return bb.all([
                 datasrc.mine.targetData.get(target),
                 filestorage.azure.downloadJson('raw', target + '.json')

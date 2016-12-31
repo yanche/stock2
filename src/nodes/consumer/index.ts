@@ -81,7 +81,7 @@ function work(limit: Object) {
                     .then(qv => {
                         return dclient.task.report({ processTs: task.lastProcessTs, statusId: constants.task.status.success, _id: <string>task._id, quickview: qv })
                             .then(() => {
-                                log.info(`task finished: ${task._id}`);
+                                log.info(`task finished: ${task._id}, ${task.comments}`);
                             }, (err: Error) => {
                                 log.error(` !!!CRITICAL!!! failed to report task success to server: ${err.stack}`);
                                 throw err;
@@ -90,7 +90,7 @@ function work(limit: Object) {
                         log.error(err.stack);
                         return dclient.task.report({ processTs: task.lastProcessTs, statusId: constants.task.status.failed, errmsg: err.stack, _id: <string>task._id, recoverable: (<any>err).code === 'ETIMEDOUT' })
                             .then(() => {
-                                log.info(`task failed: ${task._id}`);
+                                log.info(`task failed: ${task._id}, ${task.comments}`);
                             }, (err: Error) => {
                                 log.error(` !!!CRITICAL!!! failed to report task failure to server: ${err.stack}`);
                                 throw err;
