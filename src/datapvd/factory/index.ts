@@ -14,6 +14,9 @@ import kdj from './basic/kdj';
 import rsi from './basic/rsi';
 import * as math from './combine/math';
 import * as logic from './combine/logic';
+import deviate from './ext/deviate';
+import { localPeakFac } from './ext/localpeak';
+import brk from './ext/break';
 import * as constants from '../../const';
 
 const factories = new Map<string, IFactory<any, any>>();
@@ -54,5 +57,8 @@ factories.set(constants.dpType.combine.lt, logic.lt);
 factories.set(constants.dpType.combine.lte, logic.lte);
 factories.set(constants.dpType.combine.between, logic.between);
 factories.set(constants.dpType.combine.not, logic.not);
+factories.set(constants.dpType.ext.break, brk);
+factories.set(constants.dpType.ext.localpeak, localPeakFac);
+factories.set(constants.dpType.ext.deviate, deviate);
 
 export default factories;

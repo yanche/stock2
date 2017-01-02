@@ -21,7 +21,7 @@ export function dpTransform<P extends TransformPackBase<TdpIn>, TdpIn, TdpOut>(o
         validate?: (val: any) => boolean,
         tostr?: (val: any) => string
     }>,
-    gen: (pack: P, dp: def.DataPvd<TdpIn>, ts: number, selfdp: def.DataPvd<TdpOut>) => TdpOut,
+    gen: (pack: P, dp: def.DataPvd<TdpIn>, dts: number, selfdp: def.DataPvd<TdpOut>) => TdpOut,
     genrtprog: (pack: P, dp: def.DataPvd<TdpIn>) => utility.prog.Prog | string | number | boolean | Object,
     mmts?: (pack: P, dp: def.DataPvd<TdpIn>) => { minTs: number, maxTs: number },
     stored?: boolean
@@ -41,7 +41,7 @@ export function dpTransform<P extends TransformPackBase<TdpIn>, TdpIn, TdpOut>(o
                 const retdp = new (options.stored ? def.StoredDataPvd : def.DataPvd)<TdpOut>({
                     id: dpid(pack),
                     hasdef: dp.hasDef_core,
-                    gen: (ts: number): TdpOut => options.gen(pack, dp, ts, retdp),
+                    gen: (dts: number): TdpOut => options.gen(pack, dp, dts, retdp),
                     genrtprog: () => { return options.genrtprog(pack, dp); },
                     remoteTs: dp.remoteTs_core,
                     minTs: mmret.minTs,

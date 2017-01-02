@@ -72,12 +72,12 @@ export class DataPvd<T> {
         mints = this.forwardTs(mints, 0);
         maxts = this.backwardTs(maxts, 0);
         if (this.hasDef(mints) && this.hasDef(maxts)) {
-            var ts = mints, ret = new Array<number>();
-            while (true) {
+            let ts = mints, ret = new Array<number>();
+            while (ts != null && ts <= maxts) {
                 ret.push(ts);
-                if (ts === maxts) return ret;
-                else ts = this.forwardTs(ts, 1);
+                ts = this.forwardTs(ts, 1);
             }
+            return ret;
         }
         else throw new Error(`input for periodTs is out of defined area, ${mints}, ${maxts}`);
     }

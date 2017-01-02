@@ -129,7 +129,9 @@ export const dpType = {
         marketDay: 'u.mktdays'
     },
     ext: {
-        break: 'x.break'
+        break: 'x.break',
+        localpeak: 'x.localpeak',
+        deviate: 'x.deviate',
     }
 }
 
