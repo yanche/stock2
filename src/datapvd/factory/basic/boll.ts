@@ -33,9 +33,9 @@ const bollFac: IFactory<BollFacPack, BollRet> = {
                     maxTs: dp.maxTs,
                     minTs: dp.forwardTs(dp.minTs, 2 * pack.N - 2) || facutil.dateTsOffset(dp.maxTs, 1),
                     hasdef: dp.hasDef_core,
-                    gen: (ts: number): BollRet => {
-                        const bts = dp.backwardTs(ts, pack.N - 1);
-                        const dpvallist = dp.period(bts, ts), malist = mapvd.period(bts, ts);
+                    gen: (dts: number): BollRet => {
+                        const bdts = dp.backwardTs(dts, pack.N - 1);
+                        const dpvallist = dp.period(bdts, dts), malist = mapvd.period(bdts, dts);
                         // (MA[(dp - ma)^2])^(1/2)
                         const W = pack.W;
                         const maval = malist[malist.length - 1].val;
@@ -46,8 +46,8 @@ const bollFac: IFactory<BollFacPack, BollRet> = {
                         const vprog = dp.getRTProg(), mprog = mapvd.getRTProg();
                         let devi: utility.prog.Prog = null;
                         if (pack.N > 1) {
-                            const bts = dp.backwardTs(dp.maxTs, pack.N - 2);
-                            const dpvallist = dp.period(bts, dp.maxTs), malist = mapvd.period(bts, dp.maxTs);
+                            const bdts = dp.backwardTs(dp.maxTs, pack.N - 2);
+                            const dpvallist = dp.period(bdts, dp.maxTs), malist = mapvd.period(bdts, dp.maxTs);
                             devi = genProg('pow',
                                 genProg('div',
                                     genProg('add',

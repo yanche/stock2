@@ -56,9 +56,9 @@ export function run(options: {
                                 outrec.lts = ts;
                             }
                             const dpoutret = dpout.dp.get(ts, {
-                                sts: hr.sts,
-                                hts: outrec.hts,
-                                lts: outrec.lts
+                                sdts: hr.sts,
+                                hdts: outrec.hts,
+                                ldts: outrec.lts
                             });
                             if (dpoutret) {
                                 outrec.ets = ts;

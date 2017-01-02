@@ -5,9 +5,19 @@ import factories from './factory';
 import * as dpm from './dpm';
 import * as mods from '../mods';
 import IFactory from './factory/fac';
+import * as constants from '../const';
 
 var dpToCache = new Set<string>();
-dpToCache.add('b.ma').add('b.boll').add('b.ema').add('b.kdj').add('b.macd').add('b.rsi').add('r.amp').add('r.grow').add('r.growrate').add('u.mktdays');
+dpToCache.add(constants.dpType.basic.ma)
+.add(constants.dpType.basic.boll)
+.add(constants.dpType.basic.ema)
+.add(constants.dpType.basic.kdj)
+.add(constants.dpType.basic.macd)
+.add(constants.dpType.basic.rsi)
+.add(constants.dpType.raw.amp)
+.add(constants.dpType.raw.grow)
+.add(constants.dpType.raw.growRate)
+.add(constants.dpType.util.marketDay);
 
 function dpCacheable(type: string): boolean {
     return dpToCache.has(type);

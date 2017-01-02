@@ -8,26 +8,29 @@ interface DataPvdInput<T> {
     id: string;
     minTs: number;
     maxTs: number;
-    hasdef: (ts: number) => boolean;
-    gen: (ts: number) => T;
-    remoteTs: (ts: number, n: number, forward: boolean) => number;
+    hasdef: (dts: number) => boolean;
+    gen: (dts: number, ctx?: DataGetterCtx) => T;
+    remoteTs: (dts: number, n: number, forward: boolean) => number;
     weakdepts: Array<string>;
     genrtprog: () => utility.prog.Prog | string | number | boolean | Object;
 }
 
 export interface DataGetterCtx {
-    sts?: number;
-    hts?: number;
-    lts?: number;
+    sdts?: number;
+    hdts?: number;
+    ldts?: number;
+    sp?: number;
+    hp?: number;
+    lp?: number;
 }
 
 export class DataPvd<T> {
     protected _id: string;
     protected _mints: number;
     protected _maxts: number;
-    protected _hasdef: (ts: number) => boolean;
-    protected _gen: (ts: number) => T;
-    protected _remoteTs: (ts: number, n: number, forward: boolean) => number;
+    protected _hasdef: (dts: number) => boolean;
+    protected _gen: (dts: number, ctx?: DataGetterCtx) => T;
+    protected _remoteTs: (dts: number, n: number, forward: boolean) => number;
     protected _weakdepts: Array<string>;
     protected _genrtprog: () => utility.prog.Prog | string | number | boolean | Object;
 
@@ -54,15 +57,15 @@ export class DataPvd<T> {
     get remoteTs_core(): (ts: number, n: number, forward: boolean) => number { return this._remoteTs; }
     get hasDef_core(): (ts: number) => boolean { return this._hasdef; }
     get gen_core(): (ts: number) => T { return this._gen; }
-    hasDef(ts: number): boolean {
-        return ts >= this._mints && ts <= this._maxts && this._hasdef.call(null, ts);
+    hasDef(dts: number): boolean {
+        return dts >= this._mints && dts <= this._maxts && this._hasdef.call(null, dts);
     }
-    forwardTs(ts: number, n: number): number {
-        const retts = this._remoteTs.call(null, ts, n, true);
+    forwardTs(dts: number, n: number): number {
+        const retts = this._remoteTs.call(null, dts, n, true);
         return (retts != null && retts >= this._mints && retts <= this._maxts) ? retts : null;
     }
-    backwardTs(ts: number, n: number): number {
-        const retts = this._remoteTs.call(null, ts, n, false);
+    backwardTs(dts: number, n: number): number {
+        const retts = this._remoteTs.call(null, dts, n, false);
         return (retts != null && retts >= this._mints && retts <= this._maxts) ? retts : null;
     }
     periodTs(mints: number, maxts: number): Array<number> {
@@ -79,13 +82,13 @@ export class DataPvd<T> {
         else throw new Error(`input for periodTs is out of defined area, ${mints}, ${maxts}`);
     }
     period(mints: number, maxts: number): Array<{ val: T, ts: number }> {
-        return this.periodTs(mints, maxts).map(ts => { return { ts: ts, val: <T>this._gen.call(null, ts, null) }; });
+        return this.periodTs(mints, maxts).map(dts => { return { ts: dts, val: <T>this._gen.call(null, dts, null) }; });
     }
-    get(ts: number, ctx?: DataGetterCtx): T {
-        if (this.hasDef(ts)) return this._gen.call(null, ts, ctx);
-        else throw new Error(`input for get is out of defined area, ${ts}`);
+    get(dts: number, ctx?: DataGetterCtx): T {
+        if (this.hasDef(dts)) return this._gen.call(null, dts, ctx);
+        else throw new Error(`input for get is out of defined area, ${dts}`);
     }
-    cached(ts: number): boolean { return false; }
+    cached(dts: number): boolean { return false; }
     getRTProg(): utility.prog.Prog | string | number | boolean | Object {
         return this._genrtprog();
     }
@@ -98,18 +101,18 @@ export class StoredDataPvd<T> extends DataPvd<T> {
         super(pack);
         this._cache = new Map<number, T>();
     }
-    get(ts: number, ctx?: DataGetterCtx): T {
-        if (!this.hasDef(ts)) throw new Error(`input for get is out of defined area, ${ts}`);
-        if (this._cache.has(ts)) {
-            return this._cache.get(ts);
+    get(dts: number, ctx?: DataGetterCtx): T {
+        if (!this.hasDef(dts)) throw new Error(`input for get is out of defined area, ${dts}`);
+        if (this._cache.has(dts)) {
+            return this._cache.get(dts);
         }
         else {
-            const v = <T>this._gen.call(null, ts, ctx);
-            this._cache.set(ts, v);
+            const v = <T>this._gen.call(null, dts, ctx);
+            this._cache.set(dts, v);
             return v;
         }
     }
-    cached(ts: number): boolean { return this._cache.has(ts); }
+    cached(dts: number): boolean { return this._cache.has(dts); }
 }
 
 export class IterDataPvd<T> extends StoredDataPvd<T> {
@@ -120,14 +123,14 @@ export class IterDataPvd<T> extends StoredDataPvd<T> {
         this._iterUB = this.minTs;
     }
 
-    get(ts: number, ctx?: DataGetterCtx): T {
-        if (!this.hasDef(ts)) throw new Error(`input for get is out of defined area, ${ts}`);
+    get(dts: number, ctx?: DataGetterCtx): T {
+        if (!this.hasDef(dts)) throw new Error(`input for get is out of defined area, ${dts}`);
         let iterts = this._iterUB;
-        while (iterts != null && iterts <= ts) {
+        while (iterts != null && iterts <= dts) {
             this._cache.set(iterts, <T>this._gen.call(null, iterts, ctx));
             iterts = this.forwardTs(iterts, 1);
         }
         this._iterUB = iterts;
-        return this._cache.get(ts);
+        return this._cache.get(dts);
     }
 }
