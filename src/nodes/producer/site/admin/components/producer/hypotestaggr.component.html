@@ -78,6 +78,10 @@
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td>go long</td>
+                    <td><input [(ngModel)]="glong" style="width: 400px;" type="checkbox"/></td>
+                </tr>
                 <tr *ngFor="let r of envDefs.items">
                     <td><input [(ngModel)]="r.name" /></td>
                     <td><input [(ngModel)]="r.value" style="width: 400px;" /></td>

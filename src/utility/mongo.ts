@@ -157,15 +157,15 @@ export function newId(): mongodb.ObjectID {
 export function objIdfy(obj: any): any {
     if (obj == null || obj instanceof mongodb.ObjectID)
         return obj;
+    else if (Array.isArray(obj)) {
+        return obj.map(objIdfy);
+    }
     else if (validate.isObj(obj)) {
         const ret: { [name: string]: any } = {};
         for (var i in obj) {
             ret[i] = objIdfy(obj[i]);
         }
         return ret;
-    }
-    else if (Array.isArray(obj)) {
-        return obj.map(objIdfy);
     }
     else if (objIdLike(obj)) {
         return convObjId(obj);

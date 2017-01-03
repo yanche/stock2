@@ -101,10 +101,10 @@ export const action = new Action<HypoTestInput, HypoTestInput, HypoTestOutput>({
                                     items.push(utility.num.frac(rec.rev, 4));
                                     items.push(utility.date.dateFormat(utility.date.dateTs2MsTs(rec.hts))); //highest date
                                     items.push(rec.hts - h.sts); //days to highest
-                                    items.push(utility.num.frac(tester.hypo.rev(result.params['glone'], h.sp, rec.hp), 4)); //rev at highest price
+                                    items.push(utility.num.frac(tester.hypo.rev(result.params['glong'], h.sp, rec.hp), 4)); //rev at highest price
                                     items.push(utility.date.dateFormat(utility.date.dateTs2MsTs(rec.lts))); //lowest date
                                     items.push(rec.lts - h.sts); //days to lowest
-                                    items.push(utility.num.frac(tester.hypo.rev(result.params['glone'], h.sp, rec.lp), 4)); //rev at lowest price
+                                    items.push(utility.num.frac(tester.hypo.rev(result.params['glong'], h.sp, rec.lp), 4)); //rev at lowest price
                                     for (let idxdp of idxdps) {
                                         if (idxdp.hasDef(h.sts))
                                             items.push(utility.num.frac(tester.hypo.rev(result.params['glong'], idxdp.get(h.sts), idxdp.get(rec.ets)), 4));
@@ -114,7 +114,7 @@ export const action = new Action<HypoTestInput, HypoTestInput, HypoTestOutput>({
                                     for (let i in result.params)
                                         items.push(result.params[i]);
                                     for (let i in h.envs)
-                                        items.push(frac4IfNum(h.envs[i]));
+                                        items.push(frac4IfNum(h.envs[i].val));
                                     testSumLines.push(items.join(','));
                                 }
                             }

@@ -57,7 +57,7 @@ export const action = new Action<AggrInput, AggrInput, AggrOutput>({
                     .then(() => {
                         if (errs.length > 0) throw errs[0];
                         return bb.all(input.cpoutNames.map(cpoutname => {
-                            let bufcache = bufmap.get(cpoutname);
+                            const bufcache = bufmap.get(cpoutname);
                             return filestorage.common.writeTempBytes(Buffer.concat(bufcache.bufs), bufcache.fname)
                                 .then(drop => {
                                     return {

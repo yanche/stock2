@@ -79,14 +79,14 @@ export class DataPvd<T> {
             }
             return ret;
         }
-        else throw new Error(`input for periodTs is out of defined area, ${mints}, ${maxts}`);
+        else throw new Error(`input for periodTs is out of defined area, ${utility.date.dateTs2DateKey(mints)}, ${utility.date.dateTs2DateKey(maxts)}, ${this.id} from ${utility.date.dateTs2DateKey(this.minTs)} to ${utility.date.dateTs2DateKey(this.maxTs)}`);
     }
     period(mints: number, maxts: number): Array<{ val: T, ts: number }> {
         return this.periodTs(mints, maxts).map(dts => { return { ts: dts, val: <T>this._gen.call(null, dts, null) }; });
     }
     get(dts: number, ctx?: DataGetterCtx): T {
         if (this.hasDef(dts)) return this._gen.call(null, dts, ctx);
-        else throw new Error(`input for get is out of defined area, ${dts}`);
+        else throw new Error(`input for get is out of defined area, ${utility.date.dateTs2DateKey(dts)}, ${this.id} from ${utility.date.dateTs2DateKey(this.minTs)} to ${utility.date.dateTs2DateKey(this.maxTs)}`);
     }
     cached(dts: number): boolean { return false; }
     getRTProg(): utility.prog.Prog | string | number | boolean | Object {

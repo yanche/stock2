@@ -116,8 +116,7 @@ const deviateFac: IFactory<DeviateFacPack, number> = {
                         const r2 = e / (dpVPrc2(curV, tdev) * pack.threshold);
                         const ret = tpoints.map(d => {
                             const preve = pvd.get(d.dts);
-                            //return { em: e * emaxRate, r: r2 * dpVPrc2(d.val, tdev) / e, ts: d.ts };
-                            return { em: preve * pack.emaxRate, r: r2 * dpVPrc2(d.val, tdev) / preve };
+                            return { em: preve * pack.emaxRate, r: r2 * dpVPrc2(d.val, tdev) / preve }; //, dts: d.dts };
                         });
                         return ret.filter(d => rGood(d.r, tdev) && (tdev ? (e > d.em) : (e < d.em))).length;
                     },

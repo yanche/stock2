@@ -95,7 +95,7 @@ function calcEnvVals(envdps: Array<{ name: string, dp: datapvd.def.DataPvd<any> 
     return envdps.map(r => {
         return {
             name: r.name,
-            val: r.dp.get(sts)
+            val: r.dp.hasDef(sts) ? r.dp.get(sts) : null
         };
     });
 }

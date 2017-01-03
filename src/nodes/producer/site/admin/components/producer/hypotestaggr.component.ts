@@ -21,6 +21,7 @@ export class HypoTestAggrProducerComponent implements OnInit {
     enums: GrpUtil;
     glongVal: boolean;
     submitting: boolean;
+    glong: boolean;
 
     ngOnInit() {
         this.reset();
@@ -34,6 +35,7 @@ export class HypoTestAggrProducerComponent implements OnInit {
         this.envDefs = new GrpUtil();
         this.glongVal = true;
         this.targets = [];
+        this.glong = true;
     }
 
     testData() {
@@ -56,8 +58,13 @@ export class HypoTestAggrProducerComponent implements OnInit {
                 this.submitting = true;
                 const penum: { [key: string]: any } = {}, enumnames = this.enums.items.map(i => i.name);
                 this.enums.items.forEach(e => {
+                    if (e.name === 'glong') throw new Error('params name cannot be glong');
+                    if (e.name in penum) throw new Error(`params name duplicates: ${e.name}`);
                     penum[e.name] = e.value.split(';').map(q => q.trim()).filter(q => q.length > 0).map(this._utility.convParamStr);
                 });
+                //glong is the last parameter
+                penum['glong'] = [this.glong];
+                enumnames.push('glong');
                 const cpdefRef = JSON.parse(this.cpdefRef);
                 const cpoutDefRefs: { [key: string]: any } = {}, cpoutnames = this.cpoutDefRefs.items.map(i => i.name);
                 this.cpoutDefRefs.items.forEach(c => cpoutDefRefs[c.name] = JSON.parse(c.value));
