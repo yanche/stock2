@@ -132,6 +132,12 @@ export const dpType = {
         break: 'x.break',
         localpeak: 'x.localpeak',
         deviate: 'x.deviate',
+    },
+    ctx: {
+        nhold: 'ctx.nhold',
+        dropdown: 'ctx.dropdown',
+        ndays: 'ctx.ndays',
+        stoploss: 'ctx.stoploss'
     }
 }
 

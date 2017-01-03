@@ -1,0 +1,112 @@
+{
+    "type": "c.gt",
+    "pack": {
+        "list": [
+            {
+                "type": "x.deviate",
+                "pack": {
+                    "threshold": "{{threshold}}",
+                    "emaxRate": "{{emaxRate}}",
+                    "maxDays": "{{maxDays}}",
+                    "peakRange": "{{peakRange}}",
+                    "dp": {
+                        "type": "r.end",
+                        "pack": "{{target}}"
+                    },
+                    "dpT": {
+                        "type": "c.and",
+                        "pack": {
+                            "defidx": 1,
+                            "list": [
+                                {
+                                    "type": "c.lt",
+                                    "pack": {
+                                        "defidx": 0,
+                                        "list": [
+                                            {
+                                                "type": "c.prop",
+                                                "pack": {
+                                                    "prop": "diff",
+                                                    "dp": {
+                                                        "type": "b.macd",
+                                                        "pack": {
+                                                            "Ns": "{{Ns}}",
+                                                            "Nl": "{{Nl}}",
+                                                            "Na": "{{Na}}",
+                                                            "dp": {
+                                                                "type": "r.end",
+                                                                "pack": "{{target}}"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "type": "r.const",
+                                                "pack": 0
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "c.prop",
+                                    "pack": {
+                                        "prop": "peak",
+                                        "dp": {
+                                            "type": "x.localpeak",
+                                            "pack": {
+                                                "range": "{{peakRange}}",
+                                                "peak": false,
+                                                "dp": {
+                                                    "type": "c.prop",
+                                                    "pack": {
+                                                        "prop": "diff",
+                                                        "dp": {
+                                                            "type": "b.macd",
+                                                            "pack": {
+                                                                "Ns": "{{Ns}}",
+                                                                "Nl": "{{Nl}}",
+                                                                "Na": "{{Na}}",
+                                                                "dp": {
+                                                                    "type": "r.end",
+                                                                    "pack": "{{target}}"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "dpV": {
+                        "type": "c.prop",
+                        "pack": {
+                            "prop": "diff",
+                            "dp": {
+                                "type": "b.macd",
+                                "pack": {
+                                    "Ns": "{{Ns}}",
+                                    "Nl": "{{Nl}}",
+                                    "Na": "{{Na}}",
+                                    "dp": {
+                                        "type": "r.end",
+                                        "pack": "{{target}}"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "type": "r.const",
+                "pack": 1
+            }
+        ],
+        "defidx": 0
+    }
+}

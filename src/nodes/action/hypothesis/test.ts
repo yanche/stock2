@@ -54,8 +54,8 @@ export const action = new Action<HypoTestInput, HypoTestInput, HypoTestOutput>({
                 let p = em.current(), total = em.total(), finished = 0, results: Array<{ params: { [key: string]: any }, hits: Array<tester.hypo.HypoRec> }> = [];
                 //part 1: calculate hypothesis
                 return utility.whileLoop(() => bb.resolve(finished < total), () => {
-                    log.info(`[${input.target} hypotest] progress: ${utility.num.frac(finished / total * 100, 2)}%`)
-                    return bb.all([datapvd.literal.resolve(utility.refReplace(input.cpDefRef, p)), resolveDPs(input.cpoutDefRefs, p), resolveDPs(input.envDefs)])
+                    log.info(`[${input.target} hypotest] progress: ${utility.num.frac(finished / total * 100, 2)}%`);
+                    return bb.all([datapvd.literal.resolve(utility.refReplace(input.cpDefRef, p)), resolveDPs(input.cpoutDefRefs, p), resolveDPs(input.envDefs, p)])
                         .then(data => {
                             const mindayts = rdp.forwardTs(rdp.minTs, 20); //上市前20天忽略
                             if (mindayts == null) results.push({ params: p, hits: new Array<tester.hypo.HypoRec>() });

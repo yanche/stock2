@@ -79,15 +79,15 @@ export class UtilityService {
             const ref = this._strRef(input);
             return (ref == null || !(ref in map)) ? input : map[ref];
         }
+        else if (Array.isArray(input)) {
+            return input.map(o => this.refReplace(o, map));
+        }
         else if (this.validate.isObj(input)) {
             const ret: { [key: string]: any } = {};
             for (let i in input) {
                 ret[i] = this.refReplace(input[i], map);
             }
             return ret;
-        }
-        else if (Array.isArray(input)) {
-            return input.map(o => this.refReplace(o, map));
         }
         else return input;
     }

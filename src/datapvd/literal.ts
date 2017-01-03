@@ -6,18 +6,19 @@ import * as dpm from './dpm';
 import * as mods from '../mods';
 import IFactory from './factory/fac';
 import * as constants from '../const';
+import * as log from '../log';
 
 var dpToCache = new Set<string>();
 dpToCache.add(constants.dpType.basic.ma)
-.add(constants.dpType.basic.boll)
-.add(constants.dpType.basic.ema)
-.add(constants.dpType.basic.kdj)
-.add(constants.dpType.basic.macd)
-.add(constants.dpType.basic.rsi)
-.add(constants.dpType.raw.amp)
-.add(constants.dpType.raw.grow)
-.add(constants.dpType.raw.growRate)
-.add(constants.dpType.util.marketDay);
+    .add(constants.dpType.basic.boll)
+    .add(constants.dpType.basic.ema)
+    .add(constants.dpType.basic.kdj)
+    .add(constants.dpType.basic.macd)
+    .add(constants.dpType.basic.rsi)
+    .add(constants.dpType.raw.amp)
+    .add(constants.dpType.raw.grow)
+    .add(constants.dpType.raw.growRate)
+    .add(constants.dpType.util.marketDay);
 
 function dpCacheable(type: string): boolean {
     return dpToCache.has(type);
@@ -53,12 +54,12 @@ export function resolve(ldp: LiteralDP | def.DataPvd<any>): bb<def.DataPvd<any>>
                         const dpid = factory.dpid(pack);
                         var dphub = dpcache.get(dpid);
                         if (dphub == null) {
-                            console.log('create dp and then store in dpcache, ' + dpid);
+                            //console.log('create dp and then store in dpcache, ' + dpid);
                             dphub = new mods.Hub(() => factory.make(pack));
                             dpcache.set(dpid, dphub);
                         }
-                        else
-                            console.log('return dp from dpcache(dphub), ' + dpid);
+                        // else
+                        //     console.log('return dp from dpcache(dphub), ' + dpid);
                         return dphub.get();
                     });
             }

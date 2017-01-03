@@ -39,7 +39,7 @@ export class ArrayEnumerator extends Enumerator {
         return this._arr[this._idx];
     }
     public end(): boolean {
-        return this._arr.length === this._idx - 1;
+        return this._arr.length - 1 === this._idx;
     }
     public next(): void {
         if (this.end()) throw new Error('ArrayEnumerator:next, cannot move next because end reached')

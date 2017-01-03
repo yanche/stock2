@@ -16,7 +16,11 @@ import * as math from './combine/math';
 import * as logic from './combine/logic';
 import deviate from './ext/deviate';
 import { localPeakFac } from './ext/localpeak';
-import brk from './ext/break';
+import breakFac from './ext/break';
+import dropdownFac from './ctx/dropdown';
+import ndaysFac from './ctx/ndays';
+import nholdFac from './ctx/nhold';
+import stoplossFac from './ctx/stoploss';
 import * as constants from '../../const';
 
 const factories = new Map<string, IFactory<any, any>>();
@@ -57,8 +61,12 @@ factories.set(constants.dpType.combine.lt, logic.lt);
 factories.set(constants.dpType.combine.lte, logic.lte);
 factories.set(constants.dpType.combine.between, logic.between);
 factories.set(constants.dpType.combine.not, logic.not);
-factories.set(constants.dpType.ext.break, brk);
+factories.set(constants.dpType.ext.break, breakFac);
 factories.set(constants.dpType.ext.localpeak, localPeakFac);
 factories.set(constants.dpType.ext.deviate, deviate);
+factories.set(constants.dpType.ctx.dropdown, dropdownFac);
+factories.set(constants.dpType.ctx.ndays, ndaysFac);
+factories.set(constants.dpType.ctx.nhold, nholdFac);
+factories.set(constants.dpType.ctx.stoploss, stoplossFac);
 
 export default factories;

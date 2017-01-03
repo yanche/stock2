@@ -37,7 +37,7 @@ export class RequestService {
                 });
         })
             .then(() => {
-                return Array.prototype.concat.call([], ret);
+                return { list: Array.prototype.concat.apply([], ret) };
             })
 
     }

@@ -57,16 +57,19 @@ const popularDataSet: PreparedDataSet = {
         {
             dpref: JSON.stringify({
                 type: 'c.div',
-                pack: [{
-                    type: 'r.marketvalue',
-                    pack: '{{target}}'
-                }, {
-                    pack: '000001.ZICN',
-                    type: 'r.end'
-                }, {
-                    type: 'r.const',
-                    pack: 0.01
-                }]
+                pack: {
+                    defidx: 0,
+                    list: [{
+                        type: 'r.marketvalue',
+                        pack: '{{target}}'
+                    }, {
+                        pack: '000001.ZICN',
+                        type: 'r.end'
+                    }, {
+                        type: 'r.const',
+                        pack: 0.01
+                    }]
+                }
             }),
             name: 'target-marketval-relsh'
         },
@@ -76,9 +79,8 @@ const popularDataSet: PreparedDataSet = {
             name: 'target-netrate'
         },
         {
-            dpref:
-            JSON.stringify({ pack: '{{target}}', type: 'r.growrate' }),
-            name: 'trget-growrate'
+            dpref: JSON.stringify({ pack: '{{target}}', type: 'r.growrate' }),
+            name: 'target-growrate'
         },
         {
             dpref: JSON.stringify({ pack: '{{target}}', type: 'r.amp' }),
@@ -87,25 +89,32 @@ const popularDataSet: PreparedDataSet = {
         {
             dpref: JSON.stringify({
                 type: 'c.div',
-                pack: [{
-                    type: 'r.vol',
-                    pack: '{{target}}'
-                }, {
-                    type: 'b.ma',
-                    pack: { N: 5, dp: { pack: '{{target}}', type: 'r.vol' } }
-                }]
-            }), name: 'target-volrel-5'
+                pack: {
+                    defidx: 1,
+                    list: [{
+                        type: 'r.vol',
+                        pack: '{{target}}'
+                    }, {
+                        type: 'b.ma',
+                        pack: { N: 5, dp: { pack: '{{target}}', type: 'r.vol' } }
+                    }]
+                }
+            }),
+            name: 'target-volrel-5'
         },
         {
             dpref: JSON.stringify({
                 type: 'c.div',
-                pack: [{
-                    type: 'r.vol',
-                    pack: '{{target}}'
-                }, {
-                    type: 'b.ma',
-                    pack: { N: 10, dp: { type: 'r.vol', pack: '{{target}}' } }
-                }]
+                pack: {
+                    defidx: 1,
+                    list: [{
+                        type: 'r.vol',
+                        pack: '{{target}}'
+                    }, {
+                        type: 'b.ma',
+                        pack: { N: 10, dp: { type: 'r.vol', pack: '{{target}}' } }
+                    }]
+                }
             }),
             name: 'target-volrel-10'
         }
@@ -123,19 +132,22 @@ function marel(targetRef: string, N: number, name: string) {
     return {
         dpref: JSON.stringify({
             type: 'c.div',
-            pack: [
-                { type: 'r.end', pack: targetRef },
-                {
-                    type: 'b.ma',
-                    pack: {
-                        N: N,
-                        dp: {
-                            type: 'r.end',
-                            pack: targetRef
+            pack: {
+                defidx: 1,
+                list: [
+                    { type: 'r.end', pack: targetRef },
+                    {
+                        type: 'b.ma',
+                        pack: {
+                            N: N,
+                            dp: {
+                                type: 'r.end',
+                                pack: targetRef
+                            }
                         }
                     }
-                }
-            ]
+                ]
+            }
         }),
         name: name
     };
@@ -145,10 +157,13 @@ function volrel(targetRef: string, N1: number, N2: number, name: string) {
     return {
         dpref: JSON.stringify({
             type: 'c.div',
-            pack: [
-                { type: 'b.ma', pack: { N: N1, dp: { pack: targetRef, type: 'r.vol' } } },
-                { type: 'b.ma', pack: { N: N2, dp: { pack: targetRef, type: 'r.vol' } } }
-            ]
+            pack: {
+                defidx: 1,
+                list: [
+                    { type: 'b.ma', pack: { N: N1, dp: { pack: targetRef, type: 'r.vol' } } },
+                    { type: 'b.ma', pack: { N: N2, dp: { pack: targetRef, type: 'r.vol' } } }
+                ]
+            }
         }),
         name: name
     };

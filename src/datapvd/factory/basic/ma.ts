@@ -17,7 +17,7 @@ const maFac = facutil.dpTransform<MAFacPack, number, number>({
             const bts1day = dp.backwardTs(ts, 1);
             if (bts1day != null && selfdp.cached(bts1day)) {
                 // use yesterday's MA to calculate todays's quickly
-                console.log('use quick calc-MA');
+                // console.log('use quick calc-MA');
                 return selfdp.get(bts1day) + (dp.get(ts) - dp.get(dp.backwardTs(bts1day, N - 1))) / N;
             }
         }

@@ -1,0 +1,10 @@
+START cmd.exe /c node index.js c -dl
+START cmd.exe /c node index.js c -dl
+START cmd.exe /c node index.js c -dl
+START cmd.exe /c node index.js c -dl
+START cmd.exe /c node index.js c -dl
+START cmd.exe /c node index.js c -dl
+START cmd.exe /c node index.js c -dl
+START cmd.exe /c node index.js c -dl
+START cmd.exe /c node index.js c -dl
+START cmd.exe /c node index.js c -dl
