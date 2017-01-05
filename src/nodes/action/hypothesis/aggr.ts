@@ -45,8 +45,7 @@ export const action = new Action<AggrInput, AggrInput, AggrOutput>({
                     return bb.all(qv.drops.map(d => {
                         const bufcache = bufmap.get(d.name);
                         if (bufcache == null) throw new Error(`dpout name in hypotest quickview does not match input of hypoaggr: ${d.name}`);
-                        return filestorage.common.getBytes(d.drop)
-                            .then(bytes => bufcache.bufs.push(bytes));
+                        return d.drop == null ? bb.resolve(0) : filestorage.common.getBytes(d.drop).then(bytes => bufcache.bufs.push(bytes));
                     }))
                         .catch((err: Error) => {
                             log.error(err.stack);

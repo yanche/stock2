@@ -74,6 +74,7 @@ const deviateFac: IFactory<DeviateFacPack, number> = {
                         const tval = dpT.get(dts);
                         if (!tval) return 0;
                         const mindts = dpT.backwardTs(dts, pack.maxDays) || dpT.minTs;
+                        if (mindts === dts) return 0;
                         const period = dpT.period(mindts, dpT.backwardTs(dts, 1)).filter(v => v.val).map(x => {
                             const dv = dpVPrc1(dpV.get(x.ts), tdev);
                             if (!utility.validate.posNum(dv)) throw new Error(`dpV returns non-positive number: ${tdev}, ${dv}, ${utility.date.dateTs2DateKey(x.ts)}`);

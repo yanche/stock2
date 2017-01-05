@@ -118,9 +118,12 @@ export const action = new Action<HypoTestInput, HypoTestInput, HypoTestOutput>({
                                     testSumLines.push(items.join(','));
                                 }
                             }
-                            let allcontent = testSumLines.join('\r\n') + '\r\n';
-                            if (input.header) allcontent = hutil.reportHeaders(input.penum, input.envDefs) + '\r\n' + allcontent;
-                            retprms.push(filestorage.common.writeTempBytes(allcontent, `${utility.randomStr()}.csv`).then(drop => { return { drop: drop, name: dpoutname }; }));
+                            if (testSumLines.length === 0) retprms.push(bb.resolve({ drop: null, name: dpoutname }));
+                            else {
+                                let allcontent = testSumLines.join('\r\n') + '\r\n';
+                                if (input.header) allcontent = hutil.reportHeaders(input.penum, input.envDefs) + '\r\n' + allcontent;
+                                retprms.push(filestorage.common.writeTempBytes(allcontent, `${utility.randomStr()}.csv`).then(drop => { return { drop: drop, name: dpoutname }; }));
+                            }
                             ++outct;
                         }
                         return bb.all(retprms);
