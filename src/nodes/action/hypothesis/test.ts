@@ -95,14 +95,14 @@ export const action = new Action<HypoTestInput, HypoTestInput, HypoTestOutput>({
                                     }
                                     const items: Array<any> = [];
                                     items.push(input.target); //target
-                                    items.push(utility.date.dateFormat(utility.date.dateTs2MsTs(h.sts))); //start date
-                                    items.push(utility.date.dateFormat(utility.date.dateTs2MsTs(rec.ets)));//end date
+                                    items.push(utility.date.dateTs2DateKey(h.sts)); //start date
+                                    items.push(utility.date.dateTs2DateKey(rec.ets));//end date
                                     items.push(rec.ets - h.sts); //periods
                                     items.push(utility.num.frac(rec.rev, 4));
-                                    items.push(utility.date.dateFormat(utility.date.dateTs2MsTs(rec.hts))); //highest date
+                                    items.push(utility.date.dateTs2DateKey(rec.hts)); //highest date
                                     items.push(rec.hts - h.sts); //days to highest
                                     items.push(utility.num.frac(tester.hypo.rev(result.params['glong'], h.sp, rec.hp), 4)); //rev at highest price
-                                    items.push(utility.date.dateFormat(utility.date.dateTs2MsTs(rec.lts))); //lowest date
+                                    items.push(utility.date.dateTs2DateKey(rec.lts)); //lowest date
                                     items.push(rec.lts - h.sts); //days to lowest
                                     items.push(utility.num.frac(tester.hypo.rev(result.params['glong'], h.sp, rec.lp), 4)); //rev at lowest price
                                     for (let idxdp of idxdps) {

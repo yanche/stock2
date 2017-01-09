@@ -22,7 +22,7 @@ export function reportHeaders(params: { [key: string]: any } | Array<string>, en
     else
         for (let i in params) ret.push(`key_${i}`);
     if (Array.isArray(envdefs))
-        for (let q = 0; q < envdefs.length; ++q) ret.push(envdefs[q]);
+        for (let q = 0; q < envdefs.length; ++q) ret.push(`env_${envdefs[q]}`);
     else
         for (let i in envdefs) ret.push(`env_${i}`);
     return ret.join(',');
