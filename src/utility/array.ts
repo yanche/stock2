@@ -74,6 +74,18 @@ export function avg<T>(nums: Array<T>, mapfn: (t: T) => number): number {
     return nums.length === 0 ? 0 : (sum<T>(nums, mapfn) / nums.length);
 }
 
+export function avg2(nums: Array<number>): number {
+    return avg<number>(nums, n => n);
+}
+
+export function geoMean<T>(nums: Array<T>, mapfn: (t: T) => number): number {
+    return nums.length === 0 ? 1 : Math.pow(mul<T>(nums, mapfn), 1 / nums.length);
+}
+
+export function geoMean2(nums: Array<number>) {
+    return geoMean<number>(nums, n => n);
+}
+
 export function unique<T>(arr: Array<T>): Array<T> {
     const ret = new Array<T>();
     for (let r of arr)

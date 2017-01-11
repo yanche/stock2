@@ -24,13 +24,13 @@ class SimulateCreateModel implements hutil.HandlerDataModel {
         this._mongodoc = {
             closed: httpbody.closed,
             target: httpbody.target,
-            sts: httpbody.sts,
+            sdts: httpbody.sdts,
             sp: httpbody.sp,
-            hts: httpbody.hts || null,
+            hdts: httpbody.hdts || null,
             hp: httpbody.hp || null,
-            lts: httpbody.lts || null,
+            ldts: httpbody.ldts || null,
             lp: httpbody.lp || null,
-            ets: httpbody.ets || null,
+            edts: httpbody.edts || null,
             ep: httpbody.ep || null,
             glong: httpbody.glong,
             rtplanId: httpbody.rtplanId,
@@ -40,10 +40,10 @@ class SimulateCreateModel implements hutil.HandlerDataModel {
         };
         this._valid = utility.validate.valueStr(this._mongodoc.target) && utility.validate.isBool(this._mongodoc.closed) && utility.validate.isBool(this._mongodoc.glong)
             && utility.validate.valueStr(this._mongodoc.rtplanId) && Array.isArray(this._mongodoc.env) && Array.isArray(this._mongodoc.concernsIn) && Array.isArray(this._mongodoc.concernsOut)
-            && utility.validate.posInt(this._mongodoc.sts) && utility.validate.posNum(this._mongodoc.sp)
-            && ((utility.validate.posInt(this._mongodoc.hts) && utility.validate.posNum(this._mongodoc.hp)) || (this._mongodoc.hts == null && this._mongodoc.hp == null))
-            && ((utility.validate.posInt(this._mongodoc.lts) && utility.validate.posNum(this._mongodoc.lp)) || (this._mongodoc.lts == null && this._mongodoc.lp == null))
-            && ((utility.validate.posInt(this._mongodoc.ets) && utility.validate.posNum(this._mongodoc.ep)) || (this._mongodoc.ets == null && this._mongodoc.ep == null));
+            && utility.validate.posInt(this._mongodoc.sdts) && utility.validate.posNum(this._mongodoc.sp)
+            && ((utility.validate.posInt(this._mongodoc.hdts) && utility.validate.posNum(this._mongodoc.hp)) || (this._mongodoc.hdts == null && this._mongodoc.hp == null))
+            && ((utility.validate.posInt(this._mongodoc.ldts) && utility.validate.posNum(this._mongodoc.lp)) || (this._mongodoc.ldts == null && this._mongodoc.lp == null))
+            && ((utility.validate.posInt(this._mongodoc.edts) && utility.validate.posNum(this._mongodoc.ep)) || (this._mongodoc.edts == null && this._mongodoc.ep == null));
     }
 }
 

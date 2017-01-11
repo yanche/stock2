@@ -20,7 +20,7 @@ const ndaysFac: IFactory<number, boolean> = {
             minTs: 0,
             hasdef: utility.validate.alwaysTrue,
             gen: (dts: number, ctx: def.DataGetterCtx) => {
-                if (ctx == null) throw new Error('ctx cannot be null for ndays dataprovider');
+                if (ctx == null) return false;
                 return dts >= ctx.sdts + N;
             },
             genrtprog: () => {

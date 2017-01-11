@@ -31,7 +31,7 @@ export const action = new Action<SimulateInput, SimulateInput, SimulateOutput>({
         return utility.validate.valueStr(input.target) && utility.validate.valueStr(input.rtplanId) && utility.validate.isBool(input.redo);
     },
     resolve: (input: SimulateInput): bb<SimulateOutput> => {
-        return dclient.rtplan.get({ _id: input.rtplanId }, null)
+        return dclient.rtplan.get({ _id: input.rtplanId })
             .then(rtplan => {
                 if (rtplan == null) throw new Error(`rtplan not found for id: ${input.rtplanId}`);
                 if (!nutil.rtplanScopeContains(input.target, rtplan.targetScope)) throw new Error(`rtplan does not match the target: ${JSON.stringify(rtplan.targetScope)}, ${input.target}`);
@@ -53,13 +53,13 @@ export const action = new Action<SimulateInput, SimulateInput, SimulateOutput>({
                         else {
                             prm = dclient.simulate.getAll({ target: input.target, rtplanId: input.rtplanId, closed: false })
                                 .then(sims => {
-                                    const corruptedSims = sims.filter(sim => (sim.ets || sim.sts) !== simtrack.lastSimDateTs);
+                                    const corruptedSims = sims.filter(sim => (sim.edts || sim.sdts) !== simtrack.lastSimDateTs);
                                     if (corruptedSims.length > 0)
-                                        throw new Error(`simulate.ets(or sts if ets is null) does not match simtrack.lastSimDateTs: ${[input.target, input.rtplanId, utility.date.dateTsFormat(simtrack.lastSimDateTs)].concat(corruptedSims.map(function (sim) { return `${utility.date.dateTsFormat(sim.sts)}-${sim.ets == null ? 'null' : utility.date.dateTsFormat(sim.ets)}`; })).join(', ')}`);
+                                        throw new Error(`simulate.ets(or sts if ets is null) does not match simtrack.lastSimDateTs: ${[input.target, input.rtplanId, utility.date.dateTsFormat(simtrack.lastSimDateTs)].concat(corruptedSims.map(function (sim) { return `${utility.date.dateTsFormat(sim.sdts)}-${sim.edts == null ? 'null' : utility.date.dateTsFormat(sim.edts)}`; })).join(', ')}`);
                                     return { sims: sims, startDts: epvd.forwardTs(simtrack.lastSimDateTs, 1) };
                                 });
                         }
-                        return prm.then((data): SimulateOutput | bb<SimulateOutput> => {
+                        return prm.then(data => {
                             const sims = data.sims, startDts = data.startDts;
                             if (startDts == null) return <SimulateOutput>{ run: false };
                             else {
@@ -95,13 +95,13 @@ export const action = new Action<SimulateInput, SimulateInput, SimulateOutput>({
                                                                         if (sim.closed) return;
                                                                         if (sim.hp == null || sim.hp < h) {
                                                                             sim.hp = h;
-                                                                            sim.hts = ts;
+                                                                            sim.hdts = ts;
                                                                         }
                                                                         if (sim.lp == null || sim.lp > l) {
                                                                             sim.lp = l;
-                                                                            sim.lts = ts;
+                                                                            sim.ldts = ts;
                                                                         }
-                                                                        sim.ets = ts;
+                                                                        sim.edts = ts;
                                                                         sim.ep = e;
                                                                         //出清条件满足
                                                                         if (dpout.get(ts, sim)) {
@@ -116,7 +116,7 @@ export const action = new Action<SimulateInput, SimulateInput, SimulateOutput>({
                                                         });
                                                 })
                                                 .then(() => {
-                                                    if (ts < rtplan.startDateTs || dpout.get(ts) || !dpin.get(ts)) return;
+                                                    if (ts < rtplan.startDateTs || dpout.get(ts) || !dpin.hasDef(ts) || !dpin.get(ts)) return;
 
                                                     //simulate建仓
                                                     return resolveConcerns(concernsIn, input.target, rtplan.name, ts, null)
@@ -124,7 +124,7 @@ export const action = new Action<SimulateInput, SimulateInput, SimulateOutput>({
                                                             //最高最低点第二天起算, 最低点可能高于sp, 最高点可能低于sp
                                                             sims.push({
                                                                 closed: false,
-                                                                sts: ts,
+                                                                sdts: ts,
                                                                 sp: epvd.get(ts),
                                                                 glong: rtplan.glong,
                                                                 rtplanId: input.rtplanId,
@@ -138,7 +138,7 @@ export const action = new Action<SimulateInput, SimulateInput, SimulateOutput>({
                                     })
                                     .then(() => {
                                         return bb.all(sims.map(s => {
-                                            return getEnv(s.sts, s.ets)
+                                            return getEnv(s.sdts, s.edts)
                                                 .then(env => s.env = env);
                                         }));
                                     })
@@ -158,11 +158,11 @@ export const action = new Action<SimulateInput, SimulateInput, SimulateOutput>({
                                                             updateTs: new Date().getTime(),
                                                             env: s.env,
                                                             concernsOut: s.concernsOut,
-                                                            ets: s.ets,
+                                                            ets: s.edts,
                                                             ep: s.ep,
-                                                            hts: s.hts,
+                                                            hts: s.hdts,
                                                             hp: s.hp,
-                                                            lts: s.lts,
+                                                            lts: s.ldts,
                                                             lp: s.lp,
                                                             closed: s.closed
                                                         }
@@ -192,7 +192,7 @@ function getConcerns(concernarr: Array<def.RtplanConcern>, target: string) {
             .then(pvd => {
                 return {
                     name: c.name,
-                    view: c.name,
+                    view: c.view,
                     dp: pvd
                 };
             })

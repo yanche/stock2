@@ -27,18 +27,18 @@ class RtprogOutCreateModel implements hutil.HandlerDataModel {
             rtplanId: httpbody.rtplanId,
             rtprog: httpbody.rtprog,
             createdTs: new Date().getTime(),
-            sts: httpbody.sts,
+            sdts: httpbody.sdts,
             sp: httpbody.sp,
-            hts: httpbody.hts || null,
+            hdts: httpbody.hdts || null,
             hp: httpbody.hp || null,
-            lts: httpbody.lts || null,
+            ldts: httpbody.ldts || null,
             lp: httpbody.lp || null
         };
         this._valid = utility.validate.valueStr(this._mongodoc.target) && utility.validate.isBool(this._mongodoc.glong)
             && utility.validate.valueStr(this._mongodoc.rtplanId) && utility.validate.isObj(this._mongodoc.rtprog)
-            && utility.validate.posInt(this._mongodoc.sts) && utility.validate.posNum(this._mongodoc.sp)
-            && ((utility.validate.posInt(this._mongodoc.hts) && utility.validate.posNum(this._mongodoc.hp)) || (this._mongodoc.hts == null && this._mongodoc.hp == null))
-            && ((utility.validate.posInt(this._mongodoc.lts) && utility.validate.posNum(this._mongodoc.lp)) || (this._mongodoc.lts == null && this._mongodoc.lp == null));
+            && utility.validate.posInt(this._mongodoc.sdts) && utility.validate.posNum(this._mongodoc.sp)
+            && ((utility.validate.posInt(this._mongodoc.hdts) && utility.validate.posNum(this._mongodoc.hp)) || (this._mongodoc.hdts == null && this._mongodoc.hp == null))
+            && ((utility.validate.posInt(this._mongodoc.ldts) && utility.validate.posNum(this._mongodoc.lp)) || (this._mongodoc.ldts == null && this._mongodoc.lp == null));
     }
 }
 

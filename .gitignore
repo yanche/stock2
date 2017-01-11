@@ -1,4 +1,5 @@
 /node_modules
+/fruits/**/*.js
 /src/**/*.js
 !/src/nodes/producer/admin.systemjs.config.js
 *.map

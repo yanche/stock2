@@ -26,7 +26,7 @@ const dropdownFac: IFactory<DropdownFacPack, boolean> = {
                     minTs: epvd.minTs,
                     hasdef: epvd.hasDef_core,
                     gen: (dts: number, ctx: def.DataGetterCtx) => {
-                        if (ctx == null) throw new Error('ctx cannot be null for dropdown dataprovider');
+                        if (ctx == null) return false;
                         const e = epvd.get(dts);
                         if (pack.rate < 1) return e <= ctx.hp * pack.rate;
                         else return e >= ctx.lp * pack.rate;

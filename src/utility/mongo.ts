@@ -79,7 +79,7 @@ export class CollClient<T> {
         return this._colhub.get()
             .then(col => new bb<Object>((res, rej) => {
                 col.findOneAndUpdate(filter, update, {
-                    sort: sort || { _id: 1 },
+                    sort: sort,
                     returnOriginal: !returnnew,
                     upsert: upsert,
                     projection: fields || this._deffields

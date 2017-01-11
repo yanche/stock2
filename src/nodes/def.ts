@@ -25,13 +25,13 @@ export interface Simulate {
     _id?: mongo.ObjectID | string;
     closed?: boolean;
     target?: string;
-    sts?: number;
+    sdts?: number;
     sp?: number;
-    ets?: number;
+    edts?: number;
     ep?: number;
-    hts?: number;
+    hdts?: number;
     hp?: number;
-    lts?: number;
+    ldts?: number;
     lp?: number;
     glong?: boolean;
     rtplanId?: string;
@@ -68,11 +68,11 @@ export interface RtprogOut {
     rtprog?: Object;
     glong?: boolean;
     createdTs?: number;
-    sts?: number;
+    sdts?: number;
     sp?: number;
-    hts?: number;
+    hdts?: number;
     hp?: number;
-    lts?: number;
+    ldts?: number;
     lp?: number;
 }
 

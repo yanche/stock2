@@ -18,7 +18,8 @@ dpToCache.add(constants.dpType.basic.ma)
     .add(constants.dpType.raw.amp)
     .add(constants.dpType.raw.grow)
     .add(constants.dpType.raw.growRate)
-    .add(constants.dpType.util.marketDay);
+    .add(constants.dpType.util.marketDay)
+    .add(constants.dpType.ext.deviate);
 
 function dpCacheable(type: string): boolean {
     return dpToCache.has(type);

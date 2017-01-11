@@ -24,7 +24,7 @@ const nholdFac: IFactory<NHoldFacPack, boolean> = {
                     minTs: epvd.minTs,
                     hasdef: epvd.hasDef_core,
                     gen: (dts: number, ctx: def.DataGetterCtx) => {
-                        if(ctx == null) throw new Error('ctx cannot be null for nhold dataprovider');
+                        if (ctx == null) return false;
                         return epvd.forwardTs(ctx.sdts, pack.N) <= dts;
                     },
                     genrtprog: () => {

@@ -42,7 +42,14 @@ function isProg(p: any): p is Prog {
 
 //here prog could be a Prog, or number/string/boolean/Object
 export function evaluate(prog: any, env: Env): any {
-    if (!isProg(prog)) return prog;
+    if (!isProg(prog)) {
+        if (Array.isArray(prog))
+            return prog.map(p => {
+                const newenv = new Env(env);
+                return evaluate(p, newenv);
+            });
+        else return prog;
+    }
     switch (prog.fn) {
         case 'ref': return env.ref(evaluate(prog.args[0], env));
         case 'prop': return evaluate(prog.args[0], env)[evaluate(prog.args[1], env)];
@@ -137,16 +144,57 @@ export function evaluate(prog: any, env: Env): any {
             const arr = evaluate(prog.args[0], env);
             if (!Array.isArray(arr)) throw new Error(`first arg of "count" must be an array: ${arr}`);
             const prg = prog.args[1]; //second parameter is a prog node
-            return arr.filter(function (a, idx) {
+            if (prg == null) return arr.length;
+            return arr.filter((a, idx) => {
                 const newEnv = new Env(env);
                 newEnv.set('_item', a);
                 newEnv.set('_idx', idx);
                 return evaluate(prg, newEnv) === true;
             }).length;
         }
+        case 'filter': {
+            const arr = evaluate(prog.args[0], env);
+            if (!Array.isArray(arr)) throw new Error(`first arg of "filter" must be an array: ${arr}`);
+            const prg = prog.args[1]; //second parameter is a prog node
+            return arr.filter((a, idx) => {
+                const newEnv = new Env(env);
+                newEnv.set('_item', a);
+                newEnv.set('_idx', idx);
+                return evaluate(prg, newEnv) === true;
+            });
+        }
+        case 'map': {
+            const arr = evaluate(prog.args[0], env);
+            if (!Array.isArray(arr)) throw new Error(`first arg of "map" must be an array: ${arr}`);
+            const prg = prog.args[1]; //second parameter is a prog node
+            return arr.map((a, idx) => {
+                const newEnv = new Env(env);
+                newEnv.set('_item', a);
+                newEnv.set('_idx', idx);
+                return evaluate(prg, newEnv);
+            });
+        }
+        case 'mean': {
+            return arrayFn(utility.array.avg2, 'mean', prog, env);
+        }
+        case 'geo-mean': {
+            return arrayFn(utility.array.geoMean2, 'geo-mean', prog, env);
+        }
+        case 'max': {
+            return arrayFn(utility.array.max2, 'max', prog, env);
+        }
+        case 'min': {
+            return arrayFn(utility.array.min2, 'min', prog, env);
+        }
         default:
             throw new Error(`undefined function type: ${prog.fn}`);
     }
+}
+
+function arrayFn(fn: (arr: Array<number>) => number, name: string, prog: Prog, env: Env) {
+    const arr = evaluate(prog.args[0], env);
+    if (!Array.isArray(arr)) throw new Error(`first arg of ${name} must be an array: ${arr}`);
+    return fn(arr);
 }
 
 export function genProg(fn: string, ...args: Array<any>): Prog {

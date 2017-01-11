@@ -24,6 +24,14 @@ interface DeviateFacPack {
     peakRange: number
 }
 
+interface DeviateOutput {
+    count: number;
+    minThd?: number;
+    maxThd?: number;
+    thdM?: number;
+    thdGM?: number;
+}
+
 function dpid(pack: DeviateFacPack): string {
     return `DEVIATE_${pack.maxDays}_${pack.threshold}_${pack.emaxRate}_${pack.peakRange}_${literal.dpid(pack.dpT)}_${literal.dpid(pack.dpV)}_${literal.dpid(pack.dp)}`;
 }
@@ -48,14 +56,14 @@ function dpVPrc2_rtprog(dpv1rtprog: any, tdev: boolean): any {
     return tdev ? dpv1rtprog : genProg('/', 1, dpv1rtprog);
 };
 
-function rGood(r: number, tdev: boolean): boolean {
-    return tdev ? (r > 1) : (r < 1);
+function rGood(r: number, threshold: number, tdev: boolean): boolean {
+    return tdev ? (r > threshold) : (r < threshold);
 };
-function rGood_rtprog(rRtprog: any, tdev: boolean): any {
-    return genProg(tdev ? '>' : '<', rRtprog, 1);
+function rGood_rtprog(rRtprog: any, threshold: number, tdev: boolean): any {
+    return genProg(tdev ? '>' : '<', rRtprog, threshold);
 };
 
-const deviateFac: IFactory<DeviateFacPack, number> = {
+const deviateFac: IFactory<DeviateFacPack, DeviateOutput> = {
     make: (pack: DeviateFacPack) => {
         return bb.all([
             literal.resolve(pack.dp),
@@ -65,30 +73,30 @@ const deviateFac: IFactory<DeviateFacPack, number> = {
             .then(data => {
                 const pvd: def.DataPvd<number> = data[0], dpT: def.DataPvd<boolean> = data[1], dpV: def.DataPvd<number> = data[2];
                 const tdev = pack.threshold > 1;
-                return new def.StoredDataPvd<number>({
+                return new def.StoredDataPvd<DeviateOutput>({
                     id: dpid(pack),
                     maxTs: dpT.maxTs,
                     minTs: dpT.minTs,
                     hasdef: dpT.hasDef_core,
                     gen: (dts: number) => {
                         const tval = dpT.get(dts);
-                        if (!tval) return 0;
+                        if (!tval) return { count: 0 };
                         const mindts = dpT.backwardTs(dts, pack.maxDays) || dpT.minTs;
-                        if (mindts === dts) return 0;
+                        if (mindts === dts) return { count: 0 };
                         const period = dpT.period(mindts, dpT.backwardTs(dts, 1)).filter(v => v.val).map(x => {
                             const dv = dpVPrc1(dpV.get(x.ts), tdev);
                             if (!utility.validate.posNum(dv)) throw new Error(`dpV returns non-positive number: ${tdev}, ${dv}, ${utility.date.dateTs2DateKey(x.ts)}`);
                             return { dts: x.ts, val: dv, included: true };
                         });
                         //不存在顶背离参照点
-                        if (period.length === 0) return 0;
+                        if (period.length === 0) return { count: 0 };
                         const curV = dpVPrc1(dpV.get(dts), tdev);
                         const min4peak = dpT.backwardTs(dts, pack.peakRange);
                         for (let i = period.length - 1; i >= 0; --i) {
                             const prevn = period[i];
                             if (min4peak == null || prevn.dts >= min4peak) {
                                 if (curV < prevn.val) //当前值不是peakRange交易日内的极大值
-                                    return 0;
+                                    return { count: 0 };
                             }
                             else
                                 break;
@@ -114,12 +122,23 @@ const deviateFac: IFactory<DeviateFacPack, number> = {
                         }
 
                         const tpoints = period.filter(p => p.included), e = pvd.get(dts);
-                        const r2 = e / (dpVPrc2(curV, tdev) * pack.threshold);
-                        const ret = tpoints.map(d => {
+                        const r2 = e / dpVPrc2(curV, tdev);
+                        let ret = tpoints.map(d => {
                             const preve = pvd.get(d.dts);
                             return { em: preve * pack.emaxRate, r: r2 * dpVPrc2(d.val, tdev) / preve }; //, dts: d.dts };
                         });
-                        return ret.filter(d => rGood(d.r, tdev) && (tdev ? (e > d.em) : (e < d.em))).length;
+                        ret = ret.filter(d => rGood(d.r, pack.threshold, tdev) && (tdev ? (e > d.em) : (e < d.em)));
+                        if (ret.length === 0) return { count: 0 };
+                        else {
+                            const thds = ret.map(r => r.r);
+                            return {
+                                count: ret.length,
+                                minThd: utility.array.min2(thds),
+                                maxThd: utility.array.max2(thds),
+                                thdM: utility.array.avg2(thds),
+                                thdGM: utility.array.geoMean2(thds)
+                            };
+                        }
                     },
                     genrtprog: () => {
                         const mindts = dpT.backwardTs(dpT.maxTs, pack.maxDays - 1) || dpT.minTs;
@@ -163,29 +182,39 @@ const deviateFac: IFactory<DeviateFacPack, number> = {
                         //所有局部最大值的历史点
                         const tpoints = period.filter(d => d.included).map(d => {
                             const preve = pvd.get(d.dts);
-                            return { em: preve * pack.emaxRate, rmid: dpVPrc2(d.val, tdev) / (preve * pack.threshold) };
+                            return { em: preve * pack.emaxRate, rmid: dpVPrc2(d.val, tdev) / preve };
                         });
 
                         const curV = dpVPrc1_rtprog(dpV.getRTProg(), tdev);
                         const eprog = pvd.getRTProg(), tprog = dpT.getRTProg();
+                        const thdarrref = genProg('ref', 'thdarr');
                         return genProg('begin',
                             genProg('def', 'e', eprog),
                             genProg('def', 'curV', curV),
                             genProg('def', 'r2', genProg('/', genProg('ref', 'e'), dpVPrc2_rtprog(genProg('ref', 'curV'), tdev))),
                             genProg('if',
                                 genProg('and', tprog, (peakRangeTestVals.length == 0) ? true : genProg('>=', genProg('ref', 'curV'), utility.array.max2(peakRangeTestVals))),
-                                genProg('count', tpoints, genProg('and',
-                                    genProg(tdev ? '>' : '<',
-                                        genProg('ref', 'e'),
-                                        genProg('prop',
-                                            genProg('ref', '_item'),
-                                            'em'
-                                        )
-                                    ),
-                                    rGood_rtprog(genProg('*',
-                                        genProg('ref', 'r2'),
-                                        genProg('prop', genProg('ref', '_item'), 'rmid')),
-                                        tdev))),
+                                genProg('begin',
+                                    genProg('def', 'thdarr', genProg('count', tpoints, genProg('and',
+                                        genProg(tdev ? '>' : '<',
+                                            genProg('ref', 'e'),
+                                            genProg('prop',
+                                                genProg('ref', '_item'),
+                                                'em'
+                                            )
+                                        ),
+                                        rGood_rtprog(genProg('*',
+                                            genProg('ref', 'r2'),
+                                            genProg('prop', genProg('ref', '_item'), 'rmid')),
+                                            pack.threshold,
+                                            tdev)))),
+                                    genProg('obj', {
+                                        count: genProg('count', thdarrref),
+                                        minThd: genProg('min', thdarrref),
+                                        maxThd: genProg('max', thdarrref),
+                                        thdM: genProg('mean', thdarrref),
+                                        thdGM: genProg('geo-mean', thdarrref),
+                                    })),
                                 0));
                     },
                     remoteTs: dpT.remoteTs_core,

@@ -1,6 +1,6 @@
 ﻿
 use stock
-db.simulate.createIndex( { sts: 1 } )
+db.simulate.createIndex( { sdts: 1 } )
 db.simulate.createIndex( { target: 1, rtplanId: 1 } )
 db.simulate.createIndex( { rtplanId: 1 } )
 db.rtprog.createIndex( { target: 1, rtplanId: 1 } )
