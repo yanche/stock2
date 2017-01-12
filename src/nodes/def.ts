@@ -59,6 +59,8 @@ export interface Rtprog {
     rtprog?: Object;
     glong?: boolean;
     createdTs?: number;
+    hit?: boolean;
+    hitUpdateTs?: number;
 }
 
 export interface RtprogOut {
@@ -74,6 +76,8 @@ export interface RtprogOut {
     hp?: number;
     ldts?: number;
     lp?: number;
+    hit?: boolean;
+    hitUpdateTs?: number;
 }
 
 export interface Rtplan {

@@ -77,6 +77,8 @@ function wmStock(target: string, startDayTs: number, endDayTs: number): bb<{
             }
             const maxdayts = utility.date.msTs2DateTs(utility.date.dashDateStrParse(data[data.length - 1].tradeDate));
             const mindayts = utility.date.msTs2DateTs(utility.date.dashDateStrParse(data[0].tradeDate));
+            if (maxdayts > endDayTs) throw new Error(`max date from WMCLOUD exceeds provided end date: ${utility.date.dateTs2DateKey(endDayTs)}, ${utility.date.dateTs2DateKey(maxdayts)}`);
+            if (mindayts < startDayTs) throw new Error(`min date from WMCLOUD lower than provided start date: ${utility.date.dateTs2DateKey(startDayTs)}, ${utility.date.dateTs2DateKey(mindayts)}`);
             return {
                 data: {
                     data: vmap,
@@ -139,15 +141,15 @@ function wmIndex(target: string, startDayTs: number, endDayTs: number): bb<{
         });
 }
 
-function exactlySameDataExceptions(datekey: string, target: string) :boolean {
-    switch(target.toLowerCase()) {
+function exactlySameDataExceptions(datekey: string, target: string): boolean {
+    switch (target.toLowerCase()) {
         case '000803.xshe': {
-            if(datekey === '20051110') return true;
-            if(datekey === '20051123') return true;
+            if (datekey === '20051110') return true;
+            if (datekey === '20051123') return true;
             break;
         }
         case '601668.xshg': {
-            if(datekey === '20111128') return true;
+            if (datekey === '20111128') return true;
             break;
         }
         default: return false;

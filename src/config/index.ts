@@ -65,7 +65,7 @@ const timeoutCheckFreq = 2000; //in ms
 const conditionCheckFreq = 2000; //in ms
 const jobSchedulerCheckFreq = 10000; //in ms
 const jobScheduleTime = {
-    h: 11,
+    h: 5,
     m: 0
 }
 
