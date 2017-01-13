@@ -63,7 +63,9 @@ export const action = {
     genRtProg: 'genrtprog',
     genRtProgAll: 'genrtprogall',
     delay: 'delay',
-    afterRawInspect: 'afterrawinspect'
+    afterRawInspect: 'afterrawinspect',
+    lastEnd: 'lastend',
+    lastEndAll: 'lastendall'
 }
 
 export const simconcern = {

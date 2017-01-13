@@ -33,6 +33,12 @@ export const action = new Action<AfterRawInspectInput, AfterRawInspectInput, voi
                             tasks: [
                                 {
                                     action: {
+                                        type: constant.action.lastEndAll,
+                                        pack: { targets: [] }
+                                    }
+                                },
+                                {
+                                    action: {
                                         type: constant.action.simAll,
                                         pack: <simact.simall.SimAllInput>{
                                             targets: null,

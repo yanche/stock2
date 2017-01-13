@@ -31,6 +31,8 @@ actmap.set(constant.action.rawData, wm.raw.action);
 actmap.set(constant.action.stockList, wm.stocklist.action);
 actmap.set(constant.action.simulate, rtplan.simulate.action);
 actmap.set(constant.action.simAll, rtplan.simall.action);
+actmap.set(constant.action.lastEnd, rtplan.lastend.action);
+actmap.set(constant.action.lastEndAll, rtplan.lastendall.action);
 actmap.set(constant.action.hypoTest, hypo.test.action);
 actmap.set(constant.action.hypoTestAggr, hypo.aggr.action);
 actmap.set(constant.action.genRtProg, rtprog.genrtprog.action);
