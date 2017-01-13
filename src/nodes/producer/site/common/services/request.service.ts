@@ -22,6 +22,14 @@ export class RequestService {
         });
     }
 
+    getAll<T>(resource: string, filter?: Object, fields?: Object, orderby?: Object): Promise<GetAllReturn<T>> {
+        return this._reqJson<GetAllReturn<T>>(resource, 'GETALL', {
+            filter: filter,
+            fields: fields,
+            orderby: orderby
+        });
+    }
+
     create<Ti>(resource: string, data: Ti): Promise<{ _id: string }> {
         return this._reqJson<{ _id: string }>(resource, 'CREATE', data);
     }
@@ -61,4 +69,8 @@ export interface GetMulReturn<T> {
     total: number;
     page: number;
     pageSize: number;
+}
+
+export interface GetAllReturn<T> {
+    list: Array<T>;
 }

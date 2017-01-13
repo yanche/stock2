@@ -6,6 +6,7 @@ import * as rtprogout from './rtprogout';
 import * as simtrack from './simtrack';
 import * as simulate from './simulate';
 import * as task from './task';
+import * as storageproxy from './storageproxy';
 import * as bb from 'bluebird';
 import * as utility from '../../../utility';
 
@@ -19,6 +20,7 @@ export function findHandler(resx: string): (h: utility.http.HttpPack) => bb<any>
         case 'rtprog': return rtprog.handler;
         case 'rtprice': return rtprice.handler;
         case 'rtplan': return rtplan.handler;
+        case 'storageproxy': return storageproxy.handler;
         default: return null;
     }
 }

@@ -105,7 +105,7 @@ export interface RtplanConcern {
 export interface Rtprice {
     _id?: string,
     lastEnd?: number,
-    lastTs?: number,
+    lastDts?: number,
     lastEndUpdateTs?: number,
     adjprices?: {
         p?: number,

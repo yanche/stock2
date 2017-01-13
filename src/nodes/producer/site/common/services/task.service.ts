@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { UrlService } from './url.service';
 import { RequestService } from './request.service';
-import { ConstService } from './const.service';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()

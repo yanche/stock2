@@ -1,0 +1,114 @@
+<div class="col-12">
+    <div class="col-12 mt50">
+        <div class="col-12">策略命中</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        代码
+                    </th>
+                    <th>
+                        名称
+                    </th>
+                    <th>
+                        备注
+                    </th>
+                    <th>
+                        上个交易日
+                    </th>
+                    <th>
+                        最新价（交易所）
+                    </th>
+                    <th>
+                        命中更新
+                    </th>
+                    <th>
+                        价格更新
+                    </th>
+                    <th>
+                        看多
+                    </th>
+                    <th>
+                        策略名
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let t of rtprogs" (click)="console.log(t)">
+                    <td>{{t.target}}</td>
+                    <td>{{(t.target | stockname).toString()}}</td>
+                    <td>{{((t.rtplanId | rtplan) || {comments:{}}).comments.sum}}</td>
+                    <td>{{t.target | lastts | dts2datekey}}</td>
+                    <td>{{t.target | rtprice : 'e' | dround}}</td>
+                    <td>{{t.hitUpdateTs | datetime}}</td>
+                    <td>{{t.target | rtpriceupdatets | datetime}}</td>
+                    <td>{{t.glong}}</td>
+                    <td>
+                        <span>{{(t.rtplanId | rtplan).name}}</span>
+                        <a target="_blank" href="{{userutil.rtplanUrl(t.rtplanId)}}"><i class="flatbtn fa fa-info-circle"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12 mt50">
+        <div class="col-12">策略结算命中</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        代码
+                    </th>
+                    <th>
+                        名称
+                    </th>
+                    <th>
+                        备注
+                    </th>
+                    <th>
+                        上个交易日
+                    </th>
+                    <th>
+                        最新价（交易所）
+                    </th>
+                    <th>
+                        命中更新
+                    </th>
+                    <th>
+                        价格更新
+                    </th>
+                    <th>
+                        看多
+                    </th>
+                    <th>
+                        建仓时间
+                    </th>
+                    <th>
+                        收益
+                    </th>
+                    <th>
+                        策略名
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let t of rtprogouts" (click)="showDetail(t)">
+                    <td>{{t.target}}</td>
+                    <td>{{(t.target | stockname).toString()}}</td>
+                    <td>{{(t.rtplanId | rtplan).toVal().comments.sum}}</td>
+                    <td>{{(t.target | lastts).toVal() | datetime : constant.date.day}}</td>
+                    <td>{{(t.target | rtprice : 'e').toVal() | dround}}</td>
+                    <td>{{t.hitUpdateTs | datetime}}</td>
+                    <td>{{(t.target | rtpriceupdatets).toVal() | datetime}}</td>
+                    <td>{{t.glong}}</td>
+                    <td>{{t.sts | datetime : constant.date.day}}</td>
+                    <td>{{rev(t) | dround}}</td>
+                    <td>
+                        <span>{{(t.rtplanId | rtplan).toVal().name}}</span>
+                        <a target="_blank" href="{{userutil.rtplanUrl(t.rtplanId)}}"><i class="flatbtn fa fa-info-circle"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

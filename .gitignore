@@ -2,6 +2,7 @@
 /fruits/**/*.js
 /src/**/*.js
 !/src/nodes/producer/admin.systemjs.config.js
+!/src/nodes/producer/user.systemjs.config.js
 *.map
 /typings
 *.log

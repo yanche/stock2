@@ -13,7 +13,7 @@ import { HypoTestAggrService } from '../services/hypotestaggr.service';
   moduleId: module.id,
   selector: 'stock-analysis',
   templateUrl: './app.component.html',
-  providers: [UtilityService, LogService, UrlService, TaskService, RequestService, ConstService, HypoTestAggrService]
+  providers: [Router, UtilityService, LogService, UrlService, TaskService, RequestService, ConstService, HypoTestAggrService]
 })
 export class AppComponent {
   constructor(private _router: Router) { }

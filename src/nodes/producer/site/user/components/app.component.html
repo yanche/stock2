@@ -1,0 +1,12 @@
+<div id="mainview" class="col-12">
+    <div id="mainnav" class="col-12">
+        <div class="navitem" [ngClass]="{current: currentPage === 'realtime'}" routerLink="/realtime" routerLinkActive="active">RealTime</div>
+        <div class="navitem" [ngClass]="{current: currentPage === 'history'}" routerLink="/history" routerLinkActive="active">History</div>
+        <!--<div class="navitem" [ngClass]="{current: currentPage === 'profile'}" ui-sref="profile">Profile</div>-->
+        <div class="navitem" [ngClass]="{current: currentPage === 'strategy'}" routerLink="/strategy" routerLinkActive="active">Strategy</div>
+        <!--<div class="navitem" [ngClass]="{current: currentPage === 'help'}" ui-sref="help">Help</div>-->
+    </div>
+    <div id="maincontent" class="col-12">
+        <router-outlet></router-outlet>
+    </div>
+</div>

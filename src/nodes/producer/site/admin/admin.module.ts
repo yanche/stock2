@@ -39,7 +39,8 @@ import { DateTimePipe } from '../common/pipes/datetime.pipe';
       {
         path: 'resources',
         component: ResourcesComponent
-      }, {
+      },
+      {
         path: '',
         redirectTo: '/monitor',
         pathMatch: 'full'

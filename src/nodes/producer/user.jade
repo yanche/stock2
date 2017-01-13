@@ -1,0 +1,20 @@
+﻿doctype html
+html(lang='zh-CN')
+    head
+        base(href='/')
+        meta(charset='utf-8')
+        meta(http-equiv='charset' content='utf-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
+        title Stock Analysis
+
+        link(rel='stylesheet' href='/libs/css/font-awesome.min.css')
+        link(rel='stylesheet' href='/site/css/all.css')
+        script(src='/libs/js/moment.js')
+        script(src='/libs/js/zone.min.js')
+        script(src='/libs/js/Reflect.js')
+        script(src='/libs/js/system.src.js')
+        script(src='/user.systemjs.config.js')
+        script.
+            System.import('app').catch(function(err){ console.error(err); });
+        body
+            chi-wan
