@@ -9,7 +9,9 @@ const t = process.argv[2];
 switch (t) {
     case 'd': d.init(config.dispatcherPort);
         break;
-    case 'p': p.init(config.producerPort);
+    case 'p': p.init(config.producerPort, false);
+        break;
+    case 'w': p.init(config.reporterPort, true);
         break;
     case 'c': c.init(null);
         break;

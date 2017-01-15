@@ -67,9 +67,18 @@ module.exports = function (grunt) {
                 }, {
                     src: '<%= srcpath %>/admin.systemjs.config.js',
                     dest: 'static/admin.systemjs.config.js'
+                }]
+            },
+            jsUser: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= srcpath %>/site/user',
+                    src: ['**/*.js', '**/*.html', '**/*.css'],
+                    dest: 'static/site/user',
+                    filter: 'isFile'
                 }, {
-                    src: '<%= srcpath %>/admin.dev.systemjs.config.js',
-                    dest: 'static/admin.dev.systemjs.config.js'
+                    src: '<%= srcpath %>/user.systemjs.config.js',
+                    dest: 'static/user.systemjs.config.js'
                 }]
             },
             jsCommon: {

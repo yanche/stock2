@@ -1,14 +1,17 @@
 
 import * as utility from '../../../utility';
-import * as bb from 'bluebird';
 import * as log from '../../../log';
+import * as bb from 'bluebird';
 import * as filestorage from '../../../filestorage';
 
-export function handler(h: utility.http.HttpPack) {
+export function handler(h: utility.http.HttpPack):bb<void> {
     return bb.resolve().then(() => {
         const verb = (h.getReqHeader('verb') || '').toUpperCase();
         const fn = handlermap.get(verb);
-        if (fn == null) return bb.reject(new Error(`simulate handler not found for verb: ${verb}`));
+        if (fn == null) {
+            h.status = 404;
+            log.error(`storageproxy handler not found for verb: ${verb}`);
+        }
         else return fn(h);
     });
 }

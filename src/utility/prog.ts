@@ -15,7 +15,7 @@ export class Env {
     public ref(name: string): any {
         if (this._lookup.has(name)) return this._lookup.get(name);
         else if (this._parent) return this._parent.ref(name);
-        else throw new Error(`constiable ${name} not defined`);
+        else throw new Error(`variable ${name} not defined`);
     }
 
     public set(name: string, val: any): this {
@@ -37,7 +37,7 @@ export class Env {
 }
 
 function isProg(p: any): p is Prog {
-    return utility.validate.isObj(p) && p.__val !== true;
+    return !Array.isArray(p) && utility.validate.isObj(p) && p.__val !== true;
 }
 
 //here prog could be a Prog, or number/string/boolean/Object
@@ -100,8 +100,8 @@ export function evaluate(prog: any, env: Env): any {
             }
             return true;
         }
-        case 'max': return Math.max.apply(Math, prog.args.map(a => expectNum(a, env)));
-        case 'min': return Math.min.apply(Math, prog.args.map(a => expectNum(a, env)));
+        case 'max': return Math.max(...prog.args.map(a => expectNum(a, env)));
+        case 'min': return Math.min(...prog.args.map(a => expectNum(a, env)));
         case 'abs': return Math.abs(expectNum(prog.args[0], env));
         case 'and':
         case 'every': return prog.args.every(a => Boolean(evaluate(a, env)));
@@ -180,10 +180,10 @@ export function evaluate(prog: any, env: Env): any {
         case 'geo-mean': {
             return arrayFn(utility.array.geoMean2, 'geo-mean', prog, env);
         }
-        case 'max': {
+        case 'array-max': {
             return arrayFn(utility.array.max2, 'max', prog, env);
         }
-        case 'min': {
+        case 'array-min': {
             return arrayFn(utility.array.min2, 'min', prog, env);
         }
         default:

@@ -65,7 +65,7 @@ function getTimeBounds(): TimeBounds {
     bprog.setUTCHours(8, 0, 0, 0);
     bprog = utility.date.dateOffset(bprog, { day: -1 });
     return {
-        weekend: (b0.getDay() % 6) == 0,
+        weekend: (b0.getUTCDay() % 6) == 0,
         b0: b0.getTime(),
         b1: b1.getTime(),
         b2: b2.getTime(),
@@ -83,7 +83,10 @@ function schedule(pack: Pack) {
     bb.resolve()
         .then(() => {
             const nowTs = curDate().getTime(), b = getTimeBounds();
-            if (b.weekend || nowTs < b.b1 || nowTs > b.b6 || (nowTs > b.b3 && nowTs < b.b4)) log.info('not the time, do nothing');
+            if (b.weekend || nowTs < b.b1 || nowTs > b.b6 || (nowTs > b.b3 && nowTs < b.b4)) {
+                log.info('not the time, do nothing');
+                return bb.delay(2000);
+            }
             else if (pack.lastRTProgLoadTs == null || pack.lastRTProgLoadTs < b.b1) {
                 //load exec nodes from server
                 log.info('now loading stock real-time dp prog from server');

@@ -23,6 +23,10 @@ export function init(port: number) {
                     }
                 }
             })
+            .catch((err: Error) => {
+                log.error(err.stack);
+                hp.status = 500;
+            })
             .then(() => {
                 hp.setResHeader('Access-Control-Allow-Credentials', 'true');
                 hp.setResHeader('Access-Control-Allow-Headers', 'Content-Type,Verb');
@@ -30,9 +34,6 @@ export function init(port: number) {
                 hp.setResHeader('Access-Control-Allow-Origin', '*');
                 hp.setResHeader('Access-Control-Max-Age', '3600');
                 hp.send();
-            })
-            .catch((err: Error) => {
-                log.error(err.stack);
             });
     }).listen(port);
 

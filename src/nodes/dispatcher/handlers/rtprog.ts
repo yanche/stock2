@@ -1,15 +1,19 @@
 
 import * as utility from '../../../utility';
+import * as log from '../../../log';
 import * as bb from 'bluebird';
 import * as db from '../db';
 import * as hutil from './util';
 import * as d from '../../def';
 
-export function handler(h: utility.http.HttpPack) {
+export function handler(h: utility.http.HttpPack): bb<void> {
     return bb.resolve().then(() => {
         const verb = (h.getReqHeader('verb') || '').toUpperCase();
         const fn = handlermap.get(verb);
-        if (fn == null) return bb.reject(new Error(`rtprog handler not found for verb: ${verb}`));
+        if (fn == null) {
+            h.status = 404;
+            log.error(`rtprog handler not found for verb: ${verb}`);
+        }
         else return fn(h);
     });
 }

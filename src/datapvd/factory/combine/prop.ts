@@ -16,7 +16,7 @@ const propFac: IFactory<PropFacPack, any> = facutil.dpTransform<PropFacPack, any
         return dp.get(ts)[pack.prop];
     },
     genrtprog: (pack: PropFacPack, dp: def.DataPvd<any>) => {
-        return utility.prog.genProg('ref', dp.getRTProg(), pack.prop);
+        return utility.prog.genProg('prop', dp.getRTProg(), pack.prop);
     }
 });
 

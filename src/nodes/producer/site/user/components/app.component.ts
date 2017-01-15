@@ -11,7 +11,7 @@ import { RtpriceService } from '../services/rtprice.service';
   moduleId: module.id,
   selector: 'chi-wan',
   templateUrl: './app.component.html',
-  providers: [Router, RtplanService, RtprogService, RtprogoutService, RtpriceService, RequestService, StorageProxyService]
+  providers: [RtplanService, RtprogService, RtprogoutService, RtpriceService, RequestService, StorageProxyService]
 })
 export class AppComponent {
   constructor(private _router: Router) { }

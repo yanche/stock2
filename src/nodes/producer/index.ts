@@ -7,7 +7,7 @@ import * as url from 'url';
 import * as mime from 'mime';
 import * as config from '../../config';
 
-export function init(port: number) {
+export function init(port: number, realtimesite: boolean) {
     const sdir = path.join(__dirname, '../../../static');
     log.info(`static file dir: ${sdir}`);
 
@@ -23,7 +23,7 @@ export function init(port: number) {
             let filename = path.join(sdir, config.dev && p.indexOf('/site') === 0 ? '../src/nodes/producer' : '', p);
             fs.readFile(filename, (err, data) => {
                 if (err) {
-                    returnAdminHtml(sdir, res);
+                    returnAdminHtml(sdir, res, realtimesite);
                 }
                 else {
                     res.setHeader('Content-Type', mime.lookup(p));
@@ -36,8 +36,8 @@ export function init(port: number) {
     log.info(`now producer listening at port ${port}`);
 }
 
-function returnAdminHtml(sdir: string, res: http.ServerResponse) {
-    fs.readFile(path.join(sdir, 'admin.html'), (err, data) => {
+function returnAdminHtml(sdir: string, res: http.ServerResponse, realtimesite: boolean) {
+    fs.readFile(path.join(sdir, realtimesite ? 'user.html' : 'admin.html'), (err, data) => {
         if (err) {
             console.error(err.stack);
             res.writeHead(404);

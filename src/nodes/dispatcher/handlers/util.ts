@@ -153,7 +153,7 @@ export function genBulkUpdateHandler<T>(colc: utility.mongo.CollClient<T>, upser
         else {
             const erridx = new Array<number>(), updates = new Array<{ filter: any, update: any }>();
             for (var i = 0; i < body.list.length; ++i) {
-                const item = body[i];
+                const item = body.list[i];
                 if (!utility.validate.isObj(item.filter) || !utility.validate.isObj(item.update)) erridx.push(i);
                 else updates.push({ filter: objIdfy(item.filter), update: item.update });
             }

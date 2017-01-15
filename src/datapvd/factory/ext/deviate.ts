@@ -183,7 +183,7 @@ const deviateFac: IFactory<DeviateFacPack, DeviateOutput> = {
                         //所有局部最大值的历史点
                         const tpoints = period.filter(d => d.included).map(d => {
                             const preve = pvd.get(d.dts);
-                            return { em: preve * pack.emaxRate, rmid: dpVPrc2(d.val, tdev) / preve };
+                            return { __val: true, em: preve * pack.emaxRate, rmid: dpVPrc2(d.val, tdev) / preve };
                         });
 
                         const curV = dpVPrc1_rtprog(dpV.getRTProg(), tdev);
@@ -196,7 +196,7 @@ const deviateFac: IFactory<DeviateFacPack, DeviateOutput> = {
                             genProg('if',
                                 genProg('and', tprog, (peakRangeTestVals.length == 0) ? true : genProg('>=', genProg('ref', 'curV'), utility.array.max2(peakRangeTestVals))),
                                 genProg('begin',
-                                    genProg('def', 'thdarr', genProg('count', tpoints, genProg('and',
+                                    genProg('def', 'thdarr', genProg('filter', tpoints, genProg('and',
                                         genProg(tdev ? '>' : '<',
                                             genProg('ref', 'e'),
                                             genProg('prop',
@@ -209,13 +209,17 @@ const deviateFac: IFactory<DeviateFacPack, DeviateOutput> = {
                                             genProg('prop', genProg('ref', '_item'), 'rmid')),
                                             pack.threshold,
                                             tdev)))),
-                                    genProg('obj', {
-                                        count: genProg('count', thdarrref),
-                                        minThd: genProg('min', thdarrref),
-                                        maxThd: genProg('max', thdarrref),
-                                        thdM: genProg('mean', thdarrref),
-                                        thdGM: genProg('geo-mean', thdarrref),
-                                    })),
+                                    genProg('if',
+                                        genProg('eq', genProg('count', thdarrref), 0),
+                                        genProg('obj', { count: 0 }),
+                                        genProg('obj', {
+                                            count: genProg('count', thdarrref),
+                                            minThd: genProg('array-min', thdarrref),
+                                            maxThd: genProg('array-max', thdarrref),
+                                            thdM: genProg('mean', thdarrref),
+                                            thdGM: genProg('geo-mean', thdarrref),
+                                        })
+                                    )),
                                 0));
                     },
                     remoteTs: dpT.remoteTs_core,
