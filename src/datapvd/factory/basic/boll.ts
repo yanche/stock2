@@ -33,6 +33,7 @@ const bollFac: IFactory<BollFacPack, BollRet> = {
                     maxTs: dp.maxTs,
                     minTs: dp.forwardTs(dp.minTs, 2 * pack.N - 2) || facutil.dateTsOffset(dp.maxTs, 1),
                     hasdef: dp.hasDef_core,
+                    hasdefprog: () => dp.forwardTs(dp.minTs, 2 * pack.N - 3) != null,
                     gen: (dts: number): BollRet => {
                         const bdts = dp.backwardTs(dts, pack.N - 1);
                         const dpvallist = dp.period(bdts, dts), malist = mapvd.period(bdts, dts);

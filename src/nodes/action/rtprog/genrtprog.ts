@@ -40,8 +40,15 @@ export const action = new Action<GenRtProgInput, GenRtProgInput, GenRtProgOutput
                         targetMaxTs = epvd.maxTs;
                         if (epvd.forwardTs(epvd.minTs, 20) != null && targetMaxTs >= rtplan.startDateTs) {
                             return datapvd.literal.resolve(utility.refReplace(rtplan.cpdefRef, { target: input.target }))
-                                .then(dp => dclient.rtprog.create({ target: input.target, rtprog: dp.getRTProg(), rtplanId: input.rtplanId, glong: rtplan.glong }))
-                                .then(() => rtprogdone = true);
+                                .then(dp => {
+                                    if (dp.hasDefProg()) {
+                                        return dclient.rtprog.create({ target: input.target, rtprog: dp.getRTProg(), rtplanId: input.rtplanId, glong: rtplan.glong })
+                                            .then(() => rtprogdone = true);
+                                    }
+                                    else {
+                                        rtprogdone = false;
+                                    }
+                                });
                         }
                     })
                     .then(() => dclient.simulate.getAll({ target: input.target, rtplanId: input.rtplanId, closed: false }))

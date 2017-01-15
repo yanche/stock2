@@ -25,6 +25,7 @@ const stoplossFac: IFactory<StoplossFacPack, boolean> = {
                     maxTs: epvd.maxTs,
                     minTs: epvd.minTs,
                     hasdef: epvd.hasDef_core,
+                    hasdefprog: epvd.hasDefProg_core,
                     gen: (dts: number, ctx: def.DataGetterCtx) => {
                         if (ctx == null) return false;
                         const e = epvd.get(dts);

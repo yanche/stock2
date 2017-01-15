@@ -13,6 +13,7 @@ const constFac: IFactory<number, number> = {
             maxTs: utility.date.dateTs(2100, 0, 1),
             minTs: 0,
             hasdef: utility.validate.alwaysTrue,
+            hasdefprog: utility.validate.alwaysTrue,
             gen: () => num,
             genrtprog: () => num,
             remoteTs: (ts: number, n: number) => ts + n,

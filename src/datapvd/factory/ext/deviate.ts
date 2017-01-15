@@ -78,6 +78,7 @@ const deviateFac: IFactory<DeviateFacPack, DeviateOutput> = {
                     maxTs: dpT.maxTs,
                     minTs: dpT.minTs,
                     hasdef: dpT.hasDef_core,
+                    hasdefprog: dpT.hasDefProg_core,
                     gen: (dts: number) => {
                         const tval = dpT.get(dts);
                         if (!tval) return { count: 0 };

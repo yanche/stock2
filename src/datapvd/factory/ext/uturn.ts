@@ -29,6 +29,9 @@ const uturnPeakFac = facutil.dpTransform<UTurnFacPack, number, boolean>({
     },
     mmts: (pack: UTurnFacPack, dp: def.DataPvd<number>): { minTs: number, maxTs: number } => {
         return { minTs: dp.forwardTs(dp.minTs, 2) || facutil.dateTsOffset(dp.maxTs, 1), maxTs: dp.maxTs };
+    },
+    hasdefprog: (pack: UTurnFacPack, dp: def.DataPvd<number>) => {
+        return dp.forwardTs(dp.minTs, 1) != null;
     }
 })
 

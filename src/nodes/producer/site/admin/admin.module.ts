@@ -21,6 +21,7 @@ import * as taskdisplay from './components/taskdisplay.component';
 
 import { StatusPipe } from '../common/pipes/status.pipe';
 import { DateTimePipe } from '../common/pipes/datetime.pipe';
+import { Dts2DatekeyPipe } from '../common/pipes/dts2datekey.pipe';
 
 @NgModule({
   imports: [
@@ -76,9 +77,12 @@ import { DateTimePipe } from '../common/pipes/datetime.pipe';
     taskdisplay.DelayTaskDisplayComponent,
     taskdisplay.AfterRawInspectTaskDisplayComponent,
     taskdisplay.DisplayLogTaskDisplayComponent,
+    taskdisplay.LastendTaskDisplayComponent,
+    taskdisplay.LastendAllTaskDisplayComponent,
     //pipes
     StatusPipe,
-    DateTimePipe
+    DateTimePipe,
+    Dts2DatekeyPipe
   ],
   bootstrap: [AppComponent]
 })

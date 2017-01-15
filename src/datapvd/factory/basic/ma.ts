@@ -32,6 +32,7 @@ const maFac = facutil.dpTransform<MAFacPack, number, number>({
             return utility.prog.genProg('div', utility.prog.genProg('add', sum, dp.getRTProg()), pack.N);
         }
     },
+    hasdefprog: (pack: MAFacPack, dp: def.DataPvd<number>) => dp.forwardTs(dp.minTs, pack.N - 2) != null,
     mmts: (pack: MAFacPack, dp: def.DataPvd<number>): { minTs: number, maxTs: number } => {
         return { minTs: dp.forwardTs(dp.minTs, pack.N - 1) || facutil.dateTsOffset(dp.maxTs, 1), maxTs: dp.maxTs };
     },

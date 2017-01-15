@@ -9,6 +9,7 @@ interface DataPvdInput<T> {
     minTs: number;
     maxTs: number;
     hasdef: (dts: number) => boolean;
+    hasdefprog: () => boolean;
     gen: (dts: number, ctx?: DataGetterCtx) => T;
     remoteTs: (dts: number, n: number, forward: boolean) => number;
     weakdepts: Array<string>;
@@ -33,6 +34,7 @@ export class DataPvd<T> {
     protected _remoteTs: (dts: number, n: number, forward: boolean) => number;
     protected _weakdepts: Array<string>;
     protected _genrtprog: () => utility.prog.Prog | string | number | boolean | Object;
+    protected _hasdefprog: () => boolean;
 
     constructor(pack: DataPvdInput<T>) {
         if (!utility.validate.nonNegNum(pack.minTs, true) || !utility.validate.nonNegNum(pack.maxTs, true))
@@ -42,6 +44,7 @@ export class DataPvd<T> {
         this._mints = pack.minTs;
         //when _hasdef is called, no 'this' pointer will be passed
         this._hasdef = pack.hasdef;
+        this._hasdefprog = pack.hasdefprog;
         //when _gen is called, no 'this' pointer will be passed
         this._gen = pack.gen;
         //when _remoteTs is called, no 'this' pointer will be passed
@@ -56,9 +59,13 @@ export class DataPvd<T> {
     get weakdepts(): Array<string> { return this._weakdepts; }
     get remoteTs_core(): (ts: number, n: number, forward: boolean) => number { return this._remoteTs; }
     get hasDef_core(): (ts: number) => boolean { return this._hasdef; }
+    get hasDefProg_core(): () => boolean { return this._hasdefprog; }
     get gen_core(): (ts: number) => T { return this._gen; }
     hasDef(dts: number): boolean {
         return dts >= this._mints && dts <= this._maxts && this._hasdef.call(null, dts);
+    }
+    hasDefProg(): boolean {
+        return this._hasdefprog();
     }
     forwardTs(dts: number, n: number): number {
         const retts = this._remoteTs.call(null, dts, n, true);
@@ -69,6 +76,7 @@ export class DataPvd<T> {
         return (retts != null && retts >= this._mints && retts <= this._maxts) ? retts : null;
     }
     periodTs(mints: number, maxts: number): Array<number> {
+        if (maxts < mints) return [];
         mints = this.forwardTs(mints, 0);
         maxts = this.backwardTs(maxts, 0);
         if (this.hasDef(mints) && this.hasDef(maxts)) {
@@ -92,7 +100,8 @@ export class DataPvd<T> {
     }
     cached(dts: number): boolean { return false; }
     getRTProg(): utility.prog.Prog | string | number | boolean | Object {
-        return this._genrtprog();
+        if (this.hasDefProg()) return this._genrtprog();
+        else throw new Error('rtprog not defined in next trading date');
     }
 }
 

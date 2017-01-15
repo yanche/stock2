@@ -18,5 +18,5 @@ handlermap.set('GET', hutil.genGetOneHandler(db.rtprice));
 handlermap.set('GETMUL', hutil.genGetMulHandler(db.rtprice));
 handlermap.set('GETALL', hutil.genGetAllHandler(db.rtprice));
 handlermap.set('REMOVE', hutil.genRemoveAllHandler(db.rtprice));
-handlermap.set('UPSERT', hutil.genUpdateAllHandler(db.rtprice, false));
+handlermap.set('UPSERT', hutil.genUpdateAllHandler(db.rtprice, true));
 handlermap.set('BULKUPDATE', hutil.genBulkUpdateHandler(db.rtprice, false));

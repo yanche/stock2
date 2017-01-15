@@ -19,6 +19,7 @@ const ndaysFac: IFactory<number, boolean> = {
             maxTs: utility.date.dateTs(2100, 0, 1),
             minTs: 0,
             hasdef: utility.validate.alwaysTrue,
+            hasdefprog: utility.validate.alwaysTrue,
             gen: (dts: number, ctx: def.DataGetterCtx) => {
                 if (ctx == null) return false;
                 return dts >= ctx.sdts + N;

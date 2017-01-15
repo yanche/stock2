@@ -29,33 +29,39 @@ interface TimeBounds {
     dts: number
 }
 
+function curDate() {
+    //2016-1-16 早上10点
+    return new Date(Date.UTC(2017 ,0,16,2,0,0,0));
+    //return new Date();
+}
+
 function getTimeBounds(): TimeBounds {
-    const b0 = new Date();
+    const b0 = curDate();
     //China time 9:00
     b0.setUTCHours(1, 0, 0, 0);
-    const b1 = new Date();
+    const b1 = curDate();
     //China time 9:20
     b1.setUTCHours(1, 20, 0, 0);
-    const b2 = new Date();
+    const b2 = curDate();
     //China time 9:30
     b2.setUTCHours(1, 30, 0, 0);
-    const b25 = new Date();
+    const b25 = curDate();
     //China time 11:30
     b25.setUTCHours(3, 30, 0, 0);
-    const b3 = new Date();
+    const b3 = curDate();
     //China time 11:40
     b3.setUTCHours(3, 40, 0, 0);
-    const b4 = new Date();
+    const b4 = curDate();
     //China time 13:00
     b4.setUTCHours(5, 0, 0, 0);
-    const b5 = new Date();
+    const b5 = curDate();
     //China time 15:00
     b5.setUTCHours(7, 0, 0, 0);
-    const b6 = new Date();
+    const b6 = curDate();
     //China time 15:10
     b6.setUTCHours(7, 10, 0, 0);
     //早于此时间（昨天下午4点）生成的rtprog一概不执行
-    let bprog = new Date();
+    let bprog = curDate();
     bprog.setUTCHours(8, 0, 0, 0);
     bprog = utility.date.dateOffset(bprog, { day: -1 });
     return {
@@ -76,12 +82,12 @@ function getTimeBounds(): TimeBounds {
 function schedule(pack: Pack) {
     bb.resolve()
         .then(() => {
-            const nowTs = new Date().getTime(), b = getTimeBounds();
+            const nowTs = curDate().getTime(), b = getTimeBounds();
             if (b.weekend || nowTs < b.b1 || nowTs > b.b6 || (nowTs > b.b3 && nowTs < b.b4)) log.info('not the time, do nothing');
             else if (pack.lastRTProgLoadTs == null || pack.lastRTProgLoadTs < b.b1) {
                 //load exec nodes from server
                 log.info('now loading stock real-time dp prog from server');
-                pack.lastRTProgLoadTs = new Date().getTime();
+                pack.lastRTProgLoadTs = curDate().getTime();
                 return bb.all([
                     dclient.rtprog.getAll({}),
                     dclient.rtprogout.getAll({}),
@@ -130,7 +136,7 @@ function work(rtprogs: Array<def.Rtprog>, rtprogouts: Array<def.RtprogOut>, last
                     if (lastEndMap.has(target)) {
                         const adjp = genPrices(data, b, lastEndMap.get(target));
                         adjprices.set(target, adjp);
-                        rtpricepost.push({ filter: { _id: target }, update: { $set: { adjprices: adjp, prices: data, priceUpdateTs: new Date().getTime() } } });
+                        rtpricepost.push({ filter: { _id: target }, update: { $set: { adjprices: adjp, prices: data, priceUpdateTs: curDate().getTime() } } });
                     }
                     else
                         log.warn(`${target} not found in lastEndMap`);
@@ -140,7 +146,7 @@ function work(rtprogs: Array<def.Rtprog>, rtprogouts: Array<def.RtprogOut>, last
                 const data = item[1], target = item[0];
                 var adjp = genIndex(data, b);
                 adjprices.set(target, adjp);
-                rtpricepost.push({ filter: { _id: target }, update: { $set: { adjprices: adjp, prices: data, priceUpdateTs: new Date().getTime() } } });
+                rtpricepost.push({ filter: { _id: target }, update: { $set: { adjprices: adjp, prices: data, priceUpdateTs: curDate().getTime() } } });
             }
             log.info(`posting ${rtpricepost.length} rt-price data to server`);
             return dclient.rtprice.bulkUpsert(rtpricepost)
@@ -158,7 +164,7 @@ function work(rtprogs: Array<def.Rtprog>, rtprogouts: Array<def.RtprogOut>, last
                         const hit = utility.prog.evaluate(rtprog.rtprog, env);
                         if (rtprog.hit !== hit) {
                             rtprog.hit = hit;
-                            rtprog.hitUpdateTs = new Date().getTime();
+                            rtprog.hitUpdateTs = curDate().getTime();
                             rtprogsHitChange.push(rtprog);
                         }
                     }
@@ -191,7 +197,7 @@ function work(rtprogs: Array<def.Rtprog>, rtprogouts: Array<def.RtprogOut>, last
                         const hit = utility.prog.evaluate(rtprogout.rtprog, envctx);
                         if (rtprogout.hit !== hit) {
                             rtprogout.hit = hit;
-                            rtprogout.hitUpdateTs = new Date().getTime();
+                            rtprogout.hitUpdateTs = curDate().getTime();
                             rtprogoutsHitChange.push(rtprogout);
                         }
                     }
@@ -231,7 +237,7 @@ function work(rtprogs: Array<def.Rtprog>, rtprogouts: Array<def.RtprogOut>, last
 };
 
 function genPrices(rt: datasrc.rt163.StockRTData, b: TimeBounds, lastEnd: number): datadef.RawDataSlice {
-    const dts = new Date().getTime(), pRatio = lastEnd / rt.p;
+    const dts = curDate().getTime(), pRatio = lastEnd / rt.p;
     let volratio = 0;
     if (dts < b.b2)
         volratio = 0;
@@ -256,7 +262,7 @@ function genPrices(rt: datasrc.rt163.StockRTData, b: TimeBounds, lastEnd: number
 };
 
 function genIndex(rt: datadef.RawDataSlice, b: TimeBounds): datadef.RawDataSlice {
-    const dts = new Date().getTime();
+    const dts = curDate().getTime();
     let volratio = 0;
     if (dts < b.b2)
         volratio = 0;

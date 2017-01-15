@@ -185,3 +185,27 @@ export class AfterRawInspectTaskDisplayComponent {
     @Input()
     quickview: any;
 }
+
+@Component({
+    moduleId: module.id,
+    selector: 'lastend-task-display',
+    templateUrl: './taskdisplay/lastend.taskdisplay.component.html'
+})
+export class LastendTaskDisplayComponent {
+    @Input()
+    task: Task;
+    @Input()
+    quickview: any;
+}
+
+@Component({
+    moduleId: module.id,
+    selector: 'lastendall-task-display',
+    templateUrl: './taskdisplay/lastendall.taskdisplay.component.html'
+})
+export class LastendAllTaskDisplayComponent {
+    @Input()
+    task: Task;
+    @Input()
+    quickview: any;
+}

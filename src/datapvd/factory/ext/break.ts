@@ -31,6 +31,7 @@ const breakFac: IFactory<BreakFacPack, boolean> = {
                     maxTs: defdp.maxTs,
                     minTs: defdp.minTs,
                     hasdef: defdp.hasDef_core,
+                    hasdefprog: defdp.hasDefProg_core,
                     gen: (dts: number) => {
                         const bdts = defdp.backwardTs(dts, 1);
                         const curUp = dpUp.get(dts), curDown = dpDown.get(dts);

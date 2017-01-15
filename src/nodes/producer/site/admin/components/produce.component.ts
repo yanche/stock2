@@ -16,7 +16,8 @@ export class ProduceComponent {
     { type: this.constant.action.rawInspect },
     { type: this.constant.action.rawSync },
     { type: this.constant.action.simulate },
-    { type: this.constant.action.stockList }
+    { type: this.constant.action.stockList },
+    { type: this.constant.action.lastend }
   ].map(x => x.type);
 
   selectedTaskType: string = this.taskTypes[0];
@@ -35,6 +36,11 @@ export class ProduceComponent {
       inputList: [
         { name: 'rtplanId', title: 'RtPlan Id (empty for bulk)', type: InputType.string, bulkOnEmpty: true }
       ],
+      options: { locality: true }
+    },
+    lastend: {
+      action: { type: this.constant.action.lastend, bulkType: this.constant.action.lastendAll },
+      inputList: [],
       options: { locality: true }
     },
     rawsync: {

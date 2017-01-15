@@ -22,6 +22,7 @@ const emaFac: IFactory<EWAFacPack, number> = {
                     maxTs: dp.maxTs,
                     minTs: dp.minTs,
                     hasdef: dp.hasDef_core,
+                    hasdefprog: dp.hasDefProg_core,
                     gen: (ts: number): number => {
                         if (ts === dp.minTs) return dp.get(ts);
                         else return emadp.get(dp.backwardTs(ts, 1)) * (pack.N - pack.W + 1) / (pack.N + 1) + dp.get(ts) * pack.W / (pack.N + 1);

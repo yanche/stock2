@@ -72,7 +72,9 @@ export class ConstService {
         genRtProg: 'genrtprog',
         genRtProgAll: 'genrtprogall',
         delay: 'delay',
-        afterRawInspect: 'afterrawinspect'
+        afterRawInspect: 'afterrawinspect',
+        lastend: 'lastend',
+        lastendAll: 'lastendall'
     };
 
     simconcern = {

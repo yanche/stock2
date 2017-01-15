@@ -59,6 +59,9 @@ const localPeakFac = facutil.dpTransform<LocalPeakFacPack, number, LocalPeakOutp
     mmts: (pack: LocalPeakFacPack, dp: def.DataPvd<number>): { minTs: number, maxTs: number } => {
         return { minTs: dp.forwardTs(dp.minTs, pack.range + 1) || facutil.dateTsOffset(dp.maxTs, 1), maxTs: dp.maxTs };
     },
+    hasdefprog: (pack: LocalPeakFacPack, dp: def.DataPvd<number>) => {
+        return dp.forwardTs(dp.minTs, pack.range) != null;
+    },
     stored: true
 })
 

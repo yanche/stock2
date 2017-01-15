@@ -23,6 +23,7 @@ export function dpTransform<P extends TransformPackBase<TdpIn>, TdpIn, TdpOut>(o
     }>,
     gen: (pack: P, dp: def.DataPvd<TdpIn>, dts: number, selfdp: def.DataPvd<TdpOut>) => TdpOut,
     genrtprog: (pack: P, dp: def.DataPvd<TdpIn>) => utility.prog.Prog | string | number | boolean | Object,
+    hasdefprog?: (pack: P, dp: def.DataPvd<TdpIn>) => boolean,
     mmts?: (pack: P, dp: def.DataPvd<TdpIn>) => { minTs: number, maxTs: number },
     stored?: boolean
 }): IFactory<P, TdpOut> {
@@ -41,6 +42,7 @@ export function dpTransform<P extends TransformPackBase<TdpIn>, TdpIn, TdpOut>(o
                 const retdp = new (options.stored ? def.StoredDataPvd : def.DataPvd)<TdpOut>({
                     id: dpid(pack),
                     hasdef: dp.hasDef_core,
+                    hasdefprog: options.hasdefprog ? () => options.hasdefprog(pack, dp) : dp.hasDefProg_core,
                     gen: (dts: number): TdpOut => options.gen(pack, dp, dts, retdp),
                     genrtprog: () => { return options.genrtprog(pack, dp); },
                     remoteTs: dp.remoteTs_core,
@@ -83,6 +85,7 @@ export function dpUnion<P extends UnionPackBase<TdpIn>, TdpIn, TdpOut>(options: 
                     return new def.DataPvd<TdpOut>({
                         id: dpid(pack),
                         hasdef: defdp.hasDef_core,
+                        hasdefprog: defdp.hasDefProg_core,
                         gen: (ts: number): TdpOut => {
                             return options.gen(dps.map(dp => dp.get(ts)));
                         },

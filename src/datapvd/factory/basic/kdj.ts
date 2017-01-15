@@ -35,6 +35,7 @@ const kdjFac: IFactory<KDJFacPack, KDJRet> = {
                 return new def.DataPvd<number>({
                     id: `RSV_${pack.N}`,
                     hasdef: epvd.hasDef_core,
+                    hasdefprog: () => epvd.forwardTs(epvd.minTs, pack.N - 2) != null,
                     gen: (ts: number): number => {
                         const bts = epvd.backwardTs(ts, pack.N - 1);
                         const cur = epvd.get(ts), H = utility.array.max(hpvd.period(bts, ts), x => x.val).val, L = utility.array.min(lpvd.period(bts, ts), x => x.val).val;
@@ -68,6 +69,7 @@ const kdjFac: IFactory<KDJFacPack, KDJRet> = {
                 return new def.StoredDataPvd<KDJRet>({
                     id: dpid(pack),
                     hasdef: dpvd.hasDef_core,
+                    hasdefprog: dpvd.hasDefProg_core,
                     gen: (ts: number): KDJRet => {
                         const k = kpvd.get(ts), d = dpvd.get(ts);
                         return {

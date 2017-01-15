@@ -44,6 +44,7 @@ const macdFac: IFactory<MACDFacPack, MACDRet> = {
                     maxTs: deapvd.maxTs,
                     minTs: deapvd.minTs,
                     hasdef: deapvd.hasDef_core,
+                    hasdefprog: deapvd.hasDefProg_core,
                     gen: (ts: number): MACDRet => {
                         const diff = diffpvd.get(ts), dea = deapvd.get(ts);
                         return { diff: diff, dea: dea, macd: 2 * (diff - dea) };

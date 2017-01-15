@@ -14,4 +14,6 @@
     <genrtprogall-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.genRtProgAll"></genrtprogall-task-display>
     <delay-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.delay"></delay-task-display>
     <afterrawinspect-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.afterRawInspect"></afterrawinspect-task-display>
+    <lastend-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.lastend"></lastend-task-display>
+    <lastendall-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.lastendAll"></lastendall-task-display>
 </div>

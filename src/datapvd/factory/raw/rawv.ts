@@ -13,6 +13,7 @@ function facOfFac(ref: string): IFactory<string, number> {
             .then(raw => new def.DataPvd<number>({
                 id: dpid(target),
                 hasdef: ts => raw.hasDef(ts),
+                hasdefprog: utility.validate.alwaysTrue,
                 gen: ts => getRawVal(ref, raw.get(ts)),
                 minTs: raw.minDateTs,
                 maxTs: raw.maxDateTs,

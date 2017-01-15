@@ -35,6 +35,7 @@ const rsiFac: IFactory<RSIFacPack, number> = {
                     maxTs: Aema.maxTs,
                     minTs: Aema.minTs,
                     hasdef: Aema.hasDef_core,
+                    hasdefprog: Aema.hasDefProg_core,
                     gen: (ts: number): number => {
                         return 100 * Aema.get(ts) / Bema.get(ts);
                     },

@@ -33,7 +33,7 @@ export const action = new Action<GenRtProgAllInput, GenRtProgAllInput, GenRtProg
     resolve: (input: GenRtProgAllInput): bb<GenRtProgAllOutput> => {
         const rtpCount = new Array<{ rtplanId: string, ct: number }>();
         return bb.all([
-            input.targets.length === 0 ? datasrc.mine.meta.stock.getNames().then(stocks => stocks.concat(config.maintainIdx)) : bb.resolve(input.targets),
+            (input.targets || []).length === 0 ? datasrc.mine.meta.stock.getNames().then(stocks => stocks.concat(config.maintainIdx)) : bb.resolve(input.targets),
             input.rtplanId ? dclient.rtplan.getAll({ _id: input.rtplanId, runrt: true }) : dclient.rtplan.getAll({ runrt: true })
         ])
             .then(data => {

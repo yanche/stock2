@@ -15,6 +15,7 @@ const growrateFac: IFactory<string, number> = {
                 maxTs: epvd.maxTs,
                 minTs: epvd.forwardTs(epvd.minTs, 1) || facutil.dateTsOffset(epvd.maxTs, 1),
                 hasdef: epvd.hasDef_core,
+                hasdefprog: epvd.hasDefProg_core,
                 gen: (ts) => {
                     const bts = epvd.backwardTs(ts, 1);
                     const be = epvd.get(bts);

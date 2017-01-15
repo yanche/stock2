@@ -20,6 +20,12 @@ function mmts(pack: OffsetFacPack, dp: def.DataPvd<any>) {
     else return { maxTs: dp.maxTs, minTs: dp.forwardTs(dp.minTs, -pack.N) || facutil.dateTsOffset(dp.maxTs, 1) };
 }
 
+function hasdefprog(pack: OffsetFacPack, dp: def.DataPvd<any>) {
+    if (pack.N === 0) return true;
+    else if (pack.N > 0) return false;
+    else return dp.forwardTs(dp.minTs, -pack.N - 1) != null;
+}
+
 // N>0, future value, N<0 past value
 const offsetFac: IFactory<OffsetFacPack, any> = facutil.dpTransform<OffsetFacPack, any, OffsetRet>({
     prefix: 'OFFSET',
@@ -33,6 +39,7 @@ const offsetFac: IFactory<OffsetFacPack, any> = facutil.dpTransform<OffsetFacPac
         const bts = dp.backwardTs(dp.maxTs, -pack.N - 1);
         return utility.prog.genProg('obj', { ts: bts, val: dp.get(bts) });
     },
+    hasdefprog: hasdefprog,
     mmts: mmts
 });
 
@@ -46,6 +53,7 @@ const offsetVFac: IFactory<OffsetFacPack, any> = facutil.dpTransform<OffsetFacPa
         if (pack.N > 0) throw new Error(`N greater than 0 for offset datapvd is not allowed in genrtprog`);
         return dp.get(dp.backwardTs(dp.maxTs, -pack.N - 1));
     },
+    hasdefprog: hasdefprog,
     mmts: mmts
 });
 
