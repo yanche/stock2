@@ -19,9 +19,9 @@ export function handler(h: utility.http.HttpPack):bb<void> {
 function getHandler(h: utility.http.HttpPack) {
     return bb.resolve()
         .then(() => {
-            const body = <BodyType>h.body;
+            const body = <BodyType>h.reqbody;
             const storage = body.storage, path = body.path, container = body.container;
-            if (!utility.validate.valueStr(container) || !utility.validate.valueStr(path) || path !== 'azure') {
+            if (!utility.validate.valueStr(container) || !utility.validate.valueStr(path) || storage !== 'azure') {
                 h.status = 400;
             }
             else {

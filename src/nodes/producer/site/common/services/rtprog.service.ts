@@ -8,8 +8,8 @@ import { RequestService } from './request.service';
 export class RtprogService {
     constructor(private _req: RequestService) { }
 
-    getAll(fields?: Object, orderby?: Object) {
-        return this._req.getAll<Rtprog>('rtprog', { hit: true }, fields, orderby);
+    getAll(filter: Object, fields?: Object, orderby?: Object) {
+        return this._req.getAll<Rtprog>('rtprog', filter, fields, orderby);
     }
 }
 

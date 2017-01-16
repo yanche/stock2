@@ -8,7 +8,7 @@ import { RequestService } from './request.service';
 export class RtprogoutService {
     constructor(private _req: RequestService) { }
 
-    getAll(filter?: Object, fields?: Object, orderby?: Object) {
+    getAll(filter: Object, fields?: Object, orderby?: Object) {
         return this._req.getAll<Rtprogout>('rtprogout', filter, fields, orderby);
     }
 }

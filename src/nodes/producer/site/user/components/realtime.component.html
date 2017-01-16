@@ -34,18 +34,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let t of rtprogs" (click)="console.log(t)">
+                <tr *ngFor="let t of rtprogs" (click)="click(t)">
                     <td>{{t.target}}</td>
-                    <td>{{(t.target | stockname).toString()}}</td>
-                    <td>{{((t.rtplanId | rtplan) || {comments:{}}).comments.sum}}</td>
-                    <td>{{t.target | lastts | dts2datekey}}</td>
-                    <td>{{t.target | rtprice : 'e' | dround}}</td>
+                    <td>{{t.name}}</td>
+                    <td>{{t.rtplan.comments.sum}}</td>
+                    <td>{{t.price.lastDts | dts2datekey}}</td>
+                    <td>{{t.price.prices.e | frac : 2}}</td>
                     <td>{{t.hitUpdateTs | datetime}}</td>
-                    <td>{{t.target | rtpriceupdatets | datetime}}</td>
+                    <td>{{t.price.priceUpdateTs | datetime}}</td>
                     <td>{{t.glong}}</td>
                     <td>
-                        <span>{{(t.rtplanId | rtplan).name}}</span>
-                        <a target="_blank" href="{{userutil.rtplanUrl(t.rtplanId)}}"><i class="flatbtn fa fa-info-circle"></i></a>
+                        <span>{{t.rtplan.name}}</span>
+                        <!--<a target="_blank" href="{{userutil.rtplanUrl(t.rtplanId)}}"><i class="flatbtn fa fa-info-circle"></i></a>-->
                     </td>
                 </tr>
             </tbody>
@@ -92,20 +92,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let t of rtprogouts" (click)="showDetail(t)">
+                <tr *ngFor="let t of rtprogouts" (click)="click(t)">
                     <td>{{t.target}}</td>
-                    <td>{{(t.target | stockname).toString()}}</td>
-                    <td>{{(t.rtplanId | rtplan).toVal().comments.sum}}</td>
-                    <td>{{(t.target | lastts).toVal() | datetime : constant.date.day}}</td>
-                    <td>{{(t.target | rtprice : 'e').toVal() | dround}}</td>
+                    <td>{{t.name}}</td>
+                    <td>{{t.rtplan.comments.sum}}</td>
+                    <td>{{t.price.lastDts | dts2datekey}}</td>
+                    <td>{{t.price.prices.e | frac : 2}}</td>
                     <td>{{t.hitUpdateTs | datetime}}</td>
-                    <td>{{(t.target | rtpriceupdatets).toVal() | datetime}}</td>
+                    <td>{{t.price.priceUpdateTs | datetime}}</td>
                     <td>{{t.glong}}</td>
-                    <td>{{t.sts | datetime : constant.date.day}}</td>
-                    <td>{{rev(t) | dround}}</td>
+                    <td>{{t.sdts | dts2datekey}}</td>
+                    <td>{{t.rev | frac : 4}}</td>
                     <td>
-                        <span>{{(t.rtplanId | rtplan).toVal().name}}</span>
-                        <a target="_blank" href="{{userutil.rtplanUrl(t.rtplanId)}}"><i class="flatbtn fa fa-info-circle"></i></a>
+                        <span>{{t.rtplan.name}}</span>
+                        <!--<a target="_blank" href="{{userutil.rtplanUrl(t.rtplanId)}}"><i class="flatbtn fa fa-info-circle"></i></a>-->
                     </td>
                 </tr>
             </tbody>

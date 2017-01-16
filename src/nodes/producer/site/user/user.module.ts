@@ -12,14 +12,9 @@ import { RealtimeComponent } from './components/realtime.component';
 import { HistoryComponent } from './components/history.component';
 import { StrategyComponent } from './components/strategy.component';
 
-import { StockNamePipe } from '../common/pipes/stockname.pipe';
 import { DateTimePipe } from '../common/pipes/datetime.pipe';
-import { RtplanPipe } from '../common/pipes/rtplan.pipe';
 import { Dts2DatekeyPipe } from '../common/pipes/dts2datekey.pipe';
-import { DroundPipe } from '../common/pipes/dround.pipe';
-import { LastDtsPipe } from './pipes/lastts.pipe';
-import { RtpricePipe } from './pipes/rtprice.pipe';
-import { RtpriceUpdateTsPipe } from './pipes/rtpriceupdatets.pipe';
+import { FracPipe } from '../common/pipes/frac.pipe';
 
 @NgModule({
   imports: [
@@ -55,14 +50,9 @@ import { RtpriceUpdateTsPipe } from './pipes/rtpriceupdatets.pipe';
     ActionButtonComponent,
     DropComponent,
     //pipes
-    StockNamePipe,
     DateTimePipe,
-    RtplanPipe,
     Dts2DatekeyPipe,
-    LastDtsPipe,
-    RtpricePipe,
-    DroundPipe,
-    RtpriceUpdateTsPipe
+    FracPipe
   ],
   bootstrap: [AppComponent]
 })

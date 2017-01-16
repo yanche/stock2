@@ -67,8 +67,8 @@ export const action = new Action<SimulateInput, SimulateInput, SimulateOutput>({
                                 return bb.all([
                                     datapvd.literal.resolve(utility.refReplace(rtplan.cpdefRef, { target: input.target })),
                                     datapvd.literal.resolve(utility.refReplace(rtplan.cpoutdefRef, { target: input.target })),
-                                    getConcerns((rtplan.concerns || {}).in, input.target),
-                                    getConcerns((rtplan.concerns || {}).out, input.target),
+                                    getConcerns((rtplan.concerns || {}).in || [], input.target),
+                                    getConcerns((rtplan.concerns || {}).out || [], input.target),
                                 ])
                                     .then(data => {
                                         const dpin: datapvd.def.DataPvd<boolean> = data[0], dpout: datapvd.def.DataPvd<boolean> = data[1];

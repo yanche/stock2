@@ -101,3 +101,26 @@ export class UtilityService {
             .then(() => null);
     }
 }
+
+export class Hub<T> {
+    private _fn: () => Promise<T>;
+    private _timeout: number;
+    private _promise: Promise<T>;
+    private _lastfetch: number;
+
+    constructor(fn: () => Promise<T>, timeout?: number) {
+        this._timeout = timeout;
+        this._fn = fn;
+        this._promise = null;
+    }
+
+    get(): Promise<T> {
+        if (this._promise == null || (this._timeout != null && (this._lastfetch + this._timeout < new Date().getTime()))) {
+            this._lastfetch = new Date().getTime();
+            return this._promise = this._fn();
+        }
+        else {
+            return this._promise;
+        }
+    }
+}

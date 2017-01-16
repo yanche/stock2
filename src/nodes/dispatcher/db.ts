@@ -97,7 +97,7 @@ const rtprogOutFields = {
 const rtpriceFields = {
     _id: 1, //_id here is target, serve as primary key
     lastEnd: 1,
-    lastTs: 1,
+    lastDts: 1,
     lastEndUpdateTs: 1,
     adjprices: 1,
     prices: 1,
