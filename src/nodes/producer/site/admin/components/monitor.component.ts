@@ -55,7 +55,7 @@ export class MonitorComponent {
   showingTask: Task = null;
   prevShowingTask: Task = null;
   showTask(task: Task) {
-    console.info(task);
+    this._log.info(task);
     this.prevShowingTask = this.showingTask;
     this.showingTask = ((this.showingTask === task) ? null : task);
   }

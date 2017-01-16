@@ -28,13 +28,13 @@
                 <span class="flatbtn" (click)="setMongoFilter(def.prop)">unset</span>
             </span>
             <span *ngIf="def.type === qFilterTypes.EXISTS">
-                <span class="flatbtn" (click)="setMongoFilter(def.prop, true, '$exists')">ex</span>
-                <span class="flatbtn" (click)="setMongoFilter(def.prop, false, '$exists')">nex</span>
+                <span class="flatbtn" (click)="setMongoFilter(def.prop, 'true', '$exists')">ex</span>
+                <span class="flatbtn" (click)="setMongoFilter(def.prop, 'false', '$exists')">nex</span>
                 <span class="flatbtn" (click)="setMongoFilter(def.prop)">unset</span>
             </span>
             <span *ngIf="def.type === qFilterTypes.BOOL">
-                <span class="flatbtn" (click)="setMongoFilter(def.prop, true)">true</span>
-                <span class="flatbtn" (click)="setMongoFilter(def.prop, false)">false</span>
+                <span class="flatbtn" (click)="setMongoFilter(def.prop, 'true')">true</span>
+                <span class="flatbtn" (click)="setMongoFilter(def.prop, 'false')">false</span>
                 <span class="flatbtn" (click)="setMongoFilter(def.prop)">unset</span>
             </span>
         </div>

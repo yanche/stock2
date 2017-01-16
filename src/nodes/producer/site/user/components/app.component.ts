@@ -10,13 +10,14 @@ import { RequestService } from '../../common/services/request.service';
 import { StorageProxyService } from '../../common/services/storageproxy.service';
 import { RtplanService } from '../../common/services/rtplan.service';
 import { StockListService } from '../../common/services/stocklist.service';
+import { SimulateService } from '../../common/services/simulate.service';
 import { RtpriceService } from '../services/rtprice.service';
 
 @Component({
   moduleId: module.id,
   selector: 'chi-wan',
   templateUrl: './app.component.html',
-  providers: [LogService, StockListService, UtilityService, UrlService, ConstService, RtplanService, RtprogService, RtprogoutService, RtpriceService, RequestService, StorageProxyService]
+  providers: [SimulateService, LogService, StockListService, UtilityService, UrlService, ConstService, RtplanService, RtprogService, RtprogoutService, RtpriceService, RequestService, StorageProxyService]
 })
 export class AppComponent {
   constructor(private _router: Router) { }

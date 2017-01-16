@@ -1,0 +1,29 @@
+<query-page [qfilter]="qfilter" [queryFn]="queryFn" [refreshTs]="refreshTs" [options]="queryOpt" (onPageDataChange)="setPageData($event)"></query-page>
+<div class="col-12">
+    <div class="col-1 datacell">Target</div>
+    <div class="col-1 datacell">Name</div>
+    <div class="col-1 datacell">Go Long</div>
+    <div class="col-2 datacell">Start Date</div>
+    <div class="col-2 datacell">Lastest/Close Date</div>
+    <div class="col-1 datacell">Rev</div>
+    <div class="col-2 datacell">Rtplan</div>
+    <div class="col-2 datacell">Simulated Date</div>
+</div>
+<div *ngFor="let t of pageData">
+    <div class="col-12 dataline" [ngClass]="{selected: showingSimulate === t, 'prev-selected': prevShowingSimulate === t}" (click)="showSimulate(t)">
+        <div class="col-1 datacell">{{t.target}}</div>
+        <div class="col-1 datacell">{{t._name}}</div>
+        <div class="col-1 datacell">{{t.glong}}</div>
+        <div class="col-2 datacell">{{t.sdts | dts2datekey}}</div>
+        <div class="col-2 datacell">
+            <span>{{(t.edts || t.sdts) | dts2datekey}}</span>
+            <span *ngIf="!t.closed">(unclosed)</span>
+        </div>
+        <div class="col-1 datacell">{{t._rev | frac : 4}}</div>
+        <div class="col-2 datacell">{{t._rtplan}}</div>
+        <div class="col-2 datacell">{{t.createdOn | datetime}}</div>
+    </div>
+    <div [ngClass]="{hidden: showingSimulate !== t}">
+        abc
+    </div>
+</div>
