@@ -116,15 +116,8 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-concurrent');
-    grunt.loadNpmTasks('grunt-html2js');
-    grunt.loadNpmTasks('grunt-jade');
     grunt.loadNpmTasks('grunt-exec');
     grunt.registerTask('dev', ['exec:jadeCompileDev', 'sass', 'copy']);
     //grunt.registerTask('prod', ['clean:all', 'sass', 'copy', 'html2js', 'concat:js', 'uglify', 'clean:html2js']);
