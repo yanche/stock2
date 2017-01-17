@@ -117,11 +117,11 @@ const wmCloudToken = 'bf1e63e10264f88d3d44541d4057e00981ced9e6042c19ce02c0b738f4
 
 let hypotestaggrAnalysisPort = 8083;
 let producerPort = 8081;
-let storageServiceHost = 'yanstock2.chinacloudapp.cn';
+let storageServiceHost = 'yanstock3.chinacloudapp.cn';
 let storageServicePort = 8082;
 let reporterPort = 80;
 let dispatcherPort = 1000;
-let dispatcherHost = 'yanstock2.chinacloudapp.cn';
+let dispatcherHost = 'yanstock3.chinacloudapp.cn';
 
 if (dev) {
     reporterPort = 8080;
