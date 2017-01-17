@@ -31,8 +31,8 @@ interface TimeBounds {
 
 function curDate() {
     //2016-1-16 早上10点
-    return new Date(Date.UTC(2017 ,0,16,2,0,0,0));
-    //return new Date();
+    //return new Date(Date.UTC(2017 ,0,16,2,0,0,0));
+    return new Date();
 }
 
 function getTimeBounds(): TimeBounds {
