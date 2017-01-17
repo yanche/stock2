@@ -120,6 +120,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-exec');
     grunt.registerTask('dev', ['exec:jadeCompileDev', 'sass', 'copy']);
+    grunt.registerTask('prod', ['exec:jadeCompile', 'sass', 'copy']);
     //grunt.registerTask('prod', ['clean:all', 'sass', 'copy', 'html2js', 'concat:js', 'uglify', 'clean:html2js']);
     //grunt.registerTask('default', ['prod', 'concurrent:def']);
 };
