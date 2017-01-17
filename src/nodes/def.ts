@@ -80,20 +80,30 @@ export interface RtprogOut {
     hitUpdateTs?: number;
 }
 
+export interface RtplanTrigger {
+    main?: string;
+    env?: Array<string>;
+    opt?: Array<string>;
+}
 export interface Rtplan {
     _id?: string;
-    targetScope?: { type?: string, pack?: any },
-    cpdefRef?: dp.literal.LiteralDP,
-    cpoutdefRef?: dp.literal.LiteralDP,
-    createdTs?: number,
-    comments?: Object, //structured
-    name?: string,
-    doc?: Object,
-    lookback?: Object, //回测数据
-    glong?: boolean,
-    startDateTs?: number,
-    runrt?: boolean, //是否跑实时数据提醒（目前仅龙虎榜不跑）
-    concerns?: { in?: Array<RtplanConcern>, out?: Array<RtplanConcern> },
+    targetScope?: { type?: string; pack?: any };
+    cpdefRef?: Object;
+    cpoutdefRef?: Object;
+    createdTs?: number;
+    comments?: {
+        sum?: string;
+        desc?: string;
+        trigger: RtplanTrigger;
+        triggerOut: RtplanTrigger;
+    }; //structured
+    name?: string;
+    doc?: Object;
+    lookback?: Object; //回测数据
+    glong?: boolean;
+    startDateTs?: number;
+    runrt?: boolean;
+    concerns?: { in?: Array<RtplanConcern>; out?: Array<RtplanConcern> };
 }
 
 export interface RtplanConcern {

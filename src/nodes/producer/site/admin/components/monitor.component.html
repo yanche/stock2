@@ -7,7 +7,7 @@
     <div class="col-3 datacell">Actions</div>
     <div class="col-1 datacell">Priority</div>
 </div>
-<div *ngFor="let t of pageData">
+<div *ngFor="let t of pageData" class="col-12">
     <div class="col-12 dataline" [ngClass]="{selected: showingTask === t, 'prev-selected': prevShowingTask === t}" (click)="showTask(t)">
         <div class="col-2 datacell">{{t.action.type}}</div>
         <div class="col-2 datacell">{{t.statusId | status}}</div>
@@ -21,7 +21,7 @@
         </div>
         <div class="col-1 datacell">{{t.priority}}</div>
     </div>
-    <div [ngClass]="{hidden: showingTask !== t}">
+    <div [ngClass]="{hidden: showingTask !== t}" class="detail-panel col-12">
         <task-display [task]="t"></task-display>
     </div>
 </div>

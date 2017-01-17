@@ -1,0 +1,22 @@
+<query-page [qfilter]="qfilter" [queryFn]="queryFn" [options]="queryOpt" (onPageDataChange)="setPageData($event)"></query-page>
+<div class="col-12">
+    <div class="col-3 datacell">Name</div>
+    <div class="col-3 datacell">Summary</div>
+    <div class="col-2 datacell">Targets</div>
+    <div class="col-1 datacell">Go long</div>
+    <div class="col-2 datacell">Created On</div>
+    <div class="col-1 datacell">Simulates</div>
+</div>
+<div *ngFor="let t of pageData" class="col-12">
+    <div class="col-12 dataline" [ngClass]="{selected: showingRtplan === t, 'prev-selected': prevShowingRtplan === t}" (click)="showRtplan(t)">
+        <div class="col-3 datacell">{{t.name}}</div>
+        <div class="col-3 datacell">{{t.summary}}</div>
+        <div class="col-2 datacell">{{t.targetScope}}</div>
+        <div class="col-1 datacell">{{t.glong}}</div>
+        <div class="col-2 datacell">{{t.createdTs | datetime}}</div>
+        <div class="col-1 datacell"><a target="_blank" href="/history?rtplanId={{t.id}}"><i class="fa fa-info"></i></a></div>
+    </div>
+    <div [ngClass]="{hidden: showingRtplan !== t}" class="detail-panel col-12">
+        abc
+    </div>
+</div>
