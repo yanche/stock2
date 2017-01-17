@@ -123,8 +123,6 @@ let reporterPort = 80;
 let dispatcherPort = 1000;
 let dispatcherHost = 'yanstock2.chinacloudapp.cn';
 
-dev = true;
-
 if (dev) {
     reporterPort = 8080;
     storageServiceHost = '127.0.0.1';
