@@ -14,9 +14,59 @@
         <div class="col-2 datacell">{{t.targetScope}}</div>
         <div class="col-1 datacell">{{t.glong}}</div>
         <div class="col-2 datacell">{{t.createdTs | datetime}}</div>
-        <div class="col-1 datacell"><a target="_blank" href="/history?rtplanId={{t.id}}"><i class="fa fa-info"></i></a></div>
+        <div class="col-1 datacell"><a target="_blank" href="/history?rtplanId={{t.id}}"><i class="fa fa-info flatbtn"></i></a></div>
     </div>
     <div [ngClass]="{hidden: showingRtplan !== t}" class="detail-panel col-12">
-        abc
+        <div>{{t.name}}</div>
+        <div>{{t.summary}}</div>
+        <div>{{t.desc}}</div>
+        <div>{{t.targetScope}}</div>
+        <br>
+        <div class="lightfont">Trigger</div>
+        <div class="lightfont">Main cause</div>
+        <div>{{t.trigger.main}}</div>
+        <div *ngIf="t.trigger.env.length > 0">
+            <div class="lightfont">Environment</div>
+            <div *ngFor="let r of t.trigger.env">{{r}}</div>
+        </div>
+        <div *ngIf="t.trigger.opt.length > 0">
+            <div class="lightfont">Optimization</div>
+            <div *ngFor="let r of t.trigger.opt">{{r}}</div>
+        </div>
+        <br>
+        <div class="lightfont">Trigger Out</div>
+        <div class="lightfont">Main cause</div>
+        <div>{{t.triggerOut.main}}</div>
+        <div *ngIf="t.triggerOut.env.length > 0">
+            <div class="lightfont">Environment</div>
+            <div *ngFor="let r of t.triggerOut.env">{{r}} </div>
+        </div>
+        <div *ngIf="t.triggerOut.opt.length > 0">
+            <div class="lightfont">Optimization</div>
+            <div *ngFor="let r of t.triggerOut.opt">{{r}} </div>
+        </div>
+        <br>
+        <div class="lightfont">Lookback</div>
+        <div *ngFor="let l of t.lookback">
+            <div class="lightfont">{{l.name}}</div>
+            <div *ngFor="let r of l.value" style="display: inline-block; padding: 5px;">
+                <div>
+                    <span class="lightfont mr10">value</span>
+                    <span class="mr10">{{r.val}}</span>
+                    <i class="fa fa-plus flatbtn" (click)="r._expand = !r._expand"></i>
+                </div>
+                <div><span class="lightfont mr10">rev GM</span><span>{{r.revGM}}</span></div>
+                <div><span class="lightfont mr10">rev Med</span><span>{{r.revMed}}</span></div>
+                <div><span class="lightfont mr10">day M</span><span>{{r.dayM}}</span></div>
+                <div *ngIf="r._expand">
+                    <div><span class="lightfont mr10">hrev GM</span><span>{{r.hrevGM}}</span></div>
+                    <div><span class="lightfont mr10">hrev Med</span><span>{{r.hrevMed}}</span></div>
+                    <div><span class="lightfont mr10">hday M</span><span>{{r.hdayM}}</span></div>
+                    <div><span class="lightfont mr10">lrev GM</span><span>{{r.lrevGM}}</span></div>
+                    <div><span class="lightfont mr10">lrev Med</span><span>{{r.lrevMed}}</span></div>
+                    <div><span class="lightfont mr10">lday M</span><span>{{r.ldayM}}</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

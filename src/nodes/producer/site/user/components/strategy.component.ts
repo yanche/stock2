@@ -27,7 +27,7 @@ export class StrategyComponent {
         summary: (rtplan.comments || { sum: '' }).sum,
         targetScope: rtplanTargets(rtplan),
         glong: rtplan.glong,
-        lookback: rtplan.lookback,
+        lookback: lookbackToArray(<any>rtplan.lookback),
         desc: (rtplan.comments || { desc: '' }).desc,
         trigger: rtplanTrigger(rtplan.comments.trigger),
         triggerOut: rtplanTrigger(rtplan.comments.triggerOut),
@@ -71,4 +71,12 @@ function rtplanTrigger(trigger: RtplanTrigger): RtplanTrigger {
     env: env,
     opt: opt
   };
+}
+
+function lookbackToArray(lookback: { [key: string]: Array<{ name: string, value: Array<Object> }> }) {
+  const ret = new Array<{ name: string, value: Array<Object> }>();
+  for (let i in lookback) {
+    ret.push({ name: i, value: lookback[i] });
+  }
+  return ret;
 }
