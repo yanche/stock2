@@ -117,7 +117,9 @@ export const dpType = {
         lt: 'c.lt',
         lte: 'c.lte',
         between: 'c.between',
-        not: 'c.not'
+        not: 'c.not',
+        offset: 'c.offset',
+        offsetv: 'c.offsetv'
     },
     basic: {
         ma: 'b.ma',
@@ -134,6 +136,7 @@ export const dpType = {
         break: 'x.break',
         localpeak: 'x.localpeak',
         deviate: 'x.deviate',
+        marketdays: 'x.marketdays'
     },
     ctx: {
         nhold: 'ctx.nhold',
