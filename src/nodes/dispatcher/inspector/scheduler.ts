@@ -8,7 +8,7 @@ import * as constant from '../../../const';
 import * as log from '../../../log';
 
 function genTodayScheduleTs(h: number, m: number): number {
-    var d = new Date();
+    const d = new Date();
     d.setUTCHours(h);
     d.setUTCMinutes(m);
     d.setUTCSeconds(0);
@@ -17,13 +17,13 @@ function genTodayScheduleTs(h: number, m: number): number {
 }
 
 function tsWeekend(ts: number) {
-    var x = new Date(ts).getUTCDay();
+    const x = new Date(ts).getUTCDay();
     return x == 0 || x == 6;
 }
 
 const systId = 'scheduledtasks';
 export function jobScheduleCheck() {
-    var lastOpTs: number = null;
+    let lastOpTs: number = null;
     db.systrack.getOne({ _id: systId }, { pack: 1 })
         .then(syst => {
             if (syst != null && syst.pack != null) lastOpTs = syst.pack;
