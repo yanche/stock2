@@ -9,7 +9,12 @@ import * as log from '../../../log';
 
 function genTodayScheduleTs(h: number, m: number): number {
     const d = new Date();
-    d.setUTCHours(h);
+    let hrs = d.getUTCHours() + 8;
+    if (hrs >= 24) {
+        d.setUTCDate(d.getUTCDate() + 1);
+        hrs -= 24;
+    }
+    d.setUTCHours(d.getUTCHours() - hrs + h);
     d.setUTCMinutes(m);
     d.setUTCSeconds(0);
     d.setUTCMilliseconds(0);
