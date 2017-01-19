@@ -26,7 +26,8 @@ const nholdFac: IFactory<NHoldFacPack, boolean> = {
                     hasdefprog: epvd.hasDefProg_core,
                     gen: (dts: number, ctx: def.DataGetterCtx) => {
                         if (ctx == null) return false;
-                        return epvd.forwardTs(ctx.sdts, pack.N) <= dts;
+                        const pts = epvd.forwardTs(ctx.sdts, pack.N);
+                        return pts != null && pts <= dts;
                     },
                     genrtprog: () => {
                         const sdts = epvd.backwardTs(epvd.maxTs, pack.N - 1);
