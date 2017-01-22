@@ -119,7 +119,8 @@ export const dpType = {
         between: 'c.between',
         not: 'c.not',
         offset: 'c.offset',
-        offsetv: 'c.offsetv'
+        offsetv: 'c.offsetv',
+        change: 'c.change'
     },
     basic: {
         ma: 'b.ma',

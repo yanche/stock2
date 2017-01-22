@@ -1,0 +1,770 @@
+{
+    "_id": "bdev-macd-gcross-100-200-80-nhold300-threshold0.4",
+    "name": "MACD(100-200-80)金叉底背离(DIFF)",
+    "targetScope": {
+        "type": "allstocks"
+    },
+    "cpdefRef": {
+        "type": "c.gt",
+        "pack": {
+            "list": [
+                {
+                    "type": "c.prop",
+                    "pack": {
+                        "dp": {
+                            "type": "x.deviate",
+                            "pack": {
+                                "threshold": 0.4,
+                                "emaxRate": 1,
+                                "maxDays": 1000,
+                                "peakRange": 30,
+                                "dp": {
+                                    "type": "r.end",
+                                    "pack": "{{target}}"
+                                },
+                                "dpT": {
+                                    "type": "c.and",
+                                    "pack": {
+                                        "defidx": 1,
+                                        "list": [
+                                            {
+                                                "type": "c.lt",
+                                                "pack": {
+                                                    "defidx": 0,
+                                                    "list": [
+                                                        {
+                                                            "type": "c.prop",
+                                                            "pack": {
+                                                                "prop": "diff",
+                                                                "dp": {
+                                                                    "type": "b.macd",
+                                                                    "pack": {
+                                                                        "Ns": 100,
+                                                                        "Nl": 200,
+                                                                        "Na": 80,
+                                                                        "dp": {
+                                                                            "type": "r.end",
+                                                                            "pack": "{{target}}"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "r.const",
+                                                            "pack": 0
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "c.change",
+                                                "pack": {
+                                                    "dp": {
+                                                        "type": "c.gt",
+                                                        "pack": {
+                                                            "list": [
+                                                                {
+                                                                    "type": "c.prop",
+                                                                    "pack": {
+                                                                        "prop": "macd",
+                                                                        "dp": {
+                                                                            "type": "b.macd",
+                                                                            "pack": {
+                                                                                "Ns": 100,
+                                                                                "Nl": 200,
+                                                                                "Na": 80,
+                                                                                "dp": {
+                                                                                    "type": "r.end",
+                                                                                    "pack": "{{target}}"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "r.const",
+                                                                    "pack": 0
+                                                                }
+                                                            ],
+                                                            "defidx": 0
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "dpV": {
+                                    "type": "c.prop",
+                                    "pack": {
+                                        "prop": "diff",
+                                        "dp": {
+                                            "type": "b.macd",
+                                            "pack": {
+                                                "Ns": 100,
+                                                "Nl": 200,
+                                                "Na": 80,
+                                                "dp": {
+                                                    "type": "r.end",
+                                                    "pack": "{{target}}"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "prop": "count"
+                    }
+                },
+                {
+                    "type": "r.const",
+                    "pack": 0
+                }
+            ],
+            "defidx": 0
+        }
+    },
+    "cpoutdefRef": {
+        "type": "ctx.nhold",
+        "pack": {
+            "N": 300,
+            "target": "{{target}}"
+        }
+    },
+    "comments": {
+        "sum": "",
+        "desc": "MACD(100-200-80)金叉底背离(DIFF)",
+        "trigger": {
+            "main": "MACD(100-200-80)金叉底背离(DIFF)",
+            "env": [
+                "最低阈值低于0.3(minThd)"
+            ],
+            "opt": [
+                "多重底背离",
+                "平均阈值低于0.2(thdM)",
+                "几何平均阈值低于0.2(thdGM)",
+                "最高阈值低于0.25(maxThd)",
+                "小盘股"
+            ]
+        },
+        "triggerOut": {
+            "main": "固定持有300交易日"
+        }
+    },
+    "concerns": {
+        "in": [
+            {
+                "name": "背离信息",
+                "dpRef": {
+                    "type": "x.deviate",
+                    "pack": {
+                        "threshold": 0.4,
+                        "emaxRate": 1,
+                        "maxDays": 1000,
+                        "peakRange": 30,
+                        "dp": {
+                            "type": "r.end",
+                            "pack": "{{target}}"
+                        },
+                        "dpT": {
+                            "type": "c.and",
+                            "pack": {
+                                "defidx": 1,
+                                "list": [
+                                    {
+                                        "type": "c.lt",
+                                        "pack": {
+                                            "defidx": 0,
+                                            "list": [
+                                                {
+                                                    "type": "c.prop",
+                                                    "pack": {
+                                                        "prop": "diff",
+                                                        "dp": {
+                                                            "type": "b.macd",
+                                                            "pack": {
+                                                                "Ns": 100,
+                                                                "Nl": 200,
+                                                                "Na": 80,
+                                                                "dp": {
+                                                                    "type": "r.end",
+                                                                    "pack": "{{target}}"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "type": "r.const",
+                                                    "pack": 0
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "c.change",
+                                        "pack": {
+                                            "dp": {
+                                                "type": "c.gt",
+                                                "pack": {
+                                                    "list": [
+                                                        {
+                                                            "type": "c.prop",
+                                                            "pack": {
+                                                                "prop": "macd",
+                                                                "dp": {
+                                                                    "type": "b.macd",
+                                                                    "pack": {
+                                                                        "Ns": 100,
+                                                                        "Nl": 200,
+                                                                        "Na": 80,
+                                                                        "dp": {
+                                                                            "type": "r.end",
+                                                                            "pack": "{{target}}"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "r.const",
+                                                            "pack": 0
+                                                        }
+                                                    ],
+                                                    "defidx": 0
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "dpV": {
+                            "type": "c.prop",
+                            "pack": {
+                                "prop": "diff",
+                                "dp": {
+                                    "type": "b.macd",
+                                    "pack": {
+                                        "Ns": 100,
+                                        "Nl": 200,
+                                        "Na": 80,
+                                        "dp": {
+                                            "type": "r.end",
+                                            "pack": "{{target}}"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "view": "raw"
+            },
+            {
+                "name": "相对市值",
+                "dpRef": {
+                    "type": "c.div",
+                    "pack": {
+                        "defidx": 0,
+                        "list": [
+                            {
+                                "type": "r.marketvalue",
+                                "pack": "{{target}}"
+                            },
+                            {
+                                "pack": "000001.ZICN",
+                                "type": "r.end"
+                            },
+                            {
+                                "type": "r.const",
+                                "pack": 0.01
+                            }
+                        ]
+                    }
+                },
+                "view": "raw"
+            }
+        ],
+        "out": []
+    },
+    "doc": null,
+    "lookback": {
+        "全部": [
+            {
+                "val": "全部",
+                "total": 2727,
+                "revGM": 1.4349,
+                "revMed": 1.4198,
+                "dayM": 504.9058,
+                "hrevGM": 1.957,
+                "hrevMed": 1.7307,
+                "hdayM": 334.604,
+                "lrevGM": 0.7585,
+                "lrevMed": 0.8268,
+                "ldayM": 149.963
+            }
+        ],
+        "收益": [
+            {
+                "val": "盈利",
+                "total": 1957,
+                "revGM": 1.8832,
+                "revMed": 1.7244,
+                "dayM": 519.8181,
+                "hrevGM": 2.4113,
+                "hrevMed": 2.1838,
+                "hdayM": 430.1405,
+                "lrevGM": 0.8479,
+                "lrevMed": 0.8847,
+                "ldayM": 91.2018
+            },
+            {
+                "val": "亏损",
+                "total": 770,
+                "revGM": 0.7191,
+                "revMed": 0.744,
+                "dayM": 467.0052,
+                "hrevGM": 1.1511,
+                "hrevMed": 1.1086,
+                "hdayM": 91.7922,
+                "lrevGM": 0.5715,
+                "lrevMed": 0.5776,
+                "ldayM": 299.3078
+            }
+        ],
+        "相对市值": [
+            {
+                "val": "(~, 0.3]",
+                "total": 64,
+                "revGM": 2.2933,
+                "revMed": 2.101,
+                "dayM": 910.5625,
+                "hrevGM": 3.1613,
+                "hrevMed": 2.4656,
+                "hdayM": 731.8125,
+                "lrevGM": 0.7632,
+                "lrevMed": 0.8426,
+                "ldayM": 128.3594
+            },
+            {
+                "val": "(0.3, 0.6]",
+                "total": 388,
+                "revGM": 1.5134,
+                "revMed": 1.4897,
+                "dayM": 546.8093,
+                "hrevGM": 1.954,
+                "hrevMed": 1.7539,
+                "hdayM": 393.3067,
+                "lrevGM": 0.7226,
+                "lrevMed": 0.7838,
+                "ldayM": 140.8428
+            },
+            {
+                "val": "(0.6, 1.5]",
+                "total": 1247,
+                "revGM": 1.4268,
+                "revMed": 1.4477,
+                "dayM": 494.2326,
+                "hrevGM": 1.9455,
+                "hrevMed": 1.7491,
+                "hdayM": 324.5309,
+                "lrevGM": 0.7456,
+                "lrevMed": 0.8207,
+                "ldayM": 144.4322
+            },
+            {
+                "val": "(1.5, 3]",
+                "total": 554,
+                "revGM": 1.4155,
+                "revMed": 1.4081,
+                "dayM": 482.852,
+                "hrevGM": 1.972,
+                "hrevMed": 1.7636,
+                "hdayM": 312.944,
+                "lrevGM": 0.7747,
+                "lrevMed": 0.8366,
+                "ldayM": 153.1011
+            },
+            {
+                "val": "(3, 6]",
+                "total": 247,
+                "revGM": 1.3398,
+                "revMed": 1.2628,
+                "dayM": 472.9555,
+                "hrevGM": 1.8595,
+                "hrevMed": 1.5765,
+                "hdayM": 295.2267,
+                "lrevGM": 0.7955,
+                "lrevMed": 0.8316,
+                "ldayM": 178.3198
+            },
+            {
+                "val": "(6, 12]",
+                "total": 115,
+                "revGM": 1.3572,
+                "revMed": 1.3296,
+                "dayM": 471.8261,
+                "hrevGM": 1.8904,
+                "hrevMed": 1.611,
+                "hdayM": 282.5913,
+                "lrevGM": 0.8141,
+                "lrevMed": 0.868,
+                "ldayM": 155.913
+            },
+            {
+                "val": "(12, ~]",
+                "total": 112,
+                "revGM": 1.2815,
+                "revMed": 1.274,
+                "dayM": 460.2857,
+                "hrevGM": 1.7829,
+                "hrevMed": 1.5119,
+                "hdayM": 263.8036,
+                "lrevGM": 0.8165,
+                "lrevMed": 0.8496,
+                "ldayM": 171.3125
+            }
+        ],
+        "背离数": [
+            {
+                "val": "1",
+                "total": 1245,
+                "revGM": 1.292,
+                "revMed": 1.3118,
+                "dayM": 492.8104,
+                "hrevGM": 1.792,
+                "hrevMed": 1.5636,
+                "hdayM": 305.959,
+                "lrevGM": 0.7458,
+                "lrevMed": 0.8062,
+                "ldayM": 174.6522
+            },
+            {
+                "val": "2",
+                "total": 784,
+                "revGM": 1.4634,
+                "revMed": 1.4865,
+                "dayM": 497.625,
+                "hrevGM": 1.9866,
+                "hrevMed": 1.7925,
+                "hdayM": 333.0204,
+                "lrevGM": 0.7547,
+                "lrevMed": 0.8368,
+                "ldayM": 140.0842
+            },
+            {
+                "val": "3",
+                "total": 470,
+                "revGM": 1.6022,
+                "revMed": 1.5284,
+                "dayM": 524.7404,
+                "hrevGM": 2.1503,
+                "hrevMed": 1.9236,
+                "hdayM": 370.0936,
+                "lrevGM": 0.7741,
+                "lrevMed": 0.862,
+                "ldayM": 123.8
+            },
+            {
+                "val": "4",
+                "total": 169,
+                "revGM": 1.7994,
+                "revMed": 1.8341,
+                "dayM": 518.2426,
+                "hrevGM": 2.3313,
+                "hrevMed": 2.1522,
+                "hdayM": 384.5917,
+                "lrevGM": 0.7952,
+                "lrevMed": 0.8531,
+                "ldayM": 112.6923
+            },
+            {
+                "val": "5",
+                "total": 52,
+                "revGM": 2.1554,
+                "revMed": 2.0357,
+                "dayM": 634.4038,
+                "hrevGM": 2.8259,
+                "hrevMed": 2.8187,
+                "hdayM": 511.8462,
+                "lrevGM": 0.8522,
+                "lrevMed": 0.8921,
+                "ldayM": 81.9038
+            },
+            {
+                "val": "6",
+                "total": 7,
+                "revGM": 2.5521,
+                "revMed": 2.7067,
+                "dayM": 855.8571,
+                "hrevGM": 3.9228,
+                "hrevMed": 3.5267,
+                "hdayM": 700.2857,
+                "lrevGM": 0.9349,
+                "lrevMed": 0.9694,
+                "ldayM": 27.2857
+            }
+        ],
+        "最低阈值": [
+            {
+                "val": "(~, 0.1]",
+                "total": 541,
+                "revGM": 1.8041,
+                "revMed": 1.767,
+                "dayM": 540.9889,
+                "hrevGM": 2.5468,
+                "hrevMed": 2.5106,
+                "hdayM": 392.5619,
+                "lrevGM": 0.8255,
+                "lrevMed": 0.8956,
+                "ldayM": 107.4806
+            },
+            {
+                "val": "(0.1, 0.2]",
+                "total": 1017,
+                "revGM": 1.4281,
+                "revMed": 1.4083,
+                "dayM": 503.6047,
+                "hrevGM": 1.9115,
+                "hrevMed": 1.7189,
+                "hdayM": 336.0708,
+                "lrevGM": 0.7516,
+                "lrevMed": 0.8248,
+                "ldayM": 145.2104
+            },
+            {
+                "val": "(0.2, 0.25]",
+                "total": 601,
+                "revGM": 1.3563,
+                "revMed": 1.3798,
+                "dayM": 491.5108,
+                "hrevGM": 1.81,
+                "hrevMed": 1.617,
+                "hdayM": 317.6356,
+                "lrevGM": 0.747,
+                "lrevMed": 0.8062,
+                "ldayM": 162.0666
+            },
+            {
+                "val": "(0.25, 0.3]",
+                "total": 568,
+                "revGM": 1.2352,
+                "revMed": 1.2104,
+                "dayM": 487.0405,
+                "hrevGM": 1.7248,
+                "hrevMed": 1.4958,
+                "hdayM": 294.7289,
+                "lrevGM": 0.723,
+                "lrevMed": 0.7766,
+                "ldayM": 186.1285
+            }
+        ],
+        "最高阈值": [
+            {
+                "val": "(~, 0.1]",
+                "total": 291,
+                "revGM": 1.7107,
+                "revMed": 1.6796,
+                "dayM": 522.0687,
+                "hrevGM": 2.4715,
+                "hrevMed": 2.4994,
+                "hdayM": 367.512,
+                "lrevGM": 0.8358,
+                "lrevMed": 0.8967,
+                "ldayM": 117.0722
+            },
+            {
+                "val": "(0.1, 0.2]",
+                "total": 531,
+                "revGM": 1.4804,
+                "revMed": 1.425,
+                "dayM": 508.9115,
+                "hrevGM": 2.0488,
+                "hrevMed": 1.803,
+                "hdayM": 335.806,
+                "lrevGM": 0.7669,
+                "lrevMed": 0.8446,
+                "ldayM": 148.7853
+            },
+            {
+                "val": "(0.2, 0.25]",
+                "total": 471,
+                "revGM": 1.3729,
+                "revMed": 1.3936,
+                "dayM": 501.9788,
+                "hrevGM": 1.8865,
+                "hrevMed": 1.6406,
+                "hdayM": 320.586,
+                "lrevGM": 0.7587,
+                "lrevMed": 0.8288,
+                "ldayM": 163.4013
+            },
+            {
+                "val": "(0.25, 0.3]",
+                "total": 636,
+                "revGM": 1.2944,
+                "revMed": 1.302,
+                "dayM": 491.6321,
+                "hrevGM": 1.7937,
+                "hrevMed": 1.557,
+                "hdayM": 309.4528,
+                "lrevGM": 0.7295,
+                "lrevMed": 0.792,
+                "ldayM": 172.5236
+            },
+            {
+                "val": "(0.3, ~]",
+                "total": 798,
+                "revGM": 1.4689,
+                "revMed": 1.4527,
+                "dayM": 508.2882,
+                "hrevGM": 1.9094,
+                "hrevMed": 1.7222,
+                "hdayM": 350.1228,
+                "lrevGM": 0.7496,
+                "lrevMed": 0.8176,
+                "ldayM": 136.8283
+            }
+        ],
+        "平均阈值": [
+            {
+                "val": "(~, 0.1]",
+                "total": 338,
+                "revGM": 1.7444,
+                "revMed": 1.7181,
+                "dayM": 527.5148,
+                "hrevGM": 2.4955,
+                "hrevMed": 2.5359,
+                "hdayM": 375.7101,
+                "lrevGM": 0.8344,
+                "lrevMed": 0.8997,
+                "ldayM": 114.7308
+            },
+            {
+                "val": "(0.1, 0.2]",
+                "total": 681,
+                "revGM": 1.5378,
+                "revMed": 1.4715,
+                "dayM": 519.3877,
+                "hrevGM": 2.1364,
+                "hrevMed": 1.8966,
+                "hdayM": 351.1292,
+                "lrevGM": 0.775,
+                "lrevMed": 0.8503,
+                "ldayM": 140.7959
+            },
+            {
+                "val": "(0.2, 0.25]",
+                "total": 696,
+                "revGM": 1.3556,
+                "revMed": 1.3945,
+                "dayM": 498.7845,
+                "hrevGM": 1.8177,
+                "hrevMed": 1.6442,
+                "hdayM": 325.7773,
+                "lrevGM": 0.7437,
+                "lrevMed": 0.8139,
+                "ldayM": 154.148
+            },
+            {
+                "val": "(0.25, 0.3]",
+                "total": 820,
+                "revGM": 1.3134,
+                "revMed": 1.2927,
+                "dayM": 493.1707,
+                "hrevGM": 1.7668,
+                "hrevMed": 1.5438,
+                "hdayM": 313.6793,
+                "lrevGM": 0.7296,
+                "lrevMed": 0.7806,
+                "ldayM": 170.3756
+            },
+            {
+                "val": "(0.3, ~]",
+                "total": 192,
+                "revGM": 1.4277,
+                "revMed": 1.4452,
+                "dayM": 486.0469,
+                "hrevGM": 1.8897,
+                "hrevMed": 1.6926,
+                "hdayM": 324.9896,
+                "lrevGM": 0.7537,
+                "lrevMed": 0.8304,
+                "ldayM": 142.151
+            }
+        ],
+        "几何平均阈值": [
+            {
+                "val": "(~, 0.1]",
+                "total": 367,
+                "revGM": 1.7527,
+                "revMed": 1.7277,
+                "dayM": 530.5913,
+                "hrevGM": 2.5257,
+                "hrevMed": 2.5517,
+                "hdayM": 377.5722,
+                "lrevGM": 0.8315,
+                "lrevMed": 0.9017,
+                "ldayM": 111.5804
+            },
+            {
+                "val": "(0.1, 0.2]",
+                "total": 737,
+                "revGM": 1.5062,
+                "revMed": 1.4402,
+                "dayM": 514.5482,
+                "hrevGM": 2.0753,
+                "hrevMed": 1.8293,
+                "hdayM": 344.3718,
+                "lrevGM": 0.7685,
+                "lrevMed": 0.8475,
+                "ldayM": 143.2958
+            },
+            {
+                "val": "(0.2, 0.25]",
+                "total": 693,
+                "revGM": 1.3649,
+                "revMed": 1.3948,
+                "dayM": 499.3348,
+                "hrevGM": 1.8151,
+                "hrevMed": 1.6499,
+                "hdayM": 330.189,
+                "lrevGM": 0.7438,
+                "lrevMed": 0.8118,
+                "ldayM": 153.1183
+            },
+            {
+                "val": "(0.25, 0.3]",
+                "total": 786,
+                "revGM": 1.3067,
+                "revMed": 1.2855,
+                "dayM": 492.57,
+                "hrevGM": 1.7621,
+                "hrevMed": 1.5321,
+                "hdayM": 311.8906,
+                "lrevGM": 0.7311,
+                "lrevMed": 0.7819,
+                "ldayM": 172.8537
+            },
+            {
+                "val": "(0.3, ~]",
+                "total": 144,
+                "revGM": 1.4264,
+                "revMed": 1.4498,
+                "dayM": 484.2361,
+                "hrevGM": 1.9259,
+                "hrevMed": 1.7076,
+                "hdayM": 320.3264,
+                "lrevGM": 0.7546,
+                "lrevMed": 0.8455,
+                "ldayM": 141.7778
+            }
+        ]
+    },
+    "glong": true,
+    "startDateTs": 16832,
+    "runrt": true
+}
