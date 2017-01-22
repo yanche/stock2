@@ -1,0 +1,872 @@
+{
+    "_id": "stocks-bdev-macd-dea-100-200-80-nhold300-threshold0.4",
+    "name": "MACD(100-200-80)底背离(DEA)",
+    "targetScope": {
+        "type": "allstocks"
+    },
+    "cpdefRef": {
+        "type": "c.and",
+        "pack": {
+            "list": [
+                {
+                    "type": "c.gt",
+                    "pack": {
+                        "list": [
+                            {
+                                "type": "c.prop",
+                                "pack": {
+                                    "dp": {
+                                        "type": "x.deviate",
+                                        "pack": {
+                                            "threshold": 0.4,
+                                            "emaxRate": 1,
+                                            "maxDays": 1000,
+                                            "peakRange": 30,
+                                            "dp": {
+                                                "type": "r.end",
+                                                "pack": "{{target}}"
+                                            },
+                                            "dpT": {
+                                                "type": "c.and",
+                                                "pack": {
+                                                    "defidx": 1,
+                                                    "list": [
+                                                        {
+                                                            "type": "c.lt",
+                                                            "pack": {
+                                                                "defidx": 0,
+                                                                "list": [
+                                                                    {
+                                                                        "type": "c.prop",
+                                                                        "pack": {
+                                                                            "prop": "dea",
+                                                                            "dp": {
+                                                                                "type": "b.macd",
+                                                                                "pack": {
+                                                                                    "Ns": 100,
+                                                                                    "Nl": 200,
+                                                                                    "Na": 80,
+                                                                                    "dp": {
+                                                                                        "type": "r.end",
+                                                                                        "pack": "{{target}}"
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "r.const",
+                                                                        "pack": 0
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "c.prop",
+                                                            "pack": {
+                                                                "prop": "peak",
+                                                                "dp": {
+                                                                    "type": "x.localpeak",
+                                                                    "pack": {
+                                                                        "range": 30,
+                                                                        "peak": false,
+                                                                        "dp": {
+                                                                            "type": "c.prop",
+                                                                            "pack": {
+                                                                                "prop": "dea",
+                                                                                "dp": {
+                                                                                    "type": "b.macd",
+                                                                                    "pack": {
+                                                                                        "Ns": 100,
+                                                                                        "Nl": 200,
+                                                                                        "Na": 80,
+                                                                                        "dp": {
+                                                                                            "type": "r.end",
+                                                                                            "pack": "{{target}}"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "dpV": {
+                                                "type": "c.prop",
+                                                "pack": {
+                                                    "prop": "dea",
+                                                    "dp": {
+                                                        "type": "b.macd",
+                                                        "pack": {
+                                                            "Ns": 100,
+                                                            "Nl": 200,
+                                                            "Na": 80,
+                                                            "dp": {
+                                                                "type": "r.end",
+                                                                "pack": "{{target}}"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "prop": "count"
+                                }
+                            },
+                            {
+                                "type": "r.const",
+                                "pack": 0
+                            }
+                        ],
+                        "defidx": 0
+                    }
+                },
+                {
+                    "type": "c.lt",
+                    "pack": {
+                        "list": [
+                            {
+                                "type": "c.prop",
+                                "pack": {
+                                    "dp": {
+                                        "type": "x.deviate",
+                                        "pack": {
+                                            "threshold": 0.4,
+                                            "emaxRate": 1,
+                                            "maxDays": 1000,
+                                            "peakRange": 30,
+                                            "dp": {
+                                                "type": "r.end",
+                                                "pack": "{{target}}"
+                                            },
+                                            "dpT": {
+                                                "type": "c.and",
+                                                "pack": {
+                                                    "defidx": 1,
+                                                    "list": [
+                                                        {
+                                                            "type": "c.lt",
+                                                            "pack": {
+                                                                "defidx": 0,
+                                                                "list": [
+                                                                    {
+                                                                        "type": "c.prop",
+                                                                        "pack": {
+                                                                            "prop": "dea",
+                                                                            "dp": {
+                                                                                "type": "b.macd",
+                                                                                "pack": {
+                                                                                    "Ns": 100,
+                                                                                    "Nl": 200,
+                                                                                    "Na": 80,
+                                                                                    "dp": {
+                                                                                        "type": "r.end",
+                                                                                        "pack": "{{target}}"
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "r.const",
+                                                                        "pack": 0
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "c.prop",
+                                                            "pack": {
+                                                                "prop": "peak",
+                                                                "dp": {
+                                                                    "type": "x.localpeak",
+                                                                    "pack": {
+                                                                        "range": 30,
+                                                                        "peak": false,
+                                                                        "dp": {
+                                                                            "type": "c.prop",
+                                                                            "pack": {
+                                                                                "prop": "dea",
+                                                                                "dp": {
+                                                                                    "type": "b.macd",
+                                                                                    "pack": {
+                                                                                        "Ns": 100,
+                                                                                        "Nl": 200,
+                                                                                        "Na": 80,
+                                                                                        "dp": {
+                                                                                            "type": "r.end",
+                                                                                            "pack": "{{target}}"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "dpV": {
+                                                "type": "c.prop",
+                                                "pack": {
+                                                    "prop": "dea",
+                                                    "dp": {
+                                                        "type": "b.macd",
+                                                        "pack": {
+                                                            "Ns": 100,
+                                                            "Nl": 200,
+                                                            "Na": 80,
+                                                            "dp": {
+                                                                "type": "r.end",
+                                                                "pack": "{{target}}"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "prop": "minThd"
+                                }
+                            },
+                            {
+                                "type": "r.const",
+                                "pack": 0.25
+                            }
+                        ],
+                        "defidx": 0
+                    }
+                }
+            ],
+            "defidx": 0
+        }
+    },
+    "cpoutdefRef": {
+        "type": "ctx.nhold",
+        "pack": {
+            "N": 300,
+            "target": "{{target}}"
+        }
+    },
+    "comments": {
+        "sum": "",
+        "desc": "MACD(100-200-80)底背离(DEA)",
+        "trigger": {
+            "main": "MACD(100-200-80)底背离(DEA)",
+            "env": [
+                "最低阈值低于0.25(minThd)"
+            ],
+            "opt": [
+                "多重底背离",
+                "小盘股"
+            ]
+        },
+        "triggerOut": {
+            "main": "固定持有300交易日"
+        }
+    },
+    "concerns": {
+        "in": [
+            {
+                "name": "背离信息",
+                "dpRef": {
+                    "type": "x.deviate",
+                    "pack": {
+                        "threshold": 0.4,
+                        "emaxRate": 1,
+                        "maxDays": 1000,
+                        "peakRange": 30,
+                        "dp": {
+                            "type": "r.end",
+                            "pack": "{{target}}"
+                        },
+                        "dpT": {
+                            "type": "c.and",
+                            "pack": {
+                                "defidx": 1,
+                                "list": [
+                                    {
+                                        "type": "c.lt",
+                                        "pack": {
+                                            "defidx": 0,
+                                            "list": [
+                                                {
+                                                    "type": "c.prop",
+                                                    "pack": {
+                                                        "prop": "dea",
+                                                        "dp": {
+                                                            "type": "b.macd",
+                                                            "pack": {
+                                                                "Ns": 100,
+                                                                "Nl": 200,
+                                                                "Na": 80,
+                                                                "dp": {
+                                                                    "type": "r.end",
+                                                                    "pack": "{{target}}"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "type": "r.const",
+                                                    "pack": 0
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "c.prop",
+                                        "pack": {
+                                            "prop": "peak",
+                                            "dp": {
+                                                "type": "x.localpeak",
+                                                "pack": {
+                                                    "range": 30,
+                                                    "peak": false,
+                                                    "dp": {
+                                                        "type": "c.prop",
+                                                        "pack": {
+                                                            "prop": "dea",
+                                                            "dp": {
+                                                                "type": "b.macd",
+                                                                "pack": {
+                                                                    "Ns": 100,
+                                                                    "Nl": 200,
+                                                                    "Na": 80,
+                                                                    "dp": {
+                                                                        "type": "r.end",
+                                                                        "pack": "{{target}}"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "dpV": {
+                            "type": "c.prop",
+                            "pack": {
+                                "prop": "dea",
+                                "dp": {
+                                    "type": "b.macd",
+                                    "pack": {
+                                        "Ns": 100,
+                                        "Nl": 200,
+                                        "Na": 80,
+                                        "dp": {
+                                            "type": "r.end",
+                                            "pack": "{{target}}"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "view": "raw"
+            },
+            {
+                "name": "相对市值",
+                "dpRef": {
+                    "type": "c.div",
+                    "pack": {
+                        "defidx": 0,
+                        "list": [
+                            {
+                                "type": "r.marketvalue",
+                                "pack": "{{target}}"
+                            },
+                            {
+                                "pack": "000001.ZICN",
+                                "type": "r.end"
+                            },
+                            {
+                                "type": "r.const",
+                                "pack": 0.01
+                            }
+                        ]
+                    }
+                },
+                "view": "raw"
+            }
+        ],
+        "out": []
+    },
+    "doc": null,
+    "lookback": {
+        "全部": [
+            {
+                "val": "全部",
+                "total": 1816,
+                "revGM": 1.469,
+                "revMed": 1.4478,
+                "dayM": 509.196,
+                "hrevGM": 2.0031,
+                "hrevMed": 1.7994,
+                "hdayM": 339.4356,
+                "lrevGM": 0.7629,
+                "lrevMed": 0.8358,
+                "ldayM": 145.484
+            }
+        ],
+        "收益": [
+            {
+                "val": "盈利",
+                "total": 1329,
+                "revGM": 1.9023,
+                "revMed": 1.7379,
+                "dayM": 524.3296,
+                "hrevGM": 2.4584,
+                "hrevMed": 2.2169,
+                "hdayM": 431.9955,
+                "lrevGM": 0.8492,
+                "lrevMed": 0.8866,
+                "ldayM": 93.3499
+            },
+            {
+                "val": "亏损",
+                "total": 487,
+                "revGM": 0.7257,
+                "revMed": 0.7473,
+                "dayM": 467.8973,
+                "hrevGM": 1.1454,
+                "hrevMed": 1.0963,
+                "hdayM": 86.8439,
+                "lrevGM": 0.5695,
+                "lrevMed": 0.5748,
+                "ldayM": 287.7556
+            }
+        ],
+        "相对市值": [
+            {
+                "val": "(~, 0.3]",
+                "total": 52,
+                "revGM": 2.1597,
+                "revMed": 2.0305,
+                "dayM": 839.0962,
+                "hrevGM": 2.8811,
+                "hrevMed": 2.2189,
+                "hdayM": 668.1346,
+                "lrevGM": 0.7489,
+                "lrevMed": 0.8168,
+                "ldayM": 135.5962
+            },
+            {
+                "val": "(0.3, 0.6]",
+                "total": 286,
+                "revGM": 1.5891,
+                "revMed": 1.5451,
+                "dayM": 554.4371,
+                "hrevGM": 2.0288,
+                "hrevMed": 1.8273,
+                "hdayM": 410.4126,
+                "lrevGM": 0.7334,
+                "lrevMed": 0.8051,
+                "ldayM": 135.3252
+            },
+            {
+                "val": "(0.6, 1.5]",
+                "total": 781,
+                "revGM": 1.4618,
+                "revMed": 1.4677,
+                "dayM": 497.5685,
+                "hrevGM": 1.9826,
+                "hrevMed": 1.818,
+                "hdayM": 326.5391,
+                "lrevGM": 0.7491,
+                "lrevMed": 0.8326,
+                "ldayM": 137.1268
+            },
+            {
+                "val": "(1.5, 3]",
+                "total": 371,
+                "revGM": 1.4342,
+                "revMed": 1.4411,
+                "dayM": 486.1051,
+                "hrevGM": 2.0306,
+                "hrevMed": 1.8856,
+                "hdayM": 316.0512,
+                "lrevGM": 0.7802,
+                "lrevMed": 0.8547,
+                "ldayM": 151.8032
+            },
+            {
+                "val": "(3, 6]",
+                "total": 169,
+                "revGM": 1.3505,
+                "revMed": 1.265,
+                "dayM": 473.8402,
+                "hrevGM": 1.8878,
+                "hrevMed": 1.6462,
+                "hdayM": 305.7633,
+                "lrevGM": 0.7982,
+                "lrevMed": 0.8359,
+                "ldayM": 171.2249
+            },
+            {
+                "val": "(6, 12]",
+                "total": 81,
+                "revGM": 1.3422,
+                "revMed": 1.3245,
+                "dayM": 473.037,
+                "hrevGM": 1.8802,
+                "hrevMed": 1.611,
+                "hdayM": 264.0494,
+                "lrevGM": 0.8108,
+                "lrevMed": 0.8618,
+                "ldayM": 160.8148
+            },
+            {
+                "val": "(12, ~]",
+                "total": 76,
+                "revGM": 1.3183,
+                "revMed": 1.274,
+                "dayM": 462.5921,
+                "hrevGM": 1.8896,
+                "hrevMed": 1.5119,
+                "hdayM": 249.3421,
+                "lrevGM": 0.8209,
+                "lrevMed": 0.8422,
+                "ldayM": 171.9342
+            }
+        ],
+        "背离数": [
+            {
+                "val": "1",
+                "total": 760,
+                "revGM": 1.3539,
+                "revMed": 1.3507,
+                "dayM": 495.2829,
+                "hrevGM": 1.8634,
+                "hrevMed": 1.6391,
+                "hdayM": 311.8803,
+                "lrevGM": 0.7579,
+                "lrevMed": 0.8183,
+                "ldayM": 167.5513
+            },
+            {
+                "val": "2",
+                "total": 608,
+                "revGM": 1.4584,
+                "revMed": 1.4502,
+                "dayM": 505.6447,
+                "hrevGM": 1.9768,
+                "hrevMed": 1.8006,
+                "hdayM": 334.5724,
+                "lrevGM": 0.7533,
+                "lrevMed": 0.8305,
+                "ldayM": 140.375
+            },
+            {
+                "val": "3",
+                "total": 327,
+                "revGM": 1.6724,
+                "revMed": 1.5803,
+                "dayM": 532.4128,
+                "hrevGM": 2.2737,
+                "hrevMed": 2.0027,
+                "hdayM": 387.0214,
+                "lrevGM": 0.778,
+                "lrevMed": 0.8706,
+                "ldayM": 116.7859
+            },
+            {
+                "val": "4",
+                "total": 100,
+                "revGM": 1.7602,
+                "revMed": 1.8543,
+                "dayM": 554.18,
+                "hrevGM": 2.3731,
+                "hrevMed": 2.3504,
+                "hdayM": 404.68,
+                "lrevGM": 0.7953,
+                "lrevMed": 0.847,
+                "ldayM": 115.88
+            },
+            {
+                "val": "5",
+                "total": 20,
+                "revGM": 1.9056,
+                "revMed": 1.9939,
+                "dayM": 541.45,
+                "hrevGM": 2.4523,
+                "hrevMed": 2.2114,
+                "hdayM": 433.25,
+                "lrevGM": 0.838,
+                "lrevMed": 0.8822,
+                "ldayM": 86.7
+            },
+            {
+                "val": "6",
+                "total": 1,
+                "revGM": 3.257,
+                "revMed": 3.257,
+                "dayM": 507,
+                "hrevGM": 3.5204,
+                "hrevMed": 3.5204,
+                "hdayM": 277,
+                "lrevGM": 0.9805,
+                "lrevMed": 0.9805,
+                "ldayM": 1
+            }
+        ],
+        "最低阈值": [
+            {
+                "val": "(~, 0.1]",
+                "total": 411,
+                "revGM": 1.7805,
+                "revMed": 1.7277,
+                "dayM": 545.8881,
+                "hrevGM": 2.5631,
+                "hrevMed": 2.4551,
+                "hdayM": 392.3674,
+                "lrevGM": 0.8236,
+                "lrevMed": 0.8926,
+                "ldayM": 111.9659
+            },
+            {
+                "val": "(0.1, 0.2]",
+                "total": 876,
+                "revGM": 1.3985,
+                "revMed": 1.3975,
+                "dayM": 500.1027,
+                "hrevGM": 1.8802,
+                "hrevMed": 1.6651,
+                "hdayM": 324.9589,
+                "lrevGM": 0.7467,
+                "lrevMed": 0.8216,
+                "ldayM": 150.5696
+            },
+            {
+                "val": "(0.2, 0.25]",
+                "total": 529,
+                "revGM": 1.3725,
+                "revMed": 1.3985,
+                "dayM": 495.7467,
+                "hrevGM": 1.8368,
+                "hrevMed": 1.6462,
+                "hdayM": 322.2836,
+                "lrevGM": 0.7448,
+                "lrevMed": 0.8067,
+                "ldayM": 163.104
+            }
+        ],
+        "最高阈值": [
+            {
+                "val": "(~, 0.1]",
+                "total": 234,
+                "revGM": 1.7377,
+                "revMed": 1.6953,
+                "dayM": 524.3504,
+                "hrevGM": 2.5483,
+                "hrevMed": 2.5411,
+                "hdayM": 371.1496,
+                "lrevGM": 0.841,
+                "lrevMed": 0.8951,
+                "ldayM": 115.6923
+            },
+            {
+                "val": "(0.1, 0.2]",
+                "total": 448,
+                "revGM": 1.44,
+                "revMed": 1.3877,
+                "dayM": 510.1451,
+                "hrevGM": 2.001,
+                "hrevMed": 1.7033,
+                "hdayM": 325.6696,
+                "lrevGM": 0.7609,
+                "lrevMed": 0.8385,
+                "ldayM": 157.6741
+            },
+            {
+                "val": "(0.2, 0.25]",
+                "total": 411,
+                "revGM": 1.3544,
+                "revMed": 1.3971,
+                "dayM": 502.6472,
+                "hrevGM": 1.8602,
+                "hrevMed": 1.6364,
+                "hdayM": 319.8248,
+                "lrevGM": 0.7553,
+                "lrevMed": 0.8217,
+                "ldayM": 168.1168
+            },
+            {
+                "val": "(0.25, 0.3]",
+                "total": 170,
+                "revGM": 1.4744,
+                "revMed": 1.5165,
+                "dayM": 501.9294,
+                "hrevGM": 2.0282,
+                "hrevMed": 1.8759,
+                "hdayM": 348.4529,
+                "lrevGM": 0.7404,
+                "lrevMed": 0.8417,
+                "ldayM": 136.4941
+            },
+            {
+                "val": "(0.3, ~]",
+                "total": 553,
+                "revGM": 1.4755,
+                "revMed": 1.4476,
+                "dayM": 509.1157,
+                "hrevGM": 1.9057,
+                "hrevMed": 1.7247,
+                "hdayM": 348.9711,
+                "lrevGM": 0.7459,
+                "lrevMed": 0.8168,
+                "ldayM": 134.1573
+            }
+        ],
+        "平均阈值": [
+            {
+                "val": "(~, 0.1]",
+                "total": 269,
+                "revGM": 1.751,
+                "revMed": 1.7158,
+                "dayM": 526.7212,
+                "hrevGM": 2.5596,
+                "hrevMed": 2.5445,
+                "hdayM": 375.3866,
+                "lrevGM": 0.838,
+                "lrevMed": 0.8959,
+                "ldayM": 114.3717
+            },
+            {
+                "val": "(0.1, 0.2]",
+                "total": 557,
+                "revGM": 1.4822,
+                "revMed": 1.4322,
+                "dayM": 518.1634,
+                "hrevGM": 2.0625,
+                "hrevMed": 1.8363,
+                "hdayM": 339.8384,
+                "lrevGM": 0.7654,
+                "lrevMed": 0.8436,
+                "ldayM": 149.9964
+            },
+            {
+                "val": "(0.2, 0.25]",
+                "total": 599,
+                "revGM": 1.3294,
+                "revMed": 1.379,
+                "dayM": 496.8865,
+                "hrevGM": 1.7964,
+                "hrevMed": 1.6235,
+                "hdayM": 316.3072,
+                "lrevGM": 0.7355,
+                "lrevMed": 0.8019,
+                "ldayM": 161.7679
+            },
+            {
+                "val": "(0.25, 0.3]",
+                "total": 323,
+                "revGM": 1.5173,
+                "revMed": 1.5045,
+                "dayM": 505.3684,
+                "hrevGM": 1.9363,
+                "hrevMed": 1.7974,
+                "hdayM": 356.3406,
+                "lrevGM": 0.7562,
+                "lrevMed": 0.8168,
+                "ldayM": 136.743
+            },
+            {
+                "val": "(0.3, ~]",
+                "total": 68,
+                "revGM": 1.4092,
+                "revMed": 1.3599,
+                "dayM": 493.0294,
+                "hrevGM": 1.8325,
+                "hrevMed": 1.6055,
+                "hdayM": 317.3529,
+                "lrevGM": 0.7369,
+                "lrevMed": 0.819,
+                "ldayM": 129.6765
+            }
+        ],
+        "几何平均阈值": [
+            {
+                "val": "(~, 0.1]",
+                "total": 292,
+                "revGM": 1.7772,
+                "revMed": 1.7324,
+                "dayM": 537.4932,
+                "hrevGM": 2.6194,
+                "hrevMed": 2.6891,
+                "hdayM": 385.113,
+                "lrevGM": 0.8354,
+                "lrevMed": 0.897,
+                "ldayM": 110.7192
+            },
+            {
+                "val": "(0.1, 0.2]",
+                "total": 601,
+                "revGM": 1.4388,
+                "revMed": 1.3971,
+                "dayM": 509.624,
+                "hrevGM": 1.9882,
+                "hrevMed": 1.7093,
+                "hdayM": 326.0749,
+                "lrevGM": 0.7575,
+                "lrevMed": 0.8349,
+                "ldayM": 153.2779
+            },
+            {
+                "val": "(0.2, 0.25]",
+                "total": 617,
+                "revGM": 1.3587,
+                "revMed": 1.4016,
+                "dayM": 497.6888,
+                "hrevGM": 1.8148,
+                "hrevMed": 1.6499,
+                "hdayM": 327.8995,
+                "lrevGM": 0.7413,
+                "lrevMed": 0.8067,
+                "ldayM": 158.7585
+            },
+            {
+                "val": "(0.25, 0.3]",
+                "total": 272,
+                "revGM": 1.4897,
+                "revMed": 1.4682,
+                "dayM": 506.4632,
+                "hrevGM": 1.9069,
+                "hrevMed": 1.7495,
+                "hdayM": 347.0221,
+                "lrevGM": 0.7518,
+                "lrevMed": 0.8164,
+                "ldayM": 139.1728
+            },
+            {
+                "val": "(0.3, ~]",
+                "total": 34,
+                "revGM": 1.5252,
+                "revMed": 1.415,
+                "dayM": 489.2941,
+                "hrevGM": 2.0303,
+                "hrevMed": 1.7665,
+                "hdayM": 331.9706,
+                "lrevGM": 0.7509,
+                "lrevMed": 0.8543,
+                "ldayM": 115.8824
+            }
+        ]
+    },
+    "glong": true,
+    "startDateTs": 16832,
+    "runrt": true
+}

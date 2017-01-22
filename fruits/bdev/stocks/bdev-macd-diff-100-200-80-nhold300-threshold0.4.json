@@ -1,5 +1,5 @@
 {
-    "_id": "bdev-macd-diff-100-200-80-nhold300-threshold0.4",
+    "_id": "stocks-bdev-macd-diff-100-200-80-nhold300-threshold0.4",
     "name": "MACD(100-200-80)底背离(DIFF)",
     "targetScope": {
         "type": "allstocks"
@@ -141,7 +141,8 @@
                 "多重底背离",
                 "平均阈值低于0.2(thdM)",
                 "几何平均阈值低于0.2(thdGM)",
-                "最高阈值低于0.25(maxThd)"
+                "最高阈值低于0.25(maxThd)",
+                "小盘股"
             ]
         },
         "triggerOut": {

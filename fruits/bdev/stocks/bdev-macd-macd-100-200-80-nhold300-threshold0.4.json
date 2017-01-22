@@ -1,126 +1,256 @@
 {
-    "_id": "bdev-macd-gcross-100-200-80-nhold300-threshold0.4",
+    "_id": "stocks-bdev-macd-gcross-100-200-80-nhold300-threshold0.4",
     "name": "MACD(100-200-80)金叉底背离(DIFF)",
     "targetScope": {
         "type": "allstocks"
     },
     "cpdefRef": {
-        "type": "c.gt",
+        "type": "c.and",
         "pack": {
             "list": [
                 {
-                    "type": "c.prop",
+                    "type": "c.gt",
                     "pack": {
-                        "dp": {
-                            "type": "x.deviate",
-                            "pack": {
-                                "threshold": 0.4,
-                                "emaxRate": 1,
-                                "maxDays": 1000,
-                                "peakRange": 30,
-                                "dp": {
-                                    "type": "r.end",
-                                    "pack": "{{target}}"
-                                },
-                                "dpT": {
-                                    "type": "c.and",
-                                    "pack": {
-                                        "defidx": 1,
-                                        "list": [
-                                            {
-                                                "type": "c.lt",
+                        "list": [
+                            {
+                                "type": "c.prop",
+                                "pack": {
+                                    "dp": {
+                                        "type": "x.deviate",
+                                        "pack": {
+                                            "threshold": 0.4,
+                                            "emaxRate": 1,
+                                            "maxDays": 1000,
+                                            "peakRange": 30,
+                                            "dp": {
+                                                "type": "r.end",
+                                                "pack": "{{target}}"
+                                            },
+                                            "dpT": {
+                                                "type": "c.and",
                                                 "pack": {
-                                                    "defidx": 0,
+                                                    "defidx": 1,
                                                     "list": [
                                                         {
-                                                            "type": "c.prop",
+                                                            "type": "c.lt",
                                                             "pack": {
-                                                                "prop": "diff",
-                                                                "dp": {
-                                                                    "type": "b.macd",
-                                                                    "pack": {
-                                                                        "Ns": 100,
-                                                                        "Nl": 200,
-                                                                        "Na": 80,
-                                                                        "dp": {
-                                                                            "type": "r.end",
-                                                                            "pack": "{{target}}"
+                                                                "defidx": 0,
+                                                                "list": [
+                                                                    {
+                                                                        "type": "c.prop",
+                                                                        "pack": {
+                                                                            "prop": "diff",
+                                                                            "dp": {
+                                                                                "type": "b.macd",
+                                                                                "pack": {
+                                                                                    "Ns": 100,
+                                                                                    "Nl": 200,
+                                                                                    "Na": 80,
+                                                                                    "dp": {
+                                                                                        "type": "r.end",
+                                                                                        "pack": "{{target}}"
+                                                                                    }
+                                                                                }
+                                                                            }
                                                                         }
+                                                                    },
+                                                                    {
+                                                                        "type": "r.const",
+                                                                        "pack": 0
                                                                     }
-                                                                }
+                                                                ]
                                                             }
                                                         },
                                                         {
-                                                            "type": "r.const",
-                                                            "pack": 0
+                                                            "type": "c.change",
+                                                            "pack": {
+                                                                "dp": {
+                                                                    "type": "c.gt",
+                                                                    "pack": {
+                                                                        "list": [
+                                                                            {
+                                                                                "type": "c.prop",
+                                                                                "pack": {
+                                                                                    "prop": "macd",
+                                                                                    "dp": {
+                                                                                        "type": "b.macd",
+                                                                                        "pack": {
+                                                                                            "Ns": 100,
+                                                                                            "Nl": 200,
+                                                                                            "Na": 80,
+                                                                                            "dp": {
+                                                                                                "type": "r.end",
+                                                                                                "pack": "{{target}}"
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "r.const",
+                                                                                "pack": 0
+                                                                            }
+                                                                        ],
+                                                                        "defidx": 0
+                                                                    }
+                                                                }
+                                                            }
                                                         }
                                                     ]
                                                 }
                                             },
-                                            {
-                                                "type": "c.change",
+                                            "dpV": {
+                                                "type": "c.prop",
                                                 "pack": {
+                                                    "prop": "diff",
                                                     "dp": {
-                                                        "type": "c.gt",
+                                                        "type": "b.macd",
                                                         "pack": {
-                                                            "list": [
-                                                                {
-                                                                    "type": "c.prop",
-                                                                    "pack": {
-                                                                        "prop": "macd",
-                                                                        "dp": {
-                                                                            "type": "b.macd",
-                                                                            "pack": {
-                                                                                "Ns": 100,
-                                                                                "Nl": 200,
-                                                                                "Na": 80,
-                                                                                "dp": {
-                                                                                    "type": "r.end",
-                                                                                    "pack": "{{target}}"
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "r.const",
-                                                                    "pack": 0
-                                                                }
-                                                            ],
-                                                            "defidx": 0
+                                                            "Ns": 100,
+                                                            "Nl": 200,
+                                                            "Na": 80,
+                                                            "dp": {
+                                                                "type": "r.end",
+                                                                "pack": "{{target}}"
+                                                            }
                                                         }
                                                     }
                                                 }
                                             }
-                                        ]
-                                    }
-                                },
-                                "dpV": {
-                                    "type": "c.prop",
-                                    "pack": {
-                                        "prop": "diff",
-                                        "dp": {
-                                            "type": "b.macd",
-                                            "pack": {
-                                                "Ns": 100,
-                                                "Nl": 200,
-                                                "Na": 80,
-                                                "dp": {
-                                                    "type": "r.end",
-                                                    "pack": "{{target}}"
-                                                }
-                                            }
                                         }
-                                    }
+                                    },
+                                    "prop": "count"
                                 }
+                            },
+                            {
+                                "type": "r.const",
+                                "pack": 0
                             }
-                        },
-                        "prop": "count"
+                        ],
+                        "defidx": 0
                     }
                 },
                 {
-                    "type": "r.const",
-                    "pack": 0
+                    "type": "c.lt",
+                    "pack": {
+                        "list": [
+                            {
+                                "type": "c.prop",
+                                "pack": {
+                                    "dp": {
+                                        "type": "x.deviate",
+                                        "pack": {
+                                            "threshold": 0.4,
+                                            "emaxRate": 1,
+                                            "maxDays": 1000,
+                                            "peakRange": 30,
+                                            "dp": {
+                                                "type": "r.end",
+                                                "pack": "{{target}}"
+                                            },
+                                            "dpT": {
+                                                "type": "c.and",
+                                                "pack": {
+                                                    "defidx": 1,
+                                                    "list": [
+                                                        {
+                                                            "type": "c.lt",
+                                                            "pack": {
+                                                                "defidx": 0,
+                                                                "list": [
+                                                                    {
+                                                                        "type": "c.prop",
+                                                                        "pack": {
+                                                                            "prop": "diff",
+                                                                            "dp": {
+                                                                                "type": "b.macd",
+                                                                                "pack": {
+                                                                                    "Ns": 100,
+                                                                                    "Nl": 200,
+                                                                                    "Na": 80,
+                                                                                    "dp": {
+                                                                                        "type": "r.end",
+                                                                                        "pack": "{{target}}"
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "r.const",
+                                                                        "pack": 0
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "c.change",
+                                                            "pack": {
+                                                                "dp": {
+                                                                    "type": "c.gt",
+                                                                    "pack": {
+                                                                        "list": [
+                                                                            {
+                                                                                "type": "c.prop",
+                                                                                "pack": {
+                                                                                    "prop": "macd",
+                                                                                    "dp": {
+                                                                                        "type": "b.macd",
+                                                                                        "pack": {
+                                                                                            "Ns": 100,
+                                                                                            "Nl": 200,
+                                                                                            "Na": 80,
+                                                                                            "dp": {
+                                                                                                "type": "r.end",
+                                                                                                "pack": "{{target}}"
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "r.const",
+                                                                                "pack": 0
+                                                                            }
+                                                                        ],
+                                                                        "defidx": 0
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "dpV": {
+                                                "type": "c.prop",
+                                                "pack": {
+                                                    "prop": "diff",
+                                                    "dp": {
+                                                        "type": "b.macd",
+                                                        "pack": {
+                                                            "Ns": 100,
+                                                            "Nl": 200,
+                                                            "Na": 80,
+                                                            "dp": {
+                                                                "type": "r.end",
+                                                                "pack": "{{target}}"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "prop": "minThd"
+                                }
+                            },
+                            {
+                                "type": "r.const",
+                                "pack": 0.3
+                            }
+                        ],
+                        "defidx": 0
+                    }
                 }
             ],
             "defidx": 0

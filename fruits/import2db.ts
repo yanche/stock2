@@ -52,8 +52,11 @@ function getDbCol() {
 getDbCol()
 .then(dbcol => {
     return bb.all([
-        importFromFile_AllScope('./bdev-macd-diff-100-200-80-nhold300-threshold0.4.json', dbcol),
-        importFromFile_AllScope('./bdev-macd-macd-100-200-80-nhold300-threshold0.4.json', dbcol),
+        importFromFile_AllScope('./bdev/stocks/bdev-macd-diff-100-200-80-nhold300-threshold0.4.json', dbcol),
+        importFromFile_AllScope('./bdev/stocks/bdev-macd-macd-100-200-80-nhold300-threshold0.4.json', dbcol),
+        importFromFile_AllScope('./bdev/stocks/bdev-macd-dea-100-200-80-nhold300-threshold0.4.json', dbcol),
+        importFromFile_AllScope('./bdev/indexes/bdev-macd-diff-100-200-80-nhold300-threshold0.8.json', dbcol),
+        importFromFile_AllScope('./bdev/indexes/bdev-macd-macd-100-200-80-nhold300-threshold0.8.json', dbcol),
         //importFromFile_AllScope('./test.json', dbcol)
     ]);
 })

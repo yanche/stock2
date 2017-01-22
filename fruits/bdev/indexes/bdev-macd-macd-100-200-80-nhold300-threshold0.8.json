@@ -1,0 +1,353 @@
+{
+    "_id": "indexes-bdev-macd-gcross-100-200-80-nhold300-threshold0.8",
+    "name": "MACD(100-200-80)指数金叉底背离(DIFF)",
+    "targetScope": {
+        "type": "allstocks"
+    },
+    "cpdefRef": {
+        "type": "c.gt",
+        "pack": {
+            "list": [
+                {
+                    "type": "c.prop",
+                    "pack": {
+                        "dp": {
+                            "type": "x.deviate",
+                            "pack": {
+                                "threshold": 0.8,
+                                "emaxRate": 1,
+                                "maxDays": 1000,
+                                "peakRange": 30,
+                                "dp": {
+                                    "type": "r.end",
+                                    "pack": "{{target}}"
+                                },
+                                "dpT": {
+                                    "type": "c.and",
+                                    "pack": {
+                                        "defidx": 1,
+                                        "list": [
+                                            {
+                                                "type": "c.lt",
+                                                "pack": {
+                                                    "defidx": 0,
+                                                    "list": [
+                                                        {
+                                                            "type": "c.prop",
+                                                            "pack": {
+                                                                "prop": "diff",
+                                                                "dp": {
+                                                                    "type": "b.macd",
+                                                                    "pack": {
+                                                                        "Ns": 100,
+                                                                        "Nl": 200,
+                                                                        "Na": 80,
+                                                                        "dp": {
+                                                                            "type": "r.end",
+                                                                            "pack": "{{target}}"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "r.const",
+                                                            "pack": 0
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "c.change",
+                                                "pack": {
+                                                    "dp": {
+                                                        "type": "c.gt",
+                                                        "pack": {
+                                                            "list": [
+                                                                {
+                                                                    "type": "c.prop",
+                                                                    "pack": {
+                                                                        "prop": "macd",
+                                                                        "dp": {
+                                                                            "type": "b.macd",
+                                                                            "pack": {
+                                                                                "Ns": 100,
+                                                                                "Nl": 200,
+                                                                                "Na": 80,
+                                                                                "dp": {
+                                                                                    "type": "r.end",
+                                                                                    "pack": "{{target}}"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "r.const",
+                                                                    "pack": 0
+                                                                }
+                                                            ],
+                                                            "defidx": 0
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "dpV": {
+                                    "type": "c.prop",
+                                    "pack": {
+                                        "prop": "diff",
+                                        "dp": {
+                                            "type": "b.macd",
+                                            "pack": {
+                                                "Ns": 100,
+                                                "Nl": 200,
+                                                "Na": 80,
+                                                "dp": {
+                                                    "type": "r.end",
+                                                    "pack": "{{target}}"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "prop": "count"
+                    }
+                },
+                {
+                    "type": "r.const",
+                    "pack": 0
+                }
+            ],
+            "defidx": 0
+        }
+    },
+    "cpoutdefRef": {
+        "type": "ctx.nhold",
+        "pack": {
+            "N": 300,
+            "target": "{{target}}"
+        }
+    },
+    "comments": {
+        "sum": "回测样本少，分布不均匀，沪深300，中小板，创业板，中证50有数据，比不过同期创业板收益",
+        "desc": "MACD(100-200-80)指数金叉底背离(DIFF)",
+        "trigger": {
+            "main": "MACD(100-200-80)指数金叉底背离(DIFF)",
+            "env": [],
+            "opt": [
+                "多重底背离"
+            ]
+        },
+        "triggerOut": {
+            "main": "固定持有300交易日"
+        }
+    },
+    "concerns": {
+        "in": [
+            {
+                "name": "背离信息",
+                "dpRef": {
+                    "type": "x.deviate",
+                    "pack": {
+                        "threshold": 0.8,
+                        "emaxRate": 1,
+                        "maxDays": 1000,
+                        "peakRange": 30,
+                        "dp": {
+                            "type": "r.end",
+                            "pack": "{{target}}"
+                        },
+                        "dpT": {
+                            "type": "c.and",
+                            "pack": {
+                                "defidx": 1,
+                                "list": [
+                                    {
+                                        "type": "c.lt",
+                                        "pack": {
+                                            "defidx": 0,
+                                            "list": [
+                                                {
+                                                    "type": "c.prop",
+                                                    "pack": {
+                                                        "prop": "diff",
+                                                        "dp": {
+                                                            "type": "b.macd",
+                                                            "pack": {
+                                                                "Ns": 100,
+                                                                "Nl": 200,
+                                                                "Na": 80,
+                                                                "dp": {
+                                                                    "type": "r.end",
+                                                                    "pack": "{{target}}"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "type": "r.const",
+                                                    "pack": 0
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "c.change",
+                                        "pack": {
+                                            "dp": {
+                                                "type": "c.gt",
+                                                "pack": {
+                                                    "list": [
+                                                        {
+                                                            "type": "c.prop",
+                                                            "pack": {
+                                                                "prop": "macd",
+                                                                "dp": {
+                                                                    "type": "b.macd",
+                                                                    "pack": {
+                                                                        "Ns": 100,
+                                                                        "Nl": 200,
+                                                                        "Na": 80,
+                                                                        "dp": {
+                                                                            "type": "r.end",
+                                                                            "pack": "{{target}}"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "r.const",
+                                                            "pack": 0
+                                                        }
+                                                    ],
+                                                    "defidx": 0
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "dpV": {
+                            "type": "c.prop",
+                            "pack": {
+                                "prop": "diff",
+                                "dp": {
+                                    "type": "b.macd",
+                                    "pack": {
+                                        "Ns": 100,
+                                        "Nl": 200,
+                                        "Na": 80,
+                                        "dp": {
+                                            "type": "r.end",
+                                            "pack": "{{target}}"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "view": "raw"
+            }
+        ],
+        "out": []
+    },
+    "doc": null,
+    "lookback": {
+        "全部": [
+            {
+                "val": "全部",
+                "total": 12,
+                "revGM": 1.3421,
+                "revMed": 1.2622,
+                "dayM": 453.8333,
+                "hrevGM": 1.6176,
+                "hrevMed": 1.3607,
+                "hdayM": 342.9167,
+                "lrevGM": 0.9042,
+                "lrevMed": 0.89,
+                "ldayM": 135.75
+            }
+        ],
+        "收益": [
+            {
+                "val": "盈利",
+                "total": 10,
+                "revGM": 1.4571,
+                "revMed": 1.3845,
+                "dayM": 452.4,
+                "hrevGM": 1.7119,
+                "hrevMed": 1.5144,
+                "hdayM": 400.7,
+                "lrevGM": 0.9154,
+                "lrevMed": 0.9406,
+                "ldayM": 98.5
+            },
+            {
+                "val": "亏损",
+                "total": 2,
+                "revGM": 0.8898,
+                "revMed": 0.8898,
+                "dayM": 461,
+                "hrevGM": 1.2188,
+                "hrevMed": 1.2188,
+                "hdayM": 54,
+                "lrevGM": 0.8505,
+                "lrevMed": 0.8505,
+                "ldayM": 322
+            }
+        ],
+        "背离数": [
+            {
+                "val": "1",
+                "total": 6,
+                "revGM": 1.2805,
+                "revMed": 1.1412,
+                "dayM": 457.3333,
+                "hrevGM": 1.4376,
+                "hrevMed": 1.2673,
+                "hdayM": 343.8333,
+                "lrevGM": 0.9007,
+                "lrevMed": 0.89,
+                "ldayM": 147
+            },
+            {
+                "val": "2",
+                "total": 5,
+                "revGM": 1.3921,
+                "revMed": 1.449,
+                "dayM": 451.6,
+                "hrevGM": 1.7128,
+                "hrevMed": 1.6207,
+                "hdayM": 343.2,
+                "lrevGM": 0.8942,
+                "lrevMed": 0.8509,
+                "ldayM": 148.8
+            },
+            {
+                "val": "3",
+                "total": 1,
+                "revGM": 1.4822,
+                "revMed": 1.4822,
+                "dayM": 444,
+                "hrevGM": 2.4675,
+                "hrevMed": 2.4675,
+                "hdayM": 336,
+                "lrevGM": 0.9791,
+                "lrevMed": 0.9791,
+                "ldayM": 3
+            }
+        ]
+    },
+    "glong": true,
+    "startDateTs": 16832,
+    "runrt": true
+}

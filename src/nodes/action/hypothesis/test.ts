@@ -11,6 +11,8 @@ import * as datapvd from '../../../datapvd';
 import * as tester from '../../../tester';
 import * as hutil from './util';
 
+const minStartDts = utility.date.dateKey2DateTs('20000101');
+
 export interface HypoTestInput {
     header: boolean;
     target: string;
@@ -57,7 +59,8 @@ export const action = new Action<HypoTestInput, HypoTestInput, HypoTestOutput>({
                     log.info(`[${input.target} hypotest] progress: ${utility.num.frac(finished / total * 100, 2)}%`);
                     return bb.all([datapvd.literal.resolve(utility.refReplace(input.cpDefRef, p)), resolveDPs(input.cpoutDefRefs, p), resolveDPs(input.envDefs, p)])
                         .then(data => {
-                            const mindayts = rdp.forwardTs(rdp.minTs, 20); //上市前20天忽略
+                            let mindayts = rdp.forwardTs(rdp.minTs, 20); //上市前20天忽略
+                            if (mindayts < minStartDts) mindayts = rdp.forwardTs(minStartDts, 0);
                             if (mindayts == null) results.push({ params: p, hits: new Array<tester.hypo.HypoRec>() });
                             else {
                                 return tester.hypo.run({
