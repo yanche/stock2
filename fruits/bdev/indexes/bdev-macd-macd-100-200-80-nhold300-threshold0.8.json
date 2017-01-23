@@ -2,7 +2,7 @@
     "_id": "indexes-bdev-macd-gcross-100-200-80-nhold300-threshold0.8",
     "name": "MACD(100-200-80)指数金叉底背离(DIFF)",
     "targetScope": {
-        "type": "allstocks"
+        "type": "allindexes"
     },
     "cpdefRef": {
         "type": "c.gt",
