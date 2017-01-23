@@ -69,7 +69,7 @@ export const action = new Action<HypoTestInput, HypoTestInput, HypoTestOutput>({
                                     dpouts: data[1],
                                     envdps: data[2],
                                     glong: p['glong'],
-                                    minDateTs: Math.max(mindayts, utility.date.msTs2DateTs(Date.UTC(1992, 0, 1))),
+                                    minDateTs: mindayts,
                                     maxDateTs: rdp.maxTs
                                 })
                                     .then(hypos => results.push({ params: p, hits: hypos }));

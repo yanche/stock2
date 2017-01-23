@@ -256,7 +256,7 @@
         }
     },
     "comments": {
-        "sum": "",
+        "sum": "下跌后买入预期收益降低",
         "desc": "MACD(100-200-80)底背离(DEA)",
         "trigger": {
             "main": "MACD(100-200-80)底背离(DEA)",
