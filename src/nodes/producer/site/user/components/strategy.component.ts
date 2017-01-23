@@ -56,6 +56,7 @@ export class StrategyComponent {
 function rtplanTargets(rtplan: Rtplan): string {
   switch (rtplan.targetScope.type) {
     case 'allstocks': return 'all stocks';
+    case 'allindexes': return 'all indexes';
     case 'in': return `selected(${rtplan.targetScope.pack.length})`;
     case 'in': return `excluded(${rtplan.targetScope.pack.length})`;
     default: return '';
