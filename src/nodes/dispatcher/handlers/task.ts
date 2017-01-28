@@ -109,7 +109,7 @@ function dispatch(limit: Object, preference: Array<Object>, searchprior: boolean
         $set: { statusId: constant.task.status.processing, lastProcessTs: nowts },
         $push: { processLog: { ts: nowts, msg: `dispatched at ${utility.date.datetimeFormat(nowts)}` } },
         $inc: { 'constraints.ttl': -1, assigned: 1 }
-    }, null, true, false)
+    }, null, true, false, { _id: 1 })
         .then(task => {
             if (task == null) {
                 if (searchprior) return dispatch(limit, preference, false);

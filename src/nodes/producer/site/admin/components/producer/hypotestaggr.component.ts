@@ -70,6 +70,7 @@ export class HypoTestAggrProducerComponent implements OnInit {
                 this.cpoutDefRefs.items.forEach(c => cpoutDefRefs[c.name] = JSON.parse(c.value));
                 const envDefs: { [key: string]: any } = {}, envnames = this.envDefs.items.map(i => i.name);;
                 this.envDefs.items.forEach(c => envDefs[c.name] = JSON.parse(c.value));
+                const comments = this.comments;
                 const tasks = this.targets.map((t): TaskCreation => {
                     return {
                         action: {
@@ -84,7 +85,7 @@ export class HypoTestAggrProducerComponent implements OnInit {
                             }
                         },
                         locality: { target: t },
-                        comments: `${this.comments} - ${t}`
+                        comments: `${comments} - ${t}`
                     };
                 });
                 return this._task.createMul(tasks)
@@ -97,11 +98,11 @@ export class HypoTestAggrProducerComponent implements OnInit {
                                 paramNames: enumnames,
                                 envNames: envnames,
                                 cpoutNames: cpoutnames,
-                                filename: this.comments
+                                filename: comments
                             }
                         },
                         condition: { type: this._const.dispatcherCond.success, pack: list },
-                        comments: this.comments
+                        comments: comments
                     }));
             })
             .catch(err => {
