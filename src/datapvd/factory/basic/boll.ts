@@ -3,6 +3,7 @@ import IFactory from '../fac';
 import * as bb from 'bluebird';
 import * as def from '../../def';
 import * as utility from '../../../utility';
+import * as constants from '../../../const';
 import * as literal from '../../literal';
 import * as facutil from '../facutil';
 
@@ -25,53 +26,73 @@ interface BollRet {
 const bollFac: IFactory<BollFacPack, BollRet> = {
     make: (pack: BollFacPack) => {
         return literal.resolve(pack.dp)
-            .then(dp => bb.all([dp, literal.resolve({ type: 'b.ma', pack: { N: pack.N, dp: dp } })]))
-            .then(data => {
-                const mapvd = <def.DataPvd<number>>data[1], dp = <def.DataPvd<number>>data[0];
-                return bb.resolve(new def.StoredDataPvd<BollRet>({
-                    id: dpid(pack),
-                    maxTs: dp.maxTs,
-                    minTs: dp.forwardTs(dp.minTs, 2 * pack.N - 2) || facutil.dateTsOffset(dp.maxTs, 1),
-                    hasdef: dp.hasDef_core,
-                    hasdefprog: () => dp.forwardTs(dp.minTs, 2 * pack.N - 3) != null,
-                    gen: (dts: number): BollRet => {
-                        const bdts = dp.backwardTs(dts, pack.N - 1);
-                        const dpvallist = dp.period(bdts, dts), malist = mapvd.period(bdts, dts);
-                        // (MA[(dp - ma)^2])^(1/2)
-                        const W = pack.W;
-                        const maval = malist[malist.length - 1].val;
-                        const devi = Math.pow(utility.array.avg(dpvallist.map((v, idx) => Math.pow(v.val - malist[idx].val, 2)), t => t), 0.5);
-                        return { up: maval + devi * W, mid: maval, low: maval - devi * W };
-                    },
-                    genrtprog: () => {
-                        const vprog = dp.getRTProg(), mprog = mapvd.getRTProg();
-                        let devi: utility.prog.Prog = null;
-                        if (pack.N > 1) {
-                            const bdts = dp.backwardTs(dp.maxTs, pack.N - 2);
-                            const dpvallist = dp.period(bdts, dp.maxTs), malist = mapvd.period(bdts, dp.maxTs);
-                            devi = genProg('pow',
-                                genProg('div',
-                                    genProg('add',
-                                        genProg('pow', genProg('sub', vprog, mprog), 2),
-                                        utility.array.sum2(dpvallist.map((v, idx) => Math.pow(v.val - malist[idx].val, 2)))),
-                                    pack.N),
-                                0.5);
+            .then(dp => {
+                return bb.all([
+                    dp,
+                    literal.resolve({
+                        type: constants.dpType.basic.ma,
+                        pack: {
+                            N: pack.N,
+                            dp: dp
                         }
-                        else
-                            devi = genProg('abs', genProg('sub', vprog, mprog));
-                        const deviw = genProg('mul', devi, pack.W);
-                        return genProg('begin',
-                            genProg('def', 'mid', mprog),
-                            genProg('def', 'deviw', deviw),
-                            genProg('obj', {
-                                up: genProg('add', genProg('ref', 'mid'), genProg('ref', 'deviw')),
-                                mid: genProg('ref', 'mid'),
-                                low: genProg('sub', genProg('ref', 'mid'), genProg('ref', 'deviw')),
-                            }));
-                    },
-                    remoteTs: dp.remoteTs_core,
-                    weakdepts: dp.weakdepts
-                }));
+                    })])
+            })
+            .then(data => {
+                const dp: def.DataPvd<number> = data[0], mapvd: def.DataPvd<number> = data[1];
+                return literal.resolve({
+                    type: constants.dpType.combine.pow,
+                    pack: {
+                        dp: {
+                            type: constants.dpType.basic.ma,
+                            pack: {
+                                dp: {
+                                    type: constants.dpType.combine.pow,
+                                    pack: {
+                                        dp: {
+                                            type: constants.dpType.combine.sub,
+                                            pack: {
+                                                list: [
+                                                    mapvd,
+                                                    dp
+                                                ],
+                                                defidx: 0
+                                            }
+                                        },
+                                        exp: 2
+                                    }
+                                },
+                                N: pack.N
+                            }
+                        },
+                        exp: 0.5
+                    }
+                })
+                    .then(pvd1 => {
+                        return bb.resolve(new def.StoredDataPvd<BollRet>({
+                            id: dpid(pack),
+                            maxTs: pvd1.maxTs,
+                            minTs: pvd1.minTs,
+                            hasdef: dp.hasDef_core,
+                            hasdefprog: () => dp.forwardTs(dp.minTs, 2 * pack.N - 3) != null,
+                            gen: (dts: number): BollRet => {
+                                const devi = pvd1.get(dts), maval = mapvd.get(dts);
+                                return { up: maval + devi * pack.W, mid: maval, low: maval - devi * pack.W };
+                            },
+                            genrtprog: () => {
+                                const deviw = genProg('mul', pvd1.getRTProg(), pack.W);
+                                return genProg('begin',
+                                    genProg('def', 'mid', mapvd.getRTProg()),
+                                    genProg('def', 'deviw', deviw),
+                                    genProg('obj', {
+                                        up: genProg('add', genProg('ref', 'mid'), genProg('ref', 'deviw')),
+                                        mid: genProg('ref', 'mid'),
+                                        low: genProg('sub', genProg('ref', 'mid'), genProg('ref', 'deviw')),
+                                    }));
+                            },
+                            remoteTs: dp.remoteTs_core,
+                            weakdepts: dp.weakdepts
+                        }));
+                    });
             });
     },
     validate: (pack: BollFacPack): boolean => utility.validate.posInt(pack.N) && utility.validate.posInt(pack.W) && literal.validate(pack.dp),

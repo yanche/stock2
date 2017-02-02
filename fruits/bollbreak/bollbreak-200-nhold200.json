@@ -1,0 +1,370 @@
+{
+    "_id": "bollbreak-200-nhold200",
+    "name": "布林线200上轨突破",
+    "targetScope": {
+        "type": "allstocks"
+    },
+    "cpdefRef": {
+        "type": "c.and",
+        "pack": {
+            "list": [
+                {
+                    "type": "c.change",
+                    "pack": {
+                        "dp": {
+                            "type": "c.lt",
+                            "pack": {
+                                "list": [
+                                    {
+                                        "type": "c.prop",
+                                        "pack": {
+                                            "prop": "up",
+                                            "dp": {
+                                                "type": "b.boll",
+                                                "pack": {
+                                                    "N": 200,
+                                                    "W": 2,
+                                                    "dp": {
+                                                        "type": "r.end",
+                                                        "pack": "{{target}}"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "type": "r.end",
+                                        "pack": "{{target}}"
+                                    }
+                                ],
+                                "defidx": 0
+                            }
+                        }
+                    }
+                },
+                {
+                    "type": "c.lt",
+                    "pack": {
+                        "list": [
+                            {
+                                "type": "c.div",
+                                "pack": {
+                                    "list": [
+                                        {
+                                            "type": "r.end",
+                                            "pack": "000001.ZICN"
+                                        },
+                                        {
+                                            "type": "b.ma",
+                                            "pack": {
+                                                "dp": {
+                                                    "type": "r.end",
+                                                    "pack": "000001.ZICN"
+                                                },
+                                                "N": 500
+                                            }
+                                        }
+                                    ],
+                                    "defidx": 1
+                                }
+                            },
+                            {
+                                "type": "r.const",
+                                "pack": 1.4
+                            }
+                        ],
+                        "defidx": 0
+                    }
+                },
+                {
+                    "type": "c.lt",
+                    "pack": {
+                        "list": [
+                            {
+                                "type": "c.div",
+                                "pack": {
+                                    "list": [
+                                        {
+                                            "type": "r.end",
+                                            "pack": "000001.ZICN"
+                                        },
+                                        {
+                                            "type": "b.ma",
+                                            "pack": {
+                                                "dp": {
+                                                    "type": "r.end",
+                                                    "pack": "000001.ZICN"
+                                                },
+                                                "N": 1000
+                                            }
+                                        }
+                                    ],
+                                    "defidx": 1
+                                }
+                            },
+                            {
+                                "type": "r.const",
+                                "pack": 1.4
+                            }
+                        ],
+                        "defidx": 0
+                    }
+                },
+                {
+                    "type": "c.lt",
+                    "pack": {
+                        "list": [
+                            {
+                                "type": "c.div",
+                                "pack": {
+                                    "list": [
+                                        {
+                                            "type": "r.end",
+                                            "pack": "399001.ZICN"
+                                        },
+                                        {
+                                            "type": "b.ma",
+                                            "pack": {
+                                                "dp": {
+                                                    "type": "r.end",
+                                                    "pack": "399001.ZICN"
+                                                },
+                                                "N": 1000
+                                            }
+                                        }
+                                    ],
+                                    "defidx": 1
+                                }
+                            },
+                            {
+                                "type": "r.const",
+                                "pack": 1.4
+                            }
+                        ],
+                        "defidx": 0
+                    }
+                },
+                {
+                    "type": "c.gt",
+                    "pack": {
+                        "list": [
+                            {
+                                "type": "r.end",
+                                "pack": "000001.ZICN"
+                            },
+                            {
+                                "type": "b.ma",
+                                "pack": {
+                                    "dp": {
+                                        "type": "r.end",
+                                        "pack": "000001.ZICN"
+                                    },
+                                    "N": 60
+                                }
+                            }
+                        ],
+                        "defidx": 1
+                    }
+                }
+            ],
+            "defidx": 0
+        }
+    },
+    "cpoutdefRef": {
+        "type": "ctx.nhold",
+        "pack": {
+            "N": 200,
+            "target": "{{target}}"
+        }
+    },
+    "comments": {
+        "sum": "下跌或上涨后买入预期收益均降低，牛市背景下跑赢指数",
+        "desc": "",
+        "trigger": {
+            "main": "突破200日布林线上轨",
+            "env": [
+                "上证低于MA500*1.4",
+                "上证低于MA1000*1.4",
+                "深证低于MA1000*1.4",
+                "上证高于MA60"
+            ],
+            "opt": [
+                "小盘股"
+            ]
+        },
+        "triggerOut": {
+            "main": "固定持有200交易日"
+        }
+    },
+    "concerns": {
+        "in": [
+            {
+                "name": "相对市值",
+                "dpRef": {
+                    "type": "c.div",
+                    "pack": {
+                        "defidx": 0,
+                        "list": [
+                            {
+                                "type": "b.marketvalue",
+                                "pack": "{{target}}"
+                            },
+                            {
+                                "pack": "000001.ZICN",
+                                "type": "r.end"
+                            },
+                            {
+                                "type": "r.const",
+                                "pack": 0.01
+                            }
+                        ]
+                    }
+                },
+                "view": "raw"
+            }
+        ],
+        "out": []
+    },
+    "doc": null,
+    "lookback": {
+        "全部": [
+            {
+                "val": "全部",
+                "total": 21346,
+                "revGM": 1.415,
+                "revMed": 1.3436,
+                "dayM": 331.9709,
+                "hrevGM": 2.0023,
+                "hrevMed": 1.9358,
+                "hdayM": 215.9356,
+                "lrevGM": 0.8037,
+                "lrevMed": 0.8416,
+                "ldayM": 109.9176
+            }
+        ],
+        "收益": [
+            {
+                "val": "盈利",
+                "total": 15587,
+                "revGM": 1.7739,
+                "revMed": 1.6471,
+                "dayM": 338.9326,
+                "hrevGM": 2.3768,
+                "hrevMed": 2.3196,
+                "hdayM": 264.598,
+                "lrevGM": 0.869,
+                "lrevMed": 0.8851,
+                "ldayM": 69.8118
+            },
+            {
+                "val": "亏损",
+                "total": 5759,
+                "revGM": 0.7674,
+                "revMed": 0.8041,
+                "dayM": 313.1288,
+                "hrevGM": 1.2588,
+                "hrevMed": 1.1533,
+                "hdayM": 84.2287,
+                "lrevGM": 0.6504,
+                "lrevMed": 0.6739,
+                "ldayM": 218.4661
+            }
+        ],
+        "相对市值": [
+            {
+                "val": "(~, 0.3]",
+                "total": 176,
+                "revGM": 3.1552,
+                "revMed": 2.9799,
+                "dayM": 432.3523,
+                "hrevGM": 4.1806,
+                "hrevMed": 3.9198,
+                "hdayM": 383.5739,
+                "lrevGM": 0.8526,
+                "lrevMed": 0.8631,
+                "ldayM": 48.0795
+            },
+            {
+                "val": "(0.3, 0.6]",
+                "total": 1437,
+                "revGM": 2.2496,
+                "revMed": 2.3148,
+                "dayM": 356.8566,
+                "hrevGM": 2.7036,
+                "hrevMed": 2.6516,
+                "hdayM": 307.6688,
+                "lrevGM": 0.8464,
+                "lrevMed": 0.8673,
+                "ldayM": 61.3932
+            },
+            {
+                "val": "(0.6, 1.5]",
+                "total": 7280,
+                "revGM": 1.5289,
+                "revMed": 1.4821,
+                "dayM": 336.3192,
+                "hrevGM": 2.1285,
+                "hrevMed": 2.1175,
+                "hdayM": 231.9093,
+                "lrevGM": 0.8133,
+                "lrevMed": 0.8475,
+                "ldayM": 98.7823
+            },
+            {
+                "val": "(1.5, 3]",
+                "total": 6424,
+                "revGM": 1.3126,
+                "revMed": 1.2518,
+                "dayM": 329.4261,
+                "hrevGM": 1.9379,
+                "hrevMed": 1.8918,
+                "hdayM": 205.53,
+                "lrevGM": 0.7927,
+                "lrevMed": 0.8314,
+                "ldayM": 119.9819
+            },
+            {
+                "val": "(3, 6]",
+                "total": 3514,
+                "revGM": 1.2402,
+                "revMed": 1.181,
+                "dayM": 324.4616,
+                "hrevGM": 1.8041,
+                "hrevMed": 1.722,
+                "hdayM": 189.8586,
+                "lrevGM": 0.7882,
+                "lrevMed": 0.8283,
+                "ldayM": 126.4559
+            },
+            {
+                "val": "(6, 12]",
+                "total": 1480,
+                "revGM": 1.1932,
+                "revMed": 1.1411,
+                "dayM": 318.3459,
+                "hrevGM": 1.7171,
+                "hrevMed": 1.556,
+                "hdayM": 172.5014,
+                "lrevGM": 0.7949,
+                "lrevMed": 0.829,
+                "ldayM": 123.3041
+            },
+            {
+                "val": "(12, ~]",
+                "total": 1035,
+                "revGM": 1.1974,
+                "revMed": 1.092,
+                "dayM": 310.5382,
+                "hrevGM": 1.6457,
+                "hrevMed": 1.4965,
+                "hdayM": 162.9401,
+                "lrevGM": 0.8053,
+                "lrevMed": 0.8453,
+                "ldayM": 128.37
+            }
+        ]
+    },
+    "glong": true,
+    "startDateTs": 16832,
+    "runrt": true
+}
