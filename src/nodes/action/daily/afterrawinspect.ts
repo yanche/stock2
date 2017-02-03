@@ -25,6 +25,7 @@ export const action = new Action<AfterRawInspectInput, AfterRawInspectInput, voi
                 if (task.statusId !== constant.task.status.success) throw new Error(`${constant.action.rawInspect} task status not success: ${task.statusId}`);
                 const qv = <wmact.inspect.RawInspectOutput>task.quickview;
                 if (!Array.isArray(qv.rawSyncIdList)) throw new Error(`quickview of ${constant.action.rawInspect} not recognizable`);
+                const simAllId = utility.mongo.newId();
                 return dclient.task.create({
                     action: {
                         type: constant.action.delay,
@@ -38,6 +39,7 @@ export const action = new Action<AfterRawInspectInput, AfterRawInspectInput, voi
                                     }
                                 },
                                 {
+                                    _id: simAllId,
                                     action: {
                                         type: constant.action.simAll,
                                         pack: <simact.simall.SimAllInput>{
@@ -47,6 +49,10 @@ export const action = new Action<AfterRawInspectInput, AfterRawInspectInput, voi
                                             genrtprog: true
                                         }
                                     }
+                                },
+                                {
+                                    action: { type: constant.action.afterSimAll, pack: { simAllId: simAllId } },
+                                    condition: { type: 'success', pack: simAllId }
                                 }
                             ]
                         }

@@ -64,6 +64,7 @@ export const action = {
     genRtProgAll: 'genrtprogall',
     delay: 'delay',
     afterRawInspect: 'afterrawinspect',
+    afterSimAll: 'aftersimall',
     lastEnd: 'lastend',
     lastEndAll: 'lastendall',
     alertsAll: 'alertsall',

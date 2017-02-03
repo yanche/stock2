@@ -23,6 +23,7 @@ export interface SimAllOutput {
     rtplansCount: number;
     rtplansMatch: Array<{ ct: number; rtplanId: string }>;
     total: number;
+    simulateTaskIdList: Array<string>;
 }
 
 export const action = new Action<SimAllInput, SimAllInput, SimAllOutput>({
@@ -51,8 +52,10 @@ export const action = new Action<SimAllInput, SimAllInput, SimAllOutput>({
                     return ret;
                 }));
 
+                const simTaskIdList = new Array<string>();
                 return (dataset.length > 0 ? <bb<any>>dclient.task.createMul(_.flatten(dataset.map(d => {
                     const taskId = utility.mongo.newId();
+                    simTaskIdList.push(taskId.toHexString());
                     const ret: Array<dclient.task.TaskCreation> = [{
                         _id: taskId,
                         action: { type: constant.action.simulate, pack: <sim.SimulateInput>{ rtplanId: d.rtplanId, target: d.target, redo: input.redo } },
@@ -69,6 +72,7 @@ export const action = new Action<SimAllInput, SimAllInput, SimAllOutput>({
                 }))) : bb.resolve())
                     .then(() => {
                         return {
+                            simulateTaskIdList: simTaskIdList,
                             targetsCount: targets.length,
                             rtplansCount: rtplans.length,
                             rtplansMatch: rtpCount,
