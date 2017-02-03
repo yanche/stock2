@@ -8,6 +8,7 @@ db.rtprogout.createIndex( { target: 1, rtplanId: 1 } )
 db.rtprog.createIndex( { hit: 1 } )
 db.rtprogout.createIndex( { hit: 1 } )
 db.simtrack.createIndex( { target: 1, rtplanId: 1 } )
+db.alert.createIndex( { alertPlanId: 1 } )
 
 db.task.createIndex({priority:1},{partialFilterExpression:{priority:1}});
 db.task.createIndex({statusId:1,'locality.target':1,'constraints.ttl':1,'action.type':1});
