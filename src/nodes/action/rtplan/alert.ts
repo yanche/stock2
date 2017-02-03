@@ -28,7 +28,7 @@ export const action = new Action<AlertInput, AlertInput, AlertOutput>({
                 for (let a of oldAlert) simIdSet.add(makeUniqueAlertIdentifier(a.simulateId, input.alertPlanId));
                 return dclient.simulate.getAll({ closed: false, rtplanId: alertplan.rtplanId })
                     .then(simulates => {
-                        simulates = simulates.filter(s => !simIdSet.has(makeUniqueAlertIdentifier(s._id.toString(), input.alertPlanId)));
+                        simulates = simulates.filter(s => s.edts && !simIdSet.has(makeUniqueAlertIdentifier(s._id.toString(), input.alertPlanId)));
                         const newAlerts = simulates.filter(s => {
                             const env = new utility.prog.Env();
                             env.set('sdts', s.sdts);
