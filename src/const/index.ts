@@ -65,7 +65,9 @@ export const action = {
     delay: 'delay',
     afterRawInspect: 'afterrawinspect',
     lastEnd: 'lastend',
-    lastEndAll: 'lastendall'
+    lastEndAll: 'lastendall',
+    alertsAll: 'alertsall',
+    alert: 'alert'
 }
 
 export const simconcern = {

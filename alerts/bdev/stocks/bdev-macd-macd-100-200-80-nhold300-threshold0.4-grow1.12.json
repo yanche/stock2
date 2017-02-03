@@ -1,0 +1,29 @@
+{
+    "_id": "stocks-bdev-macd-gcross-100-200-80-nhold300-threshold0.4-grow1.12",
+    "name": "macd底背离上涨12%",
+    "desc": "macd底背离之后上涨12%有最高预期收益",
+    "rtplanId": "stocks-bdev-macd-gcross-100-200-80-nhold300-threshold0.4",
+    "prog": {
+        "fn": ">",
+        "args": [
+            {
+                "fn": "div",
+                "args": [
+                    {
+                        "fn": "ref",
+                        "args": [
+                            "hp"
+                        ]
+                    },
+                    {
+                        "fn": "ref",
+                        "args": [
+                            "sp"
+                        ]
+                    }
+                ]
+            },
+            1.12
+        ]
+    }
+}

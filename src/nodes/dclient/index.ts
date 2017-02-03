@@ -6,5 +6,7 @@ import * as rtprogout from './rtprogout';
 import * as simtrack from './simtrack';
 import * as simulate from './simulate';
 import * as task from './task';
+import * as alertplan from './alertplan';
+import * as alert from './alert';
 
-export {rtplan, rtprice, rtprog, rtprogout, simtrack, simulate, task}
+export { rtplan, rtprice, rtprog, rtprogout, simtrack, simulate, task, alert, alertplan }

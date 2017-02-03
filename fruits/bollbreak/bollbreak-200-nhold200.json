@@ -206,7 +206,7 @@
                         "defidx": 0,
                         "list": [
                             {
-                                "type": "b.marketvalue",
+                                "type": "r.marketvalue",
                                 "pack": "{{target}}"
                             },
                             {

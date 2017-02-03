@@ -7,6 +7,8 @@ import * as simtrack from './simtrack';
 import * as simulate from './simulate';
 import * as task from './task';
 import * as storageproxy from './storageproxy';
+import * as alert from './alert';
+import * as alertplan from './alertplan';
 import * as bb from 'bluebird';
 import * as utility from '../../../utility';
 
@@ -21,6 +23,8 @@ export function findHandler(resx: string): (h: utility.http.HttpPack) => bb<any>
         case 'rtprice': return rtprice.handler;
         case 'rtplan': return rtplan.handler;
         case 'storageproxy': return storageproxy.handler;
+        case 'alert': return alert.handler;
+        case 'alertplan': return alertplan.handler;
         default: return null;
     }
 }

@@ -32,8 +32,12 @@ export class HistoryComponent {
       .subscribe(params => {
         if (!this._loadingparams) return;
         const rtplanId = params['rtplanId'];
-        if (rtplanId) {
-          this.queryOpt.inits = { filter: { rtplanId: rtplanId } };
+        const _id = params['_id'];
+        if (rtplanId || _id) {
+          const filter: any = {};
+          if (rtplanId) filter.rtplanId = rtplanId;
+          if (_id) filter._id = _id;
+          this.queryOpt.inits = { filter: filter };
           this.runOnInit = true;
         }
         else {

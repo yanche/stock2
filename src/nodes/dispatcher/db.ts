@@ -109,6 +109,23 @@ const systrackFields = {
     pack: 1,
 };
 
+const alertplanFields = {
+    _id: 1,
+    name: 1,
+    desc: 1,
+    rtplanId: 1,
+    prog: 1
+};
+
+const alertFields = {
+    _id: 1,
+    simulateId: 1,
+    target: 1,
+    alertPlanId: 1,
+    createdTs: 1,
+    new: 1
+}
+
 const task = dbc.getCollClient<d.Task>(config.dbCols.task, taskFields);
 const simulate = dbc.getCollClient<d.Simulate>(config.dbCols.simulate, simulateFields);
 const simtrack = dbc.getCollClient<d.SimTrack>(config.dbCols.simtrack, simtrackFields);
@@ -117,5 +134,7 @@ const rtprog = dbc.getCollClient<d.Rtprog>(config.dbCols.rtprog, rtprogFields);
 const rtprogout = dbc.getCollClient<d.RtprogOut>(config.dbCols.rtprogout, rtprogOutFields);
 const rtprice = dbc.getCollClient<d.Rtprice>(config.dbCols.rtprice, rtpriceFields);
 const systrack = dbc.getCollClient<d.SysTrack>(config.dbCols.systrack, systrackFields);
+const alertplan = dbc.getCollClient<d.SysTrack>(config.dbCols.alertplan, alertplanFields);
+const alert = dbc.getCollClient<d.SysTrack>(config.dbCols.alert, alertFields);
 
-export {task, simulate, simtrack, rtplan, rtprog, rtprogout, rtprice, systrack};
+export { task, simulate, simtrack, rtplan, rtprog, rtprogout, rtprice, systrack, alertplan, alert };

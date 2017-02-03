@@ -11,6 +11,7 @@ import { AppComponent } from './components/app.component';
 import { RealtimeComponent } from './components/realtime.component';
 import { HistoryComponent } from './components/history.component';
 import { StrategyComponent } from './components/strategy.component';
+import { AlertsComponent } from './components/alerts.component';
 
 import { DateTimePipe } from '../common/pipes/datetime.pipe';
 import { Dts2DatekeyPipe } from '../common/pipes/dts2datekey.pipe';
@@ -35,6 +36,10 @@ import { FracPipe } from '../common/pipes/frac.pipe';
         component: StrategyComponent
       },
       {
+        path: 'alerts',
+        component: AlertsComponent
+      },
+      {
         path: '',
         redirectTo: '/realtime',
         pathMatch: 'full'
@@ -45,6 +50,7 @@ import { FracPipe } from '../common/pipes/frac.pipe';
     AppComponent,
     RealtimeComponent,
     HistoryComponent,
+    AlertsComponent,
     StrategyComponent,
     QueryPageComponent,
     ActionButtonComponent,

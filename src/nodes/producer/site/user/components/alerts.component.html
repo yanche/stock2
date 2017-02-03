@@ -1,0 +1,23 @@
+<div>
+    <query-page [qfilter]="qfilter" [queryFn]="queryFn" [options]="queryOpt" (onPageDataChange)="setPageData($event)"></query-page>
+    <div class="col-12">
+        <div class="col-1 datacell">New</div>
+        <div class="col-1 datacell">Target</div>
+        <div class="col-1 datacell">Name</div>
+        <div class="col-3 datacell">Alert Plan</div>
+        <div class="col-4 datacell">Rtplan</div>
+        <div class="col-1 datacell">Created On</div>
+        <div class="col-1 datacell">Simulate</div>
+    </div>
+    <div *ngFor="let t of pageData" class="col-12">
+        <div class="col-12">
+            <div class="col-1 datacell">{{t.new}}</div>
+            <div class="col-1 datacell">{{t.target}}</div>
+            <div class="col-1 datacell">{{t._name}}</div>
+            <div class="col-3 datacell">{{t._alertplan}}</div>
+            <div class="col-4 datacell">{{t._rtplan}}</div>
+            <div class="col-1 datacell">{{t.createdTs | datetime}}</div>
+            <div class="col-1 datacell"><a target="_blank" href="/history?_id={{t.simulateId}}"><i class="fa fa-info flatbtn"></i></a></div>
+        </div>
+    </div>
+</div>

@@ -5,10 +5,10 @@ import * as dp from '../datapvd';
 export interface Task {
     _id?: mongo.ObjectID | string;
     locality?: Object;
-    condition?: { type: string, pack?: any };
-    action?: { type: string, pack?: any };
+    condition?: { type: string; pack?: any };
+    action?: { type: string; pack?: any };
     postAction?: Object;
-    constraints?: { ttl?: number, conditionCheckInterval?: number, timeoutLevel?: number };
+    constraints?: { ttl?: number; conditionCheckInterval?: number; timeoutLevel?: number };
     comments?: string;
     statusId?: number;
     createdTs?: number;
@@ -35,7 +35,7 @@ export interface Simulate {
     lp?: number;
     glong?: boolean;
     rtplanId?: string;
-    env?: Array<{ target: string, sp: number, ep: number }>;
+    env?: Array<{ target: string; sp: number; ep: number }>;
     concernsIn?: Array<Object>;
     concernsOut?: Array<Object>;
 }
@@ -113,31 +113,48 @@ export interface RtplanConcern {
 }
 
 export interface Rtprice {
-    _id?: string,
-    lastEnd?: number,
-    lastDts?: number,
-    lastEndUpdateTs?: number,
+    _id?: string;
+    lastEnd?: number;
+    lastDts?: number;
+    lastEndUpdateTs?: number;
     adjprices?: {
-        p?: number,
-        s?: number,
-        e?: number,
-        l?: number,
-        h?: number,
-        v?: number,
-        ex?: number,
-        nr?: number,
+        p?: number;
+        s?: number;
+        e?: number;
+        l?: number;
+        h?: number;
+        v?: number;
+        ex?: number;
+        nr?: number;
         mv?: number
-    },
+    };
     prices?: {
-        p?: number,
-        s?: number,
-        e?: number,
-        l?: number,
-        h?: number,
-        v?: number,
-        ex?: number,
-        nr?: number,
+        p?: number;
+        s?: number;
+        e?: number;
+        l?: number;
+        h?: number;
+        v?: number;
+        ex?: number;
+        nr?: number;
         mv?: number
-    },
-    priceUpdateTs?: number,
+    };
+    priceUpdateTs?: number;
 };
+
+export interface AlertPlan {
+    _id?: string;
+    name?: string;
+    desc?: string;
+    rtplanId?: string;
+    prog?: Object;
+}
+
+export interface Alert {
+    _id?: string | mongo.ObjectID;
+    simulateId?: string;
+    target?: string;
+    alertPlanId?: string;
+    new?: boolean;
+    createdTs?: number;
+}

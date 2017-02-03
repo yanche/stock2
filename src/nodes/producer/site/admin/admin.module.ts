@@ -16,6 +16,7 @@ import { TargetsActionComponent } from './components/producer/targetsact.compone
 import { TargetsInputComponent } from './components/producer/targetsinput.component';
 import { HypoTestAggrProducerComponent } from './components/producer/hypotestaggr.component';
 import { SimpleProducerComponent } from './components/producer/simple.component';
+import { AlertAllProducerComponent } from './components/producer/alertsall.component';
 import { RawDataProducerComponent } from './components/producer/rawdata.component';
 import * as taskdisplay from './components/taskdisplay.component';
 
@@ -62,6 +63,7 @@ import { Dts2DatekeyPipe } from '../common/pipes/dts2datekey.pipe';
     RawDataProducerComponent,
     TargetsActionComponent,
     TargetsInputComponent,
+    AlertAllProducerComponent,
     //target displays
     taskdisplay.TaskDisplayComponent,
     taskdisplay.RawInspectTaskDisplayComponent,

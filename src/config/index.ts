@@ -58,7 +58,9 @@ const dbCols = {
     rtprog: 'rtprog',
     rtprogout: 'rtprogout',
     rtprice: 'rtprice',
-    systrack: 'systrack'
+    systrack: 'systrack',
+    alertplan: 'alertplan',
+    alert: 'alert'
 };
 
 const timeoutCheckFreq = 2000; //in ms

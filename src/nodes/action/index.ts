@@ -39,3 +39,5 @@ actmap.set(constant.action.genRtProg, rtprog.genrtprog.action);
 actmap.set(constant.action.genRtProgAll, rtprog.genrtprogall.action);
 actmap.set(constant.action.afterRawInspect, daily.afterRawInspect.action);
 actmap.set(constant.action.delay, ctrl.delay.action);
+actmap.set(constant.action.alert, rtplan.alert.action);
+actmap.set(constant.action.alertsAll, rtplan.alertsall.action);

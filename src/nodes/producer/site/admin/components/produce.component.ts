@@ -17,7 +17,8 @@ export class ProduceComponent {
     { type: this.constant.action.rawSync },
     { type: this.constant.action.simulate },
     { type: this.constant.action.stockList },
-    { type: this.constant.action.lastend }
+    { type: this.constant.action.lastend },
+    { type: this.constant.action.alertsAll }
   ].map(x => x.type);
 
   selectedTaskType: string = this.taskTypes[0];
