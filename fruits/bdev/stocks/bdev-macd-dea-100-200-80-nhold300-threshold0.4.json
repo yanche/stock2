@@ -4,6 +4,77 @@
     "targetScope": {
         "type": "allstocks"
     },
+    "envMap": {
+        "deviate_dp": {
+            "type": "x.deviate",
+            "pack": {
+                "threshold": 0.4,
+                "emaxRate": 1,
+                "maxDays": 1000,
+                "peakRange": 30,
+                "dp": {
+                    "type": "r.end",
+                    "pack": "{{target}}"
+                },
+                "dpT": "{{dpT_dp}}",
+                "dpV": "{{dea_dp}}"
+            }
+        },
+        "dea_dp": {
+            "type": "c.prop",
+            "pack": {
+                "prop": "dea",
+                "dp": {
+                    "type": "b.macd",
+                    "pack": {
+                        "Ns": 100,
+                        "Nl": 200,
+                        "Na": 80,
+                        "dp": {
+                            "type": "r.end",
+                            "pack": "{{target}}"
+                        }
+                    }
+                }
+            }
+        },
+        "localpeak_dp": {
+            "type": "c.prop",
+            "pack": {
+                "prop": "peak",
+                "dp": {
+                    "type": "x.localpeak",
+                    "pack": {
+                        "range": 30,
+                        "peak": false,
+                        "dp": "{{dea_dp}}"
+                    }
+                }
+            }
+        },
+        "dpT_dp": {
+            "type": "c.and",
+            "pack": {
+                "defidx": 1,
+                "list": [
+                    {
+                        "type": "c.lt",
+                        "pack": {
+                            "defidx": 0,
+                            "list": [
+                                "{{dea_dp}}",
+                                {
+                                    "type": "r.const",
+                                    "pack": 0
+                                }
+                            ]
+                        }
+                    },
+                    "{{localpeak_dp}}"
+                ]
+            }
+        }
+    },
     "cpdefRef": {
         "type": "c.and",
         "pack": {
@@ -15,106 +86,7 @@
                             {
                                 "type": "c.prop",
                                 "pack": {
-                                    "dp": {
-                                        "type": "x.deviate",
-                                        "pack": {
-                                            "threshold": 0.4,
-                                            "emaxRate": 1,
-                                            "maxDays": 1000,
-                                            "peakRange": 30,
-                                            "dp": {
-                                                "type": "r.end",
-                                                "pack": "{{target}}"
-                                            },
-                                            "dpT": {
-                                                "type": "c.and",
-                                                "pack": {
-                                                    "defidx": 1,
-                                                    "list": [
-                                                        {
-                                                            "type": "c.lt",
-                                                            "pack": {
-                                                                "defidx": 0,
-                                                                "list": [
-                                                                    {
-                                                                        "type": "c.prop",
-                                                                        "pack": {
-                                                                            "prop": "dea",
-                                                                            "dp": {
-                                                                                "type": "b.macd",
-                                                                                "pack": {
-                                                                                    "Ns": 100,
-                                                                                    "Nl": 200,
-                                                                                    "Na": 80,
-                                                                                    "dp": {
-                                                                                        "type": "r.end",
-                                                                                        "pack": "{{target}}"
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "type": "r.const",
-                                                                        "pack": 0
-                                                                    }
-                                                                ]
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "c.prop",
-                                                            "pack": {
-                                                                "prop": "peak",
-                                                                "dp": {
-                                                                    "type": "x.localpeak",
-                                                                    "pack": {
-                                                                        "range": 30,
-                                                                        "peak": false,
-                                                                        "dp": {
-                                                                            "type": "c.prop",
-                                                                            "pack": {
-                                                                                "prop": "dea",
-                                                                                "dp": {
-                                                                                    "type": "b.macd",
-                                                                                    "pack": {
-                                                                                        "Ns": 100,
-                                                                                        "Nl": 200,
-                                                                                        "Na": 80,
-                                                                                        "dp": {
-                                                                                            "type": "r.end",
-                                                                                            "pack": "{{target}}"
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    ]
-                                                }
-                                            },
-                                            "dpV": {
-                                                "type": "c.prop",
-                                                "pack": {
-                                                    "prop": "dea",
-                                                    "dp": {
-                                                        "type": "b.macd",
-                                                        "pack": {
-                                                            "Ns": 100,
-                                                            "Nl": 200,
-                                                            "Na": 80,
-                                                            "dp": {
-                                                                "type": "r.end",
-                                                                "pack": "{{target}}"
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    },
+                                    "dp": "{{deviate_dp}}",
                                     "prop": "count"
                                 }
                             },
@@ -133,106 +105,7 @@
                             {
                                 "type": "c.prop",
                                 "pack": {
-                                    "dp": {
-                                        "type": "x.deviate",
-                                        "pack": {
-                                            "threshold": 0.4,
-                                            "emaxRate": 1,
-                                            "maxDays": 1000,
-                                            "peakRange": 30,
-                                            "dp": {
-                                                "type": "r.end",
-                                                "pack": "{{target}}"
-                                            },
-                                            "dpT": {
-                                                "type": "c.and",
-                                                "pack": {
-                                                    "defidx": 1,
-                                                    "list": [
-                                                        {
-                                                            "type": "c.lt",
-                                                            "pack": {
-                                                                "defidx": 0,
-                                                                "list": [
-                                                                    {
-                                                                        "type": "c.prop",
-                                                                        "pack": {
-                                                                            "prop": "dea",
-                                                                            "dp": {
-                                                                                "type": "b.macd",
-                                                                                "pack": {
-                                                                                    "Ns": 100,
-                                                                                    "Nl": 200,
-                                                                                    "Na": 80,
-                                                                                    "dp": {
-                                                                                        "type": "r.end",
-                                                                                        "pack": "{{target}}"
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "type": "r.const",
-                                                                        "pack": 0
-                                                                    }
-                                                                ]
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "c.prop",
-                                                            "pack": {
-                                                                "prop": "peak",
-                                                                "dp": {
-                                                                    "type": "x.localpeak",
-                                                                    "pack": {
-                                                                        "range": 30,
-                                                                        "peak": false,
-                                                                        "dp": {
-                                                                            "type": "c.prop",
-                                                                            "pack": {
-                                                                                "prop": "dea",
-                                                                                "dp": {
-                                                                                    "type": "b.macd",
-                                                                                    "pack": {
-                                                                                        "Ns": 100,
-                                                                                        "Nl": 200,
-                                                                                        "Na": 80,
-                                                                                        "dp": {
-                                                                                            "type": "r.end",
-                                                                                            "pack": "{{target}}"
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    ]
-                                                }
-                                            },
-                                            "dpV": {
-                                                "type": "c.prop",
-                                                "pack": {
-                                                    "prop": "dea",
-                                                    "dp": {
-                                                        "type": "b.macd",
-                                                        "pack": {
-                                                            "Ns": 100,
-                                                            "Nl": 200,
-                                                            "Na": 80,
-                                                            "dp": {
-                                                                "type": "r.end",
-                                                                "pack": "{{target}}"
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    },
+                                    "dp": "{{deviate_dp}}",
                                     "prop": "minThd"
                                 }
                             },
@@ -276,106 +149,7 @@
         "in": [
             {
                 "name": "背离信息",
-                "dpRef": {
-                    "type": "x.deviate",
-                    "pack": {
-                        "threshold": 0.4,
-                        "emaxRate": 1,
-                        "maxDays": 1000,
-                        "peakRange": 30,
-                        "dp": {
-                            "type": "r.end",
-                            "pack": "{{target}}"
-                        },
-                        "dpT": {
-                            "type": "c.and",
-                            "pack": {
-                                "defidx": 1,
-                                "list": [
-                                    {
-                                        "type": "c.lt",
-                                        "pack": {
-                                            "defidx": 0,
-                                            "list": [
-                                                {
-                                                    "type": "c.prop",
-                                                    "pack": {
-                                                        "prop": "dea",
-                                                        "dp": {
-                                                            "type": "b.macd",
-                                                            "pack": {
-                                                                "Ns": 100,
-                                                                "Nl": 200,
-                                                                "Na": 80,
-                                                                "dp": {
-                                                                    "type": "r.end",
-                                                                    "pack": "{{target}}"
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "type": "r.const",
-                                                    "pack": 0
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "c.prop",
-                                        "pack": {
-                                            "prop": "peak",
-                                            "dp": {
-                                                "type": "x.localpeak",
-                                                "pack": {
-                                                    "range": 30,
-                                                    "peak": false,
-                                                    "dp": {
-                                                        "type": "c.prop",
-                                                        "pack": {
-                                                            "prop": "dea",
-                                                            "dp": {
-                                                                "type": "b.macd",
-                                                                "pack": {
-                                                                    "Ns": 100,
-                                                                    "Nl": 200,
-                                                                    "Na": 80,
-                                                                    "dp": {
-                                                                        "type": "r.end",
-                                                                        "pack": "{{target}}"
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "dpV": {
-                            "type": "c.prop",
-                            "pack": {
-                                "prop": "dea",
-                                "dp": {
-                                    "type": "b.macd",
-                                    "pack": {
-                                        "Ns": 100,
-                                        "Nl": 200,
-                                        "Na": 80,
-                                        "dp": {
-                                            "type": "r.end",
-                                            "pack": "{{target}}"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
+                "dpRef": "{{deviate_dp}}",
                 "view": "raw"
             },
             {

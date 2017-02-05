@@ -57,7 +57,7 @@ export const action = new Action<HypoTestInput, HypoTestInput, HypoTestOutput>({
                 //part 1: calculate hypothesis
                 return utility.whileLoop(() => bb.resolve(finished < total), () => {
                     log.info(`[${input.target} hypotest] progress: ${utility.num.frac(finished / total * 100, 2)}%`);
-                    return bb.all([datapvd.literal.resolve(utility.refReplace(input.cpDefRef, p)), resolveDPs(input.cpoutDefRefs, p), resolveDPs(input.envDefs, p)])
+                    return bb.all([datapvd.literal.resolve(utility.meta.replace(input.cpDefRef, p)), resolveDPs(input.cpoutDefRefs, p), resolveDPs(input.envDefs, p)])
                         .then(data => {
                             let mindayts = rdp.forwardTs(rdp.minTs, 20); //上市前20天忽略
                             if (mindayts < minStartDts) mindayts = rdp.forwardTs(minStartDts, 0);
@@ -146,7 +146,7 @@ function resolveDPs(dpl: { [key: string]: datapvd.literal.LiteralDP }, repl?: { 
     const prms: Array<bb<{ name: string, dp: datapvd.def.DataPvd<any> }>> = [];
     for (let i in dpl) {
         const v = dpl[i];
-        prms.push(datapvd.literal.resolve(<datapvd.literal.LiteralDP>(repl == null ? v : utility.refReplace(v, repl))).then(pvd => {
+        prms.push(datapvd.literal.resolve(<datapvd.literal.LiteralDP>(repl == null ? v : utility.meta.replace(v, repl))).then(pvd => {
             return { name: i, dp: pvd };
         }));
     }

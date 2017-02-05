@@ -88,6 +88,7 @@ export interface RtplanTrigger {
 export interface Rtplan {
     _id?: string;
     targetScope?: { type?: string; pack?: any };
+    envMap?: Object;
     cpdefRef?: Object;
     cpoutdefRef?: Object;
     createdTs?: number;

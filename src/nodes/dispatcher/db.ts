@@ -55,6 +55,7 @@ const simtrackFields = {
 const rtplanFields = {
     _id: 1,
     targetScope: 1,
+    envMap: 1,
     cpdefRef: 1,
     cpoutdefRef: 1,
     createdTs: 1,

@@ -5,6 +5,7 @@ import Action from '../action';
 import * as dclient from '../../dclient';
 import * as nutil from '../../util';
 import * as datapvd from '../../../datapvd';
+import * as _ from 'lodash';
 
 export interface GenRtProgInput {
     target: string;
@@ -39,7 +40,7 @@ export const action = new Action<GenRtProgInput, GenRtProgInput, GenRtProgOutput
                         const epvd = <datapvd.def.DataPvd<number>>data[2];
                         targetMaxTs = epvd.maxTs;
                         if (epvd.forwardTs(epvd.minTs, 20) != null && targetMaxTs >= rtplan.startDateTs) {
-                            return datapvd.literal.resolve(utility.refReplace(rtplan.cpdefRef, { target: input.target }))
+                            return datapvd.literal.resolve(utility.meta.replace(rtplan.cpdefRef, _.extend({ target: input.target }, rtplan.envMap)))
                                 .then(dp => {
                                     if (dp.hasDefProg()) {
                                         return dclient.rtprog.create({ target: input.target, rtprog: dp.getRTProg(), rtplanId: input.rtplanId, glong: rtplan.glong })
@@ -55,7 +56,7 @@ export const action = new Action<GenRtProgInput, GenRtProgInput, GenRtProgOutput
                     .then(sims => {
                         const corrupted = sims.filter(sim => (sim.edts || sim.sdts) !== targetMaxTs);
                         if (corrupted.length > 0) throw new Error(`simulate.ets or sts does not match target's max-date-ts, ${corrupted.length}, ${input.target}, ${input.rtplanId}`);
-                        return datapvd.literal.resolve(utility.refReplace(rtplan.cpoutdefRef, { target: input.target }))
+                        return datapvd.literal.resolve(utility.meta.replace(rtplan.cpoutdefRef, { target: input.target }))
                             .then(dpout => dclient.rtprogout.createMul(sims.map(sim => {
                                 return {
                                     target: input.target,

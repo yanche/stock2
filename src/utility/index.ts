@@ -10,6 +10,7 @@ import * as hypo from './hypo';
 import * as bb from 'bluebird';
 import * as mongodb from 'mongodb';
 import * as prog from './prog';
+import * as meta from './metaobj';
 
 export function parseJson<T>(str: string): T {
     try {
@@ -32,31 +33,6 @@ export function noop() { };
 
 export function id<T>(x: T): T { return x; }
 
-function strRef(str: string): string {
-    str = str.trim();
-    if (str.length < 4) return null;
-    else if (str.slice(0, 2) === '{{' && str.slice(-2) === '}}') return str.slice(2, -2);
-    else return null;
-}
-
-export function refReplace(input: any, map: { [key: string]: any }): any {
-    if (validate.isStr(input)) {
-        const ref = strRef(input);
-        return (ref == null || !(ref in map)) ? input : map[ref];
-    }
-    else if (Array.isArray(input)) {
-        return input.map(o => refReplace(o, map));
-    }
-    else if (validate.isObj(input)) {
-        const ret: { [key: string]: any } = {};
-        for (let i in input) {
-            ret[i] = refReplace(input[i], map);
-        }
-        return ret;
-    }
-    else return input;
-}
-
 export function whileLoop(condition: () => bb<boolean>, body: () => bb<any>): bb<void> {
     return condition()
         .then(loop => {
@@ -65,4 +41,4 @@ export function whileLoop(condition: () => bb<boolean>, body: () => bb<any>): bb
         });
 }
 
-export { validate, date, array, file, http, mongo, num, hypo, prog }
+export { validate, date, array, file, http, mongo, num, hypo, prog, meta }

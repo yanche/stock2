@@ -4,6 +4,7 @@
     "targetScope": {
         "type": "allstocks"
     },
+    "envMap": {},
     "cpdefRef": {
         "type": "c.and",
         "pack": {

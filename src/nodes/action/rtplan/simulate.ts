@@ -65,10 +65,10 @@ export const action = new Action<SimulateInput, SimulateInput, SimulateOutput>({
                             else {
                                 log.info(`load ${sims.length} unclosed simulates`);
                                 return bb.all([
-                                    datapvd.literal.resolve(utility.refReplace(rtplan.cpdefRef, { target: input.target })),
-                                    datapvd.literal.resolve(utility.refReplace(rtplan.cpoutdefRef, { target: input.target })),
-                                    getConcerns((rtplan.concerns || {}).in || [], input.target),
-                                    getConcerns((rtplan.concerns || {}).out || [], input.target),
+                                    datapvd.literal.resolve(utility.meta.replace(rtplan.cpdefRef, _.extend({ target: input.target }, rtplan.envMap))),
+                                    datapvd.literal.resolve(utility.meta.replace(rtplan.cpoutdefRef, _.extend({ target: input.target }, rtplan.envMap))),
+                                    getConcerns(rtplan.envMap, (rtplan.concerns || {}).in || [], input.target),
+                                    getConcerns(rtplan.envMap, (rtplan.concerns || {}).out || [], input.target),
                                 ])
                                     .then(data => {
                                         const dpin: datapvd.def.DataPvd<boolean> = data[0], dpout: datapvd.def.DataPvd<boolean> = data[1];
@@ -186,9 +186,9 @@ export const action = new Action<SimulateInput, SimulateInput, SimulateOutput>({
     }
 });
 
-function getConcerns(concernarr: Array<def.RtplanConcern>, target: string) {
+function getConcerns(envMap: Object, concernarr: Array<def.RtplanConcern>, target: string) {
     return bb.all(concernarr.map(c => {
-        return datapvd.literal.resolve(utility.refReplace(c.dpRef, { target: target }))
+        return datapvd.literal.resolve(utility.meta.replace(c.dpRef, _.extend({ target: target }, envMap)))
             .then(pvd => {
                 return {
                     name: c.name,
