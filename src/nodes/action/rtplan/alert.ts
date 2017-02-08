@@ -48,14 +48,15 @@ export const action = new Action<AlertInput, AlertInput, AlertOutput>({
                                 alertPlanId: input.alertPlanId
                             };
                         });
+                        const oldAlertInNew = oldAlert.filter(a => a.new);
                         return bb.all([
-                            dclient.alert.createMul(newAlerts),
-                            dclient.alert.bulkUpdate(oldAlert.filter(a => a.new).map(a => {
+                            newAlerts.length > 0 ? dclient.alert.createMul(newAlerts) : bb.resolve(null),
+                            oldAlertInNew.length > 0 ? dclient.alert.bulkUpdate(oldAlertInNew.map(a => {
                                 return {
                                     filter: { _id: a._id },
                                     update: { $set: { new: false } }
                                 };
-                            }))
+                            })) : bb.resolve(null)
                         ])
                             .then(() => {
                                 return {
