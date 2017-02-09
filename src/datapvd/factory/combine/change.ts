@@ -14,6 +14,9 @@ const changeFac: IFactory<facutil.TransformPackBase<boolean>, boolean> = facutil
     },
     mmts: (pack: facutil.TransformPackBase<boolean>, dp: def.DataPvd<boolean>) => {
         return { minTs: dp.forwardTs(dp.minTs, 1) || facutil.dateTsOffset(dp.maxTs, 1), maxTs: dp.maxTs };
+    },
+    hasdefprog: (pack: facutil.TransformPackBase<boolean>, dp: def.DataPvd<boolean>) => {
+        return dp.maxTs >= dp.minTs;
     }
 });
 
