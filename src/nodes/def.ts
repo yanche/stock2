@@ -38,6 +38,7 @@ export interface Simulate {
     env?: Array<{ target: string; sp: number; ep: number }>;
     concernsIn?: Array<Object>;
     concernsOut?: Array<Object>;
+    createdTs?: number;
 }
 
 export interface SimTrack {

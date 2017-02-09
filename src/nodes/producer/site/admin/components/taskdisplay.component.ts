@@ -209,3 +209,39 @@ export class LastendAllTaskDisplayComponent {
     @Input()
     quickview: any;
 }
+
+@Component({
+    moduleId: module.id,
+    selector: 'alertsall-task-display',
+    templateUrl: './taskdisplay/alertsall.taskdisplay.component.html'
+})
+export class AlertsAllTaskDisplayComponent {
+    @Input()
+    task: Task;
+    @Input()
+    quickview: any;
+}
+
+@Component({
+    moduleId: module.id,
+    selector: 'alert-task-display',
+    templateUrl: './taskdisplay/alert.taskdisplay.component.html'
+})
+export class AlertTaskDisplayComponent {
+    @Input()
+    task: Task;
+    @Input()
+    quickview: any;
+}
+
+@Component({
+    moduleId: module.id,
+    selector: 'aftersimall-task-display',
+    templateUrl: './taskdisplay/aftersimall.taskdisplay.component.html'
+})
+export class AfterSimAllTaskDisplayComponent {
+    @Input()
+    task: Task;
+    @Input()
+    quickview: any;
+}

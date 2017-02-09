@@ -75,7 +75,9 @@ export class ConstService {
         afterRawInspect: 'afterrawinspect',
         lastend: 'lastend',
         lastendAll: 'lastendall',
-        alertsAll: 'alertsall'
+        alertsAll: 'alertsall',
+        alert: 'alert',
+        afterSimAll: 'aftersimall'
     };
 
     simconcern = {

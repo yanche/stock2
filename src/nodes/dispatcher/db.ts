@@ -49,7 +49,7 @@ const simtrackFields = {
     _id: 1,
     target: 1,
     rtplanId: 1,
-    lastSimTs: 1,
+    lastSimDateTs: 1,
 };
 
 const rtplanFields = {

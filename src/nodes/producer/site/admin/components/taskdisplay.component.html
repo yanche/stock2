@@ -16,4 +16,7 @@
     <afterrawinspect-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.afterRawInspect"></afterrawinspect-task-display>
     <lastend-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.lastend"></lastend-task-display>
     <lastendall-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.lastendAll"></lastendall-task-display>
+    <aftersimall-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.afterSimAll"></aftersimall-task-display>
+    <alert-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.alert"></alert-task-display>
+    <alertsall-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.alertsAll"></alertsall-task-display>
 </div>

@@ -40,7 +40,8 @@ class SimulateCreateModel implements hutil.HandlerDataModel {
             rtplanId: httpbody.rtplanId,
             env: httpbody.env || [],
             concernsIn: httpbody.concernsIn || [],
-            concernsOut: httpbody.concernsOut || []
+            concernsOut: httpbody.concernsOut || [],
+            createdTs: new Date().getTime()
         };
         this._valid = utility.validate.valueStr(this._mongodoc.target) && utility.validate.isBool(this._mongodoc.closed) && utility.validate.isBool(this._mongodoc.glong)
             && utility.validate.valueStr(this._mongodoc.rtplanId) && Array.isArray(this._mongodoc.env) && Array.isArray(this._mongodoc.concernsIn) && Array.isArray(this._mongodoc.concernsOut)

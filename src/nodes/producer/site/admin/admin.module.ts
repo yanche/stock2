@@ -81,6 +81,9 @@ import { Dts2DatekeyPipe } from '../common/pipes/dts2datekey.pipe';
     taskdisplay.DisplayLogTaskDisplayComponent,
     taskdisplay.LastendTaskDisplayComponent,
     taskdisplay.LastendAllTaskDisplayComponent,
+    taskdisplay.AlertsAllTaskDisplayComponent,
+    taskdisplay.AlertTaskDisplayComponent,
+    taskdisplay.AfterSimAllTaskDisplayComponent,
     //pipes
     StatusPipe,
     DateTimePipe,
