@@ -4,6 +4,8 @@ import * as cm from './common';
 import * as co from 'co';
 import * as bb from 'bluebird';
 import * as mongodb from 'mongodb';
+import * as constant from '../../const';
+import * as utility from '../../utility';
 
 function post<T>(body: d.Task | { list: Array<d.Task> }, verb: string, retry: number) {
     return cm.expectJson<T>('POST', 'task', body, retry, { verb: verb.toUpperCase() });
@@ -24,7 +26,7 @@ function refineTaskCreationArg(task: TaskCreation): TaskCreation {
         action: task.action,
         locality: task.locality,
         condition: task.condition || { type: 'ok' },
-        constraints: task.constraints || { timeoutLevel: 3, conditionCheckInterval: 1, ttl: 1 },
+        constraints: task.constraints || { timeoutLevel: constant.task.constraints.timeoutLevel.long.code, conditionCheckInterval: constant.task.constraints.conditionCheckInterval.short.code, ttl: 1 },
         comments: task.comments
     }
 }
@@ -57,4 +59,41 @@ export function report(data: { _id: string, processTs: number, statusId: number,
         .then(reply => {
             if (reply.statusCode !== 200) throw new Error(`report task status failed with statuscode: ${reply.statusCode}`);
         });
+}
+
+const longConstraints = { timeoutLevel: constant.task.constraints.timeoutLevel.long.code, conditionCheckInterval: constant.task.constraints.conditionCheckInterval.long.code, ttl: 1 };
+const taskNoneStep = 1000;
+export function createTasksHasManyPrecedence(list: Array<TaskCreation>, idList: Array<string>) {
+    list.forEach(l => { l.condition = null; l.constraints = null; })
+    if (idList.length === 0) return createMul(list);
+    if (idList.length <= taskNoneStep) return createMul(list.map(l => {
+        l.condition = { type: constant.dispatcherCond.success, pack: idList };
+        l.constraints = longConstraints;
+        return l;
+    }))
+    const idSplit = new Array<Array<string>>();
+    let i = 0;
+    while (i < idList.length) {
+        const e = i + taskNoneStep;
+        idSplit.push(idList.slice(i, e));
+        i = e;
+    }
+    const tasksToCreate = new Array<TaskCreation>();
+    const taskIds = new Array<string>();
+    idSplit.forEach(s => {
+        const tid = utility.mongo.newId().toHexString();
+        taskIds.push(tid);
+        tasksToCreate.push({
+            _id: tid,
+            action: { type: constant.action.none },
+            condition: { type: constant.dispatcherCond.success, pack: s },
+            constraints: longConstraints
+        });
+    });
+    list.forEach(l => {
+        l.constraints = longConstraints;
+        l.condition = { type: constant.dispatcherCond.success, pack: taskIds };
+        tasksToCreate.push(l);
+    });
+    return createMul(tasksToCreate);
 }

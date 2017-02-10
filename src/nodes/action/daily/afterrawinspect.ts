@@ -2,7 +2,6 @@
 import * as bb from 'bluebird';
 import * as utility from '../../../utility';
 import Action from '../action';
-import * as log from '../../../log';
 import * as dclient from '../../dclient';
 import * as wmact from '../wmcloud';
 import * as constant from '../../../const';
@@ -26,7 +25,7 @@ export const action = new Action<AfterRawInspectInput, AfterRawInspectInput, voi
                 const qv = <wmact.inspect.RawInspectOutput>task.quickview;
                 if (!Array.isArray(qv.rawSyncIdList)) throw new Error(`quickview of ${constant.action.rawInspect} not recognizable`);
                 const simAllId = utility.mongo.newId();
-                return dclient.task.create({
+                return dclient.task.createTasksHasManyPrecedence([{
                     action: {
                         type: constant.action.delay,
                         pack: <ctrlact.delay.DelayInput>{
@@ -56,10 +55,8 @@ export const action = new Action<AfterRawInspectInput, AfterRawInspectInput, voi
                                 }
                             ]
                         }
-                    },
-                    condition: { type: 'success', pack: qv.rawSyncIdList },
-                    constraints: { timeoutLevel: 3, conditionCheckInterval: 3, ttl: 1 }
-                })
+                    }
+                }], qv.rawSyncIdList)
             })
             .then(() => {
                 return;

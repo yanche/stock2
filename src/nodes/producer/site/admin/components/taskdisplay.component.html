@@ -12,11 +12,12 @@
     <hypotestaggr-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.hypoTestAggr"></hypotestaggr-task-display>
     <genrtprog-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.genRtProg"></genrtprog-task-display>
     <genrtprogall-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.genRtProgAll"></genrtprogall-task-display>
-    <delay-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.delay"></delay-task-display>
-    <afterrawinspect-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.afterRawInspect"></afterrawinspect-task-display>
     <lastend-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.lastend"></lastend-task-display>
-    <lastendall-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.lastendAll"></lastendall-task-display>
-    <aftersimall-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.afterSimAll"></aftersimall-task-display>
     <alert-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.alert"></alert-task-display>
     <alertsall-task-display [task]="task" [quickview]="task.quickview" *ngIf="task.action.type === constant.action.alertsAll"></alertsall-task-display>
+    <none-task-display *ngIf="task.action.type === constant.action.lastendAll"></none-task-display>
+    <none-task-display *ngIf="task.action.type === constant.action.afterRawInspect"></none-task-display>
+    <none-task-display *ngIf="task.action.type === constant.action.delay"></none-task-display>
+    <none-task-display *ngIf="task.action.type === constant.action.none"></none-task-display>
+    <none-task-display *ngIf="task.action.type === constant.action.afterSimAll"></none-task-display>
 </div>

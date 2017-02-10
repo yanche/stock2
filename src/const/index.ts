@@ -68,7 +68,8 @@ export const action = {
     lastEnd: 'lastend',
     lastEndAll: 'lastendall',
     alertsAll: 'alertsall',
-    alert: 'alert'
+    alert: 'alert',
+    none: 'none'
 }
 
 export const simconcern = {

@@ -77,7 +77,8 @@ export class ConstService {
         lastendAll: 'lastendall',
         alertsAll: 'alertsall',
         alert: 'alert',
-        afterSimAll: 'aftersimall'
+        afterSimAll: 'aftersimall',
+        none: 'none'
     };
 
     simconcern = {

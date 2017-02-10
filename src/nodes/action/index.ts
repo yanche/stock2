@@ -42,3 +42,4 @@ actmap.set(constant.action.afterSimAll, daily.afterSimAll.action);
 actmap.set(constant.action.delay, ctrl.delay.action);
 actmap.set(constant.action.alert, rtplan.alert.action);
 actmap.set(constant.action.alertsAll, rtplan.alertsall.action);
+actmap.set(constant.action.none, ctrl.none.action);

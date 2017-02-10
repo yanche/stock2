@@ -164,46 +164,10 @@ export class GenRtProgAllTaskDisplayComponent {
 
 @Component({
     moduleId: module.id,
-    selector: 'delay-task-display',
-    templateUrl: './taskdisplay/delay.taskdisplay.component.html'
-})
-export class DelayTaskDisplayComponent {
-    @Input()
-    task: Task;
-    @Input()
-    quickview: any;
-}
-
-@Component({
-    moduleId: module.id,
-    selector: 'afterrawinspect-task-display',
-    templateUrl: './taskdisplay/afterrawinspect.taskdisplay.component.html'
-})
-export class AfterRawInspectTaskDisplayComponent {
-    @Input()
-    task: Task;
-    @Input()
-    quickview: any;
-}
-
-@Component({
-    moduleId: module.id,
     selector: 'lastend-task-display',
     templateUrl: './taskdisplay/lastend.taskdisplay.component.html'
 })
 export class LastendTaskDisplayComponent {
-    @Input()
-    task: Task;
-    @Input()
-    quickview: any;
-}
-
-@Component({
-    moduleId: module.id,
-    selector: 'lastendall-task-display',
-    templateUrl: './taskdisplay/lastendall.taskdisplay.component.html'
-})
-export class LastendAllTaskDisplayComponent {
     @Input()
     task: Task;
     @Input()
@@ -236,12 +200,8 @@ export class AlertTaskDisplayComponent {
 
 @Component({
     moduleId: module.id,
-    selector: 'aftersimall-task-display',
-    templateUrl: './taskdisplay/aftersimall.taskdisplay.component.html'
+    selector: 'none-task-display',
+    templateUrl: './taskdisplay/none.taskdisplay.component.html'
 })
-export class AfterSimAllTaskDisplayComponent {
-    @Input()
-    task: Task;
-    @Input()
-    quickview: any;
+export class NoneTaskDisplayComponent {
 }

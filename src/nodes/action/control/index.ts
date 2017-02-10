@@ -1,4 +1,5 @@
 
 import * as delay from './delay';
+import * as none from './none';
 
-export {delay}
+export { delay, none }
