@@ -74,6 +74,8 @@ class TaskReportModel {
         this.errmsg = httpbody.errmsg || '';
         this.quickview = httpbody.quickview || null;
         this._valid = this.objId != null && utility.validate.posNum(this.processTs, true) && (this.statusId === constant.task.status.success || this.statusId === constant.task.status.failed);
+        if (!this._valid)
+            log.warn(`invalid reported task: ${this.objId}, ${this.processTs}, ${this.statusId}`);
     }
 }
 
@@ -258,10 +260,12 @@ function reportHandler(hpack: utility.http.HttpPack): bb<void> {
                     if (task == null) hpack.status = 404;
                     else {
                         if (task.statusId !== constant.task.status.processing && task.statusId !== constant.task.status.timeout) {
+                            log.warn(`task.statusId invalid: ${task.statusId}, ${task._id}`);
                             hpack.status = 400;
                             hpack.body = { errcode: 2, statusId: task.statusId };
                         }
                         else if (task.lastProcessTs !== model.processTs) {
+                            log.warn(`task.lastProcessTs does not equal to model.processTs: ${task.lastProcessTs}, ${model.processTs}, ${task._id}`);
                             hpack.status = 400;
                             hpack.body = { errcode: 3 };
                         }

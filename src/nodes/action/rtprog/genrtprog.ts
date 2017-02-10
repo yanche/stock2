@@ -55,7 +55,7 @@ export const action = new Action<GenRtProgInput, GenRtProgInput, GenRtProgOutput
                     .then(() => dclient.simulate.getAll({ target: input.target, rtplanId: input.rtplanId, closed: false }))
                     .then(sims => {
                         const corrupted = sims.filter(sim => (sim.edts || sim.sdts) !== targetMaxTs);
-                        if (corrupted.length > 0) throw new Error(`simulate.ets or sts does not match target's max-date-ts, ${corrupted.length}, ${input.target}, ${input.rtplanId}`);
+                        if (corrupted.length > 0) throw new Error(`simulate.ets or sts does not match target's max-date-ts, ${corrupted[0].edts}, ${corrupted[0].sdts}, ${targetMaxTs}, ${corrupted.length}, ${input.target}, ${input.rtplanId}`);
                         return datapvd.literal.resolve(utility.meta.replace(rtplan.cpoutdefRef, { target: input.target }))
                             .then(dpout => dclient.rtprogout.createMul(sims.map(sim => {
                                 return {
