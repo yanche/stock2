@@ -159,11 +159,11 @@ export const action = new Action<SimulateInput, SimulateInput, SimulateOutput>({
                                                                 updateTs: new Date().getTime(),
                                                                 env: s.env,
                                                                 concernsOut: s.concernsOut,
-                                                                ets: s.edts,
+                                                                edts: s.edts,
                                                                 ep: s.ep,
-                                                                hts: s.hdts,
+                                                                hdts: s.hdts,
                                                                 hp: s.hp,
-                                                                lts: s.ldts,
+                                                                ldts: s.ldts,
                                                                 lp: s.lp,
                                                                 closed: s.closed
                                                             }
