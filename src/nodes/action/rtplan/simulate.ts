@@ -155,16 +155,18 @@ export const action = new Action<SimulateInput, SimulateInput, SimulateOutput>({
                                                     return {
                                                         filter: { _id: s._id },
                                                         update: {
-                                                            updateTs: new Date().getTime(),
-                                                            env: s.env,
-                                                            concernsOut: s.concernsOut,
-                                                            ets: s.edts,
-                                                            ep: s.ep,
-                                                            hts: s.hdts,
-                                                            hp: s.hp,
-                                                            lts: s.ldts,
-                                                            lp: s.lp,
-                                                            closed: s.closed
+                                                            $set: {
+                                                                updateTs: new Date().getTime(),
+                                                                env: s.env,
+                                                                concernsOut: s.concernsOut,
+                                                                ets: s.edts,
+                                                                ep: s.ep,
+                                                                hts: s.hdts,
+                                                                hp: s.hp,
+                                                                lts: s.ldts,
+                                                                lp: s.lp,
+                                                                closed: s.closed
+                                                            }
                                                         }
                                                     };
                                                 }));
