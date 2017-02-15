@@ -21,7 +21,7 @@ const pow = facutil.dpTransform<PowPack, number, number>({
         return Math.pow(dp.get(ts), pack.exp);
     },
     genrtprog: (pack: PowPack, dp: def.DataPvd<number>) => {
-        return utility.prog.genProg('exp', dp.getRTProg(), pack.exp);
+        return utility.prog.genProg('pow', dp.getRTProg(), pack.exp);
     }
 })
 
