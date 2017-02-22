@@ -106,7 +106,7 @@ class RawDataAggr {
     private _findClosestDts(dts: number, next: boolean): number {
         if (this._rawmap.has(dts)) return dts;
         else {
-            const maxdts = this._rawarr[0]._datets, mindts = this._rawarr[this._rawarr.length - 1]._datets;
+            const mindts = this._rawarr[0]._datets, maxdts = this._rawarr[this._rawarr.length - 1]._datets;
             if (next) {
                 if (dts > maxdts) return null;
                 if (dts < mindts) return mindts;
