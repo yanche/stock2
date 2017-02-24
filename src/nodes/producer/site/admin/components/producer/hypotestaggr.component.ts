@@ -15,6 +15,7 @@ export class HypoTestAggrProducerComponent implements OnInit {
 
     comments: string;
     targets: Array<string>;
+    envMap: string;
     cpdefRef: string;
     cpoutDefRefs: GrpUtil;
     envDefs: GrpUtil;
@@ -29,7 +30,7 @@ export class HypoTestAggrProducerComponent implements OnInit {
     }
 
     reset() {
-        this.cpdefRef = this.comments = '';
+        this.envMap = this.cpdefRef = this.comments = '';
         this.enums = new GrpUtil();
         this.cpoutDefRefs = new GrpUtil();
         this.envDefs = new GrpUtil();
@@ -46,6 +47,7 @@ export class HypoTestAggrProducerComponent implements OnInit {
         this.reset();
         this.targets = ['000001.XSHE'];
         this.cpdefRef = data.cpdefRef;
+        this.envMap = data.envMap;
         data.enums.forEach(e => this.enums.add(e.name, e.values));
         data.cpoutDefRefs.forEach(c => this.cpoutDefRefs.add(c.name, c.dpref));
         data.envRefs.forEach(e => this.envDefs.add(e.name, e.dpref));
@@ -65,6 +67,7 @@ export class HypoTestAggrProducerComponent implements OnInit {
                 //glong is the last parameter
                 penum['glong'] = [this.glong];
                 enumnames.push('glong');
+                const envMap = JSON.parse(this.envMap);
                 const cpdefRef = JSON.parse(this.cpdefRef);
                 const cpoutDefRefs: { [key: string]: any } = {}, cpoutnames = this.cpoutDefRefs.items.map(i => i.name);
                 this.cpoutDefRefs.items.forEach(c => cpoutDefRefs[c.name] = JSON.parse(c.value));
@@ -78,6 +81,7 @@ export class HypoTestAggrProducerComponent implements OnInit {
                             pack: {
                                 target: t,
                                 penum: penum,
+                                envMap: this._utility.refReplace(envMap, { target: t }),
                                 cpDefRef: this._utility.refReplace(cpdefRef, { target: t }),
                                 cpoutDefRefs: this._utility.refReplace(cpoutDefRefs, { target: t }),
                                 envDefs: this._utility.refReplace(envDefs, { target: t }),
@@ -114,6 +118,7 @@ export class HypoTestAggrProducerComponent implements OnInit {
     standardInput: string = '';
     genStandardInput() {
         this.standardInput = JSON.stringify(<StandardInput>{
+            envMap: this.envMap,
             cpdefRef: this.cpdefRef,
             cpoutDefRefs: this.cpoutDefRefs.items.map(c => { return { name: c.name, dp: c.value } }),
             envDefs: this.envDefs.items.map(e => { return { name: e.name, dp: e.value } }),
@@ -124,6 +129,7 @@ export class HypoTestAggrProducerComponent implements OnInit {
         this.reset();
         const input = <StandardInput>JSON.parse(this.standardInput);
         this.cpdefRef = input.cpdefRef;
+        this.envMap = input.envMap;
         input.cpoutDefRefs.forEach(e => this.cpoutDefRefs.add(e.name, e.dp));
         input.envDefs.forEach(e => this.envDefs.add(e.name, e.dp));
         input.enums.forEach(e => this.enums.add(e.name, e.values));
@@ -150,6 +156,7 @@ interface GrpItem {
 
 interface StandardInput {
     cpdefRef: string;
+    envMap: string;
     cpoutDefRefs: Array<{ name: string; dp: string }>;
     envDefs: Array<{ name: string; dp: string }>;
     enums: Array<{ name: string; values: string }>;

@@ -7,6 +7,7 @@ export class HypoTestAggrService {
 }
 
 const popularDataSet: PreparedDataSet = {
+    envMap: '{}',
     enums: [
         { name: 'N', values: '30;60;120' },
         { name: 'waitN', values: '100;150' }
@@ -126,6 +127,7 @@ export interface PreparedDataSet {
     cpdefRef: string;
     cpoutDefRefs: Array<{ name: string; dpref: string }>;
     envRefs: Array<{ name: string; dpref: string }>;
+    envMap: string;
 }
 
 function marel(targetRef: string, N: number, name: string) {

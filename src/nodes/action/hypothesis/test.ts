@@ -17,6 +17,7 @@ export interface HypoTestInput {
     header: boolean;
     target: string;
     penum: utility.hypo.PEnum;
+    envMap: { [key: string]: any };
     cpDefRef: datapvd.literal.LiteralDP;
     cpoutDefRefs: { [key: string]: datapvd.literal.LiteralDP };
     envDefs: { [key: string]: datapvd.literal.LiteralDP };
@@ -30,7 +31,8 @@ export const action = new Action<HypoTestInput, HypoTestInput, HypoTestOutput>({
     refine: utility.id,
     validate: (input: HypoTestInput): boolean => {
         const v1 = utility.validate.isObj(input) && utility.validate.isBool(input.header) && utility.validate.isStr(input.target) && input.target.length > 0 && input.target.trim().length === input.target.length
-            && utility.hypo.isPEnum(input.penum) && utility.validate.isObj(input.cpDefRef) && utility.validate.isObj(input.cpoutDefRefs) && utility.validate.isObj(input.envDefs);
+            && utility.hypo.isPEnum(input.penum) && utility.validate.isObj(input.cpDefRef) && utility.validate.isObj(input.cpoutDefRefs) && utility.validate.isObj(input.envDefs)
+            && (utility.validate.isObj(input.envMap) || input.envMap == null);
         if (v1) {
             let ct = 0;
             for (let k in input.cpoutDefRefs) {
@@ -57,7 +59,8 @@ export const action = new Action<HypoTestInput, HypoTestInput, HypoTestOutput>({
                 //part 1: calculate hypothesis
                 return utility.whileLoop(() => bb.resolve(finished < total), () => {
                     log.info(`[${input.target} hypotest] progress: ${utility.num.frac(finished / total * 100, 2)}%`);
-                    return bb.all([datapvd.literal.resolve(utility.meta.replace(input.cpDefRef, p)), resolveDPs(input.cpoutDefRefs, p), resolveDPs(input.envDefs, p)])
+                    const envMap = _.extend({}, input.envMap || {}, p);
+                    return bb.all([datapvd.literal.resolve(utility.meta.replace(input.cpDefRef, envMap)), resolveDPs(input.cpoutDefRefs, envMap), resolveDPs(input.envDefs, envMap)])
                         .then(data => {
                             let mindayts = rdp.forwardTs(rdp.minTs, 20); //上市前20天忽略
                             if (mindayts < minStartDts) mindayts = rdp.forwardTs(minStartDts, 0);

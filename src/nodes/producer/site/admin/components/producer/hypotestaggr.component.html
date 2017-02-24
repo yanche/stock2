@@ -17,6 +17,10 @@
         <targets-input class="col-12" [targets]="targets" (onTargetsChange)="targets = $event"></targets-input>
     </div>
     <div class="col-12">
+        <div class="col-12 label">ENV Map</div>
+        <textarea [(ngModel)]="envMap" style="width: 500px; max-width: 500px; min-height: 200px;"></textarea>
+    </div>
+    <div class="col-12">
         <div class="col-12 label">CP Def Reference</div>
         <textarea [(ngModel)]="cpdefRef" style="width: 500px; max-width: 500px; min-height: 200px;"></textarea>
     </div>
