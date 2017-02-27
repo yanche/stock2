@@ -29,7 +29,7 @@ export function webreq(options: WebReqOptions, body?: Buffer | Object | Array<an
             options.host = '127.0.0.1';
             options.port = 8888;
         }
-        var req = (secure ? https.request : http.request)(options, (res: http.IncomingMessage) => {
+        var req = ((secure && !config.useFiddler) ? https.request : http.request)(options, (res: http.IncomingMessage) => {
             var bufs = new Array<Buffer>();
             res.on('data', (d: Buffer) => {
                 bufs.push(d);
