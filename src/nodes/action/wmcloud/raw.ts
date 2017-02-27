@@ -51,7 +51,7 @@ export const action = new Action({
         return rutil.wmRaw(pack.index, pack.target, pack.startDayTs, pack.endDayTs)
             .then(data => {
                 if (data == null || data.count === 0) return { nodata: true };
-                else if (data.count >= 10) return filestorage.azure.upload(JSON.stringify(data.data), `${utility.randomStr()}.json`, null, config.azurestorage.container.temp)
+                else if (data.count >= 10) return filestorage.common.writeTempBytes(JSON.stringify(data.data), /*`${utility.randomStr()}.json`*/ `${pack.target}.json`)
                     .then(drop => { return <RawOutput>{ nodata: false, drop: drop } });
                 else return <RawOutput>{
                     nodata: false,
