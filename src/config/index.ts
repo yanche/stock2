@@ -115,7 +115,9 @@ if (ctrl[0] == '-') {
         console.log('no run-time config available, now run as 100% prod mode');
 }
 
-const wmCloudToken = 'bf1e63e10264f88d3d44541d4057e00981ced9e6042c19ce02c0b738f471c747';
+// const wmCloudToken = 'bf1e63e10264f88d3d44541d4057e00981ced9e6042c19ce02c0b738f471c747';
+const wmCloudToken = '1435e205f9d203055d546b1ed7cc991f7363100bbed9c7bf9a3a0f40c5362a91';
+const wmTrialDays = 180;
 
 let hypotestaggrAnalysisPort = 8083;
 let producerPort = 8081;
@@ -137,5 +139,5 @@ export {
     rawDataFolder, azurestorage, localStoragePath, rawDataExpiryInMS, maintainIdx,
     maxRawDataCached, dispatcherMongoUrl, dbCols, conditionCheckFreq, jobSchedulerCheckFreq, jobScheduleTime,
     hypotestaggrAnalysisPort, producerPort, storageServiceHost, storageServicePort, reporterPort, dispatcherHost, dispatcherPort, dev, useFiddler,
-    scheduledTask, useLocalRaw, useLocalTempStore, timeoutCheckFreq, wmCloudToken
+    scheduledTask, useLocalRaw, useLocalTempStore, timeoutCheckFreq, wmCloudToken, wmTrialDays
 }
