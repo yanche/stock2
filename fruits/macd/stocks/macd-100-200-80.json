@@ -1,0 +1,433 @@
+{
+    "_id": "stocks-macd-100-200-80",
+    "name": "MACD(100-200-80)",
+    "targetScope": {
+        "type": "allstocks"
+    },
+    "envMap": {
+        "Ns": 100,
+        "Nl": 200,
+        "Na": 80
+    },
+    "cpdefRef": {
+        "type": "c.change",
+        "pack": {
+            "dp": {
+                "type": "c.gt",
+                "pack": {
+                    "list": [
+                        {
+                            "type": "c.prop",
+                            "pack": {
+                                "dp": {
+                                    "type": "b.macd",
+                                    "pack": {
+                                        "Ns": "{{Ns}}",
+                                        "Nl": "{{Nl}}",
+                                        "Na": "{{Na}}",
+                                        "dp": {
+                                            "type": "r.end",
+                                            "pack": "{{target}}"
+                                        }
+                                    }
+                                },
+                                "prop": "macd"
+                            }
+                        },
+                        {
+                            "type": "r.const",
+                            "pack": 0
+                        }
+                    ],
+                    "defidx": 0
+                }
+            }
+        }
+    },
+    "cpoutdefRef": {
+        "type": "c.change",
+        "pack": {
+            "dp": {
+                "type": "c.lt",
+                "pack": {
+                    "list": [
+                        {
+                            "type": "c.prop",
+                            "pack": {
+                                "dp": {
+                                    "type": "b.macd",
+                                    "pack": {
+                                        "Ns": "{{Ns}}",
+                                        "Nl": "{{Nl}}",
+                                        "Na": "{{Na}}",
+                                        "dp": {
+                                            "type": "r.end",
+                                            "pack": "{{target}}"
+                                        }
+                                    }
+                                },
+                                "prop": "macd"
+                            }
+                        },
+                        {
+                            "type": "r.const",
+                            "pack": 0
+                        }
+                    ],
+                    "defidx": 0
+                }
+            }
+        }
+    },
+    "comments": {
+        "sum": "下跌后买入预期收益大幅降低，上涨后买入预期收益上升胜率上升，于1.3达到最高值",
+        "desc": "MACD(100-200-80)",
+        "trigger": {
+            "main": "MACD(100-200-80)金叉",
+            "env": [],
+            "opt": [
+                "低于30/60/120日线"
+            ]
+        },
+        "triggerOut": {
+            "main": "MACD(100-200-80)死叉"
+        }
+    },
+    "concerns": {
+        "in": [
+            {
+                "name": "收盘价/30日线",
+                "dpRef": {
+                    "type": "c.div",
+                    "pack": {
+                        "defidx": 1,
+                        "list": [
+                            {
+                                "type": "r.end",
+                                "pack": "{{target}}"
+                            },
+                            {
+                                "type": "b.ma",
+                                "pack": {
+                                    "N": 30,
+                                    "dp": {
+                                        "type": "r.end",
+                                        "pack": "{{target}}"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                "view": "raw"
+            },
+            {
+                "name": "收盘价/60日线",
+                "dpRef": {
+                    "type": "c.div",
+                    "pack": {
+                        "defidx": 1,
+                        "list": [
+                            {
+                                "type": "r.end",
+                                "pack": "{{target}}"
+                            },
+                            {
+                                "type": "b.ma",
+                                "pack": {
+                                    "N": 60,
+                                    "dp": {
+                                        "type": "r.end",
+                                        "pack": "{{target}}"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                "view": "raw"
+            },
+            {
+                "name": "收盘价/120日线",
+                "dpRef": {
+                    "type": "c.div",
+                    "pack": {
+                        "defidx": 1,
+                        "list": [
+                            {
+                                "type": "r.end",
+                                "pack": "{{target}}"
+                            },
+                            {
+                                "type": "b.ma",
+                                "pack": {
+                                    "N": 120,
+                                    "dp": {
+                                        "type": "r.end",
+                                        "pack": "{{target}}"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                "view": "raw"
+            }
+        ],
+        "out": []
+    },
+    "doc": null,
+    "lookback": {
+        "全部": [
+            {
+                "val": "全部",
+                "total": 29809,
+                "revGM": 1.0675,
+                "revMed": 0.9321,
+                "dayM": 187.425,
+                "hrevGM": 1.4343,
+                "hrevMed": 1.1793,
+                "hdayM": 116.7356,
+                "lrevGM": 0.8496,
+                "lrevMed": 0.8702,
+                "ldayM": 66.3961
+            }
+        ],
+        "收益": [
+            {
+                "val": "盈利",
+                "total": 10799,
+                "revGM": 1.5783,
+                "revMed": 1.3732,
+                "dayM": 339.0763,
+                "hrevGM": 2.2263,
+                "hrevMed": 1.9639,
+                "hdayM": 260.2044,
+                "lrevGM": 0.9098,
+                "lrevMed": 0.9344,
+                "ldayM": 42.656
+            },
+            {
+                "val": "亏损",
+                "total": 19010,
+                "revGM": 0.8549,
+                "revMed": 0.875,
+                "dayM": 101.2765,
+                "hrevGM": 1.1174,
+                "hrevMed": 1.0797,
+                "hdayM": 35.2353,
+                "lrevGM": 0.8172,
+                "lrevMed": 0.8387,
+                "ldayM": 79.8821
+            }
+        ],
+        "MA30": [
+            {
+                "val": "高于",
+                "total": 27951,
+                "revGM": 1.0662,
+                "revMed": 0.9319,
+                "dayM": 186.0094,
+                "hrevGM": 1.4369,
+                "hrevMed": 1.1844,
+                "hdayM": 115.3476,
+                "lrevGM": 0.8489,
+                "lrevMed": 0.869,
+                "ldayM": 66.0696
+            },
+            {
+                "val": "低于",
+                "total": 1771,
+                "revGM": 1.0954,
+                "revMed": 0.9357,
+                "dayM": 214.0322,
+                "hrevGM": 1.4066,
+                "hrevMed": 1.1163,
+                "hdayM": 141.8289,
+                "lrevGM": 0.8611,
+                "lrevMed": 0.89,
+                "ldayM": 72.7482
+            }
+        ],
+        "MA60": [
+            {
+                "val": "高于",
+                "total": 27254,
+                "revGM": 1.0655,
+                "revMed": 0.9322,
+                "dayM": 184.4552,
+                "hrevGM": 1.4363,
+                "hrevMed": 1.1843,
+                "hdayM": 113.7549,
+                "lrevGM": 0.8496,
+                "lrevMed": 0.8698,
+                "ldayM": 65.6701
+            },
+            {
+                "val": "低于",
+                "total": 2206,
+                "revGM": 1.107,
+                "revMed": 0.9329,
+                "dayM": 235.447,
+                "hrevGM": 1.4407,
+                "hrevMed": 1.1236,
+                "hdayM": 162.267,
+                "lrevGM": 0.8477,
+                "lrevMed": 0.8758,
+                "ldayM": 79.0725
+            }
+        ],
+        "MA120": [
+            {
+                "val": "高于",
+                "total": 21674,
+                "revGM": 1.0434,
+                "revMed": 0.9324,
+                "dayM": 162.8495,
+                "hrevGM": 1.4073,
+                "hrevMed": 1.177,
+                "hdayM": 96.7658,
+                "lrevGM": 0.8521,
+                "lrevMed": 0.8723,
+                "ldayM": 59.5567
+            },
+            {
+                "val": "低于",
+                "total": 7264,
+                "revGM": 1.1554,
+                "revMed": 0.9336,
+                "dayM": 268.2248,
+                "hrevGM": 1.5422,
+                "hrevMed": 1.1953,
+                "hdayM": 182.3382,
+                "lrevGM": 0.8411,
+                "lrevMed": 0.8643,
+                "ldayM": 88.4599
+            }
+        ],
+        "相对市值": [
+            {
+                "val": "(~, 0.3]",
+                "total": 336,
+                "revGM": 1.7208,
+                "revMed": 1.5404,
+                "dayM": 361.5119,
+                "hrevGM": 2.512,
+                "hrevMed": 2.4367,
+                "hdayM": 291.5298,
+                "lrevGM": 0.861,
+                "lrevMed": 0.9045,
+                "ldayM": 38.6071
+            },
+            {
+                "val": "(0.3, 0.6]",
+                "total": 2532,
+                "revGM": 1.3041,
+                "revMed": 1.069,
+                "dayM": 276.2081,
+                "hrevGM": 1.8041,
+                "hrevMed": 1.4713,
+                "hdayM": 203.1169,
+                "lrevGM": 0.8439,
+                "lrevMed": 0.8683,
+                "ldayM": 64.8831
+            },
+            {
+                "val": "(0.6, 1.5]",
+                "total": 11985,
+                "revGM": 1.068,
+                "revMed": 0.9294,
+                "dayM": 191.7781,
+                "hrevGM": 1.4422,
+                "hrevMed": 1.1895,
+                "hdayM": 119.7414,
+                "lrevGM": 0.8451,
+                "lrevMed": 0.8649,
+                "ldayM": 69.9574
+            },
+            {
+                "val": "(1.5, 3]",
+                "total": 8357,
+                "revGM": 1.014,
+                "revMed": 0.9209,
+                "dayM": 164.2767,
+                "hrevGM": 1.3583,
+                "hrevMed": 1.1542,
+                "hdayM": 95.2117,
+                "lrevGM": 0.8482,
+                "lrevMed": 0.8686,
+                "ldayM": 65.1864
+            },
+            {
+                "val": "(3, 6]",
+                "total": 3967,
+                "revGM": 1.0128,
+                "revMed": 0.9251,
+                "dayM": 158.0431,
+                "hrevGM": 1.3441,
+                "hrevMed": 1.1448,
+                "hdayM": 89.8049,
+                "lrevGM": 0.8543,
+                "lrevMed": 0.8746,
+                "ldayM": 63.2846
+            },
+            {
+                "val": "(6, 12]",
+                "total": 1532,
+                "revGM": 1.0383,
+                "revMed": 0.9368,
+                "dayM": 173.2728,
+                "hrevGM": 1.3679,
+                "hrevMed": 1.1518,
+                "hdayM": 103.1997,
+                "lrevGM": 0.8634,
+                "lrevMed": 0.8807,
+                "ldayM": 64.7134
+            },
+            {
+                "val": "(12, ~]",
+                "total": 1100,
+                "revGM": 1.0751,
+                "revMed": 0.9524,
+                "dayM": 183.9945,
+                "hrevGM": 1.3716,
+                "hrevMed": 1.1589,
+                "hdayM": 111.2564,
+                "lrevGM": 0.884,
+                "lrevMed": 0.9051,
+                "ldayM": 62.3182
+            }
+        ],
+        "最高收益超过1.3": [
+            {
+                "val": "最终收益高于1.3",
+                "total": 5995,
+                "revGM": 2.081,
+                "revMed": 1.8432,
+                "dayM": 425.1425,
+                "hrevGM": 3.0202,
+                "hrevMed": 2.7355,
+                "hdayM": 348.0395,
+                "lrevGM": 0.9108,
+                "lrevMed": 0.9362,
+                "ldayM": 36.6295
+            },
+            {
+                "val": "最终收益低于1.3",
+                "total": 5459,
+                "revGM": 1.0539,
+                "revMed": 1.0774,
+                "dayM": 221.181,
+                "hrevGM": 1.5782,
+                "hrevMed": 1.4938,
+                "hdayM": 140.3554,
+                "lrevGM": 0.8704,
+                "lrevMed": 0.9029,
+                "ldayM": 72.2975
+            }
+        ]
+    },
+    "glong": true,
+    "startDateTs": 16832,
+    "runrt": true
+}

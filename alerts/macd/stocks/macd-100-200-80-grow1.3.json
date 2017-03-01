@@ -1,0 +1,29 @@
+{
+    "_id": "stocks-macd-100-200-80-grow1.3",
+    "name": "macd金叉上涨30%",
+    "desc": "macd金叉之后上涨30%有最高预期收益/胜率",
+    "rtplanId": "stocks-macd-100-200-80",
+    "prog": {
+        "fn": ">",
+        "args": [
+            {
+                "fn": "div",
+                "args": [
+                    {
+                        "fn": "ref",
+                        "args": [
+                            "hp"
+                        ]
+                    },
+                    {
+                        "fn": "ref",
+                        "args": [
+                            "sp"
+                        ]
+                    }
+                ]
+            },
+            1.3
+        ]
+    }
+}

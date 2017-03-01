@@ -151,8 +151,8 @@ function genRawDataHub(target: string): mods.Hub<RawDataAggr> {
                     rawarr.push(ds);
                     rawmap.set(ts, ds);
                 }
-                if (!mintshit) throw new Error(`no data found for minTs, ${rawdata.minDay}`);
-                if (!maxtshit) throw new Error(`no data found for maxTs, ${rawdata.maxDay}`);
+                if (!mintshit) throw new Error(`no data found for minTs, ${rawdata.minDay}, ${target}`);
+                if (!maxtshit) throw new Error(`no data found for maxTs, ${rawdata.maxDay}, ${target}`);
                 rawarr.sort((v1, v2) => v1._datets - v2._datets);
                 for (let i = 0; i < rawarr.length; ++i) rawarr[i]._idx = i;
                 return new RawDataAggr(rawarr, rawmap);

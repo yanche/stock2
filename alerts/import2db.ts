@@ -47,6 +47,7 @@ getDbCol()
             importFromFile_AllScope('./bdev/stocks/bdev-macd-dea-100-200-80-nhold300-threshold0.4-grow1.11.json', dbcol),
             importFromFile_AllScope('./bdev/stocks/bdev-macd-diff-100-200-80-nhold300-threshold0.4-grow1.28.json', dbcol),
             importFromFile_AllScope('./bdev/stocks/bdev-macd-macd-100-200-80-nhold300-threshold0.4-grow1.12.json', dbcol),
+            importFromFile_AllScope('./macd/stocks/macd-100-200-80-grow1.3.json', dbcol),
             //importFromFile_AllScope('./test.json', dbcol)
         ]);
     })

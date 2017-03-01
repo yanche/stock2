@@ -30,7 +30,7 @@ export const targetData = {
             });
     },
     get2: (target: string): bb<datadef.RawData> => {
-        return config.useLocalRaw ? utility.file.loadJsonFile<datadef.RawData>(path.join(config.rawDataFolder, `${target}.json`)) : filestorage.azure.downloadJson2<datadef.RawData>(config.azurestorage.container.raw, `${target}.json`);
+        return config.useLocalRaw ? utility.file.loadJsonFile<datadef.RawData>(path.join(config.rawDataFolder, `${target.toLowerCase()}.json`)) : filestorage.azure.downloadJson2<datadef.RawData>(config.azurestorage.container.raw, `${target}.json`);
     },
     upload: (target: string, data: datadef.RawData): bb<filestorage.common.FileStorage> => {
         return filestorage.azure.upload(JSON.stringify(data), `${target}.json`, null, config.azurestorage.container.raw);
