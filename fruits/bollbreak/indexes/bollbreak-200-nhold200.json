@@ -1,0 +1,79 @@
+{
+    "_id": "indexes-bollbreak-200-nhold200",
+    "name": "布林线200上轨突破",
+    "targetScope": {
+        "type": "in",
+        "pack": [
+            "000001.ZICN",
+            "000016.ZICN",
+            "399300.ZICN",
+            "399005.ZICN",
+            "399006.ZICN",
+            "399001.ZICN",
+            "399905.ZICN"
+        ]
+    },
+    "envMap": {},
+    "cpdefRef": {
+        "type": "c.change",
+        "pack": {
+            "dp": {
+                "type": "c.lt",
+                "pack": {
+                    "list": [
+                        {
+                            "type": "c.prop",
+                            "pack": {
+                                "prop": "up",
+                                "dp": {
+                                    "type": "b.boll",
+                                    "pack": {
+                                        "N": 200,
+                                        "W": 2,
+                                        "dp": {
+                                            "type": "r.end",
+                                            "pack": "{{target}}"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "type": "r.end",
+                            "pack": "{{target}}"
+                        }
+                    ],
+                    "defidx": 0
+                }
+            }
+        }
+    },
+    "cpoutdefRef": {
+        "type": "ctx.nhold",
+        "pack": {
+            "N": 200,
+            "target": "{{target}}"
+        }
+    },
+    "comments": {
+        "sum": "指数突破布林线上轨",
+        "desc": "",
+        "trigger": {
+            "main": "突破200日布林线上轨",
+            "env": [],
+            "opt": []
+        },
+        "triggerOut": {
+            "main": "固定持有200交易日"
+        }
+    },
+    "concerns": {
+        "in": [],
+        "out": []
+    },
+    "doc": "https://stockanalysis.blob.core.chinacloudapi.cn/newfruitdetail/indexes-bollbreak-200-nhold200.csv",
+    "lookback": {},
+    "glong": true,
+    "startDateTs": 16832,
+    "runrt": true
+}

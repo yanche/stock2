@@ -23,6 +23,7 @@ export class StrategyComponent {
       return {
         id: rtplan._id,
         name: rtplan.name,
+        doc: rtplan.doc,
         createdTs: rtplan.createdTs,
         summary: (rtplan.comments || { sum: '' }).sum,
         targetScope: rtplanTargets(rtplan),
