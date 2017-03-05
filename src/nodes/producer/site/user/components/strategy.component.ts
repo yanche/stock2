@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { QueryData, QFilterDef, QueryFn, OptionsPack } from '../../common/components/querypage.component';
+import { QueryData, QFilterDefType, SetterQFilter, QueryFn, OptionsPack } from '../../common/components/querypage.component';
 import { LogService } from '../../common/services/log.service';
 import { Rtplan, RtplanService, RtplanTrigger } from '../../common/services/rtplan.service';
 
@@ -12,9 +12,10 @@ export class StrategyComponent {
 
   constructor(private _log: LogService, private _rtplan: RtplanService) { }
 
-  qfilter: Array<QFilterDef> = [{
+  qfilter: Array<SetterQFilter> = [{
     name: 'id',
-    prop: '_id'
+    prop: '_id',
+    type: QFilterDefType.NORMAL
   }]
 
   pageData: Rtplan[];
