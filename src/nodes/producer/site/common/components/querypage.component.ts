@@ -48,6 +48,10 @@ export class QueryPageComponent implements OnInit {
         }
     }
 
+    replaceMongoFilter(filter: Object) {
+        this.queryRaw.filter = JSON.stringify(filter);
+    }
+
     setMongoFilter(field: string, val: string, modifier: string) {
         if (!this.validFilter()) return;
         const q = this._query;
@@ -73,7 +77,7 @@ export class QueryPageComponent implements OnInit {
             }
             q.filter[field] = fval;
         }
-        this.queryRaw.filter = JSON.stringify(q.filter);
+        this.replaceMongoFilter(q.filter);
     }
 
     validFilter(): boolean {
@@ -159,16 +163,24 @@ export interface QueryData {
     orderby: { [key: string]: any };
 }
 
-export interface QFilterDef {
+interface QFilterDef {
+    type?: QFilterDefType;
+}
+
+export interface SetterQFilter extends QFilterDef {
     name: string;
     prop: string;
-    type?: QFilterDefType;
+}
+
+export interface ReplacerQFilter extends QFilterDef {
+    filter: Object;
 }
 
 export enum QFilterDefType {
     NORMAL,
     EXISTS,
-    BOOL
+    BOOL,
+    REPLACE
 }
 
 interface Options {

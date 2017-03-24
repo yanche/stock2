@@ -21,6 +21,9 @@
         <div>{{t.summary}}</div>
         <div>{{t.desc}}</div>
         <div>{{t.targetScope}}</div>
+        <div *ngIf="t.doc">
+            <a target="_blank" href="{{t.doc}}">testing doc</a>
+        </div>
         <br>
         <div class="lightfont">Trigger</div>
         <div class="lightfont">Main cause</div>

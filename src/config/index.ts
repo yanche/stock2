@@ -1,7 +1,7 @@
 
 // http://hq.cs.ecitic.com/cssweb?type=GET_TICK_DETAILMAX&exchange=sz&stockcode=000001&detailtype=max&returnflag=max_first&from=1024&to=0 
 
-const rawDataFolder = 'D:\\stock raw data2\\raw json priceadj=b wmcloud\\';
+const rawDataFolder = 'D:\\stock raw data3';
 
 const azurestorage = {
     host: 'stockanalysis.blob.core.chinacloudapi.cn',

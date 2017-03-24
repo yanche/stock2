@@ -1,5 +1,5 @@
 {
-    "_id": "bollbreak-200-nhold200",
+    "_id": "stocks-bollbreak-200-nhold200",
     "name": "布林线200上轨突破",
     "targetScope": {
         "type": "allstocks"

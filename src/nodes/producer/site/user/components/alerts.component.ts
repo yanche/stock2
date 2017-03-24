@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { QueryData, QFilterDef, QueryFn, OptionsPack, QFilterDefType } from '../../common/components/querypage.component';
+import { QueryData, SetterQFilter, QueryFn, OptionsPack, QFilterDefType } from '../../common/components/querypage.component';
 import { Alert, AlertService, AlertPlan, AlertPlanService } from '../../common/services/alert.service';
 import { LogService } from '../../common/services/log.service';
 import { Rtplan, RtplanService } from '../../common/services/rtplan.service';
@@ -40,18 +40,22 @@ export class AlertsComponent {
         };
     }
 
-    qfilter: Array<QFilterDef> = [{
+    qfilter: Array<SetterQFilter> = [{
         name: 'id',
-        prop: '_id'
+        prop: '_id',
+        type: QFilterDefType.NORMAL
     }, {
         name: 'rtplanId',
         prop: 'rtplanId',
+        type: QFilterDefType.NORMAL
     }, {
         name: 'alertPlanId',
         prop: 'alertPlanId',
+        type: QFilterDefType.NORMAL
     }, {
         name: 'target',
-        prop: 'target'
+        prop: 'target',
+        type: QFilterDefType.NORMAL
     }, {
         name: 'new',
         prop: 'new',

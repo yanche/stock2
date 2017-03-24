@@ -2,7 +2,16 @@
     "_id": "indexes-bdev-macd-gcross-100-200-80-nhold300-threshold0.8",
     "name": "MACD(100-200-80)指数金叉底背离(DIFF)",
     "targetScope": {
-        "type": "allindexes"
+        "type": "in",
+        "pack": [
+            "000001.ZICN",
+            "000016.ZICN",
+            "399300.ZICN",
+            "399005.ZICN",
+            "399006.ZICN",
+            "399001.ZICN",
+            "399905.ZICN"
+        ]
     },
     "envMap": {
         "macd_dp": {
@@ -129,93 +138,8 @@
         ],
         "out": []
     },
-    "doc": null,
-    "lookback": {
-        "全部": [
-            {
-                "val": "全部",
-                "total": 12,
-                "revGM": 1.3421,
-                "revMed": 1.2622,
-                "dayM": 453.8333,
-                "hrevGM": 1.6176,
-                "hrevMed": 1.3607,
-                "hdayM": 342.9167,
-                "lrevGM": 0.9042,
-                "lrevMed": 0.89,
-                "ldayM": 135.75
-            }
-        ],
-        "收益": [
-            {
-                "val": "盈利",
-                "total": 10,
-                "revGM": 1.4571,
-                "revMed": 1.3845,
-                "dayM": 452.4,
-                "hrevGM": 1.7119,
-                "hrevMed": 1.5144,
-                "hdayM": 400.7,
-                "lrevGM": 0.9154,
-                "lrevMed": 0.9406,
-                "ldayM": 98.5
-            },
-            {
-                "val": "亏损",
-                "total": 2,
-                "revGM": 0.8898,
-                "revMed": 0.8898,
-                "dayM": 461,
-                "hrevGM": 1.2188,
-                "hrevMed": 1.2188,
-                "hdayM": 54,
-                "lrevGM": 0.8505,
-                "lrevMed": 0.8505,
-                "ldayM": 322
-            }
-        ],
-        "背离数": [
-            {
-                "val": "1",
-                "total": 6,
-                "revGM": 1.2805,
-                "revMed": 1.1412,
-                "dayM": 457.3333,
-                "hrevGM": 1.4376,
-                "hrevMed": 1.2673,
-                "hdayM": 343.8333,
-                "lrevGM": 0.9007,
-                "lrevMed": 0.89,
-                "ldayM": 147
-            },
-            {
-                "val": "2",
-                "total": 5,
-                "revGM": 1.3921,
-                "revMed": 1.449,
-                "dayM": 451.6,
-                "hrevGM": 1.7128,
-                "hrevMed": 1.6207,
-                "hdayM": 343.2,
-                "lrevGM": 0.8942,
-                "lrevMed": 0.8509,
-                "ldayM": 148.8
-            },
-            {
-                "val": "3",
-                "total": 1,
-                "revGM": 1.4822,
-                "revMed": 1.4822,
-                "dayM": 444,
-                "hrevGM": 2.4675,
-                "hrevMed": 2.4675,
-                "hdayM": 336,
-                "lrevGM": 0.9791,
-                "lrevMed": 0.9791,
-                "ldayM": 3
-            }
-        ]
-    },
+    "doc": "https://stockanalysis.blob.core.chinacloudapi.cn/newfruitdetail/indexes-bdev-macd-gcross-100-200-80-nhold300-threshold0.8.csv",
+    "lookback": {},
     "glong": true,
     "startDateTs": 16832,
     "runrt": true

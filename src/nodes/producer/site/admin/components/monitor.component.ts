@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { QueryData, QFilterDef, QueryFn, OptionsPack } from '../../common/components/querypage.component';
+import { QueryData, SetterQFilter, QFilterDefType, QueryFn, OptionsPack } from '../../common/components/querypage.component';
 import { Task, TaskService } from '../../common/services/task.service';
 import { LogService } from '../../common/services/log.service';
 
@@ -10,18 +10,22 @@ import { LogService } from '../../common/services/log.service';
 export class MonitorComponent {
   constructor(private _task: TaskService, private _log: LogService) { }
 
-  qfilter: Array<QFilterDef> = [{
+  qfilter: Array<SetterQFilter> = [{
     name: 'id',
-    prop: '_id'
+    prop: '_id',
+    type: QFilterDefType.NORMAL
   }, {
     name: 'statusId',
-    prop: 'statusId'
+    prop: 'statusId',
+    type: QFilterDefType.NORMAL
   }, {
     name: 'action type',
-    prop: 'action.type'
+    prop: 'action.type',
+    type: QFilterDefType.NORMAL
   }, {
     name: 'target',
-    prop: 'action.pack.target'
+    prop: 'action.pack.target',
+    type: QFilterDefType.NORMAL
   }]
 
   refreshTs: number = 0;

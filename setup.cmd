@@ -1,6 +1,8 @@
 
 CALL npm install --no-optional
 
+CALL npm install -g typescript
+
 CALL bower install
 
 CALL typings install

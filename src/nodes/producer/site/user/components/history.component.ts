@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { QueryData, QFilterDef, QueryFn, OptionsPack, QFilterDefType } from '../../common/components/querypage.component';
+import { QueryData, SetterQFilter, ReplacerQFilter, QueryFn, OptionsPack, QFilterDefType } from '../../common/components/querypage.component';
 import { Simulate, SimulateService } from '../../common/services/simulate.service';
 import { LogService } from '../../common/services/log.service';
 import { Rtplan, RtplanService } from '../../common/services/rtplan.service';
@@ -49,20 +49,40 @@ export class HistoryComponent {
 
   runOnInit: boolean;
 
-  qfilter: Array<QFilterDef> = [{
+  qfilter: Array<SetterQFilter | ReplacerQFilter> = [{
     name: 'id',
-    prop: '_id'
+    prop: '_id',
+    type: QFilterDefType.NORMAL
   }, {
     name: 'rtplanId',
     prop: 'rtplanId',
-
+    type: QFilterDefType.NORMAL
   }, {
     name: 'target',
-    prop: 'target'
+    prop: 'target',
+    type: QFilterDefType.NORMAL
   }, {
     name: 'closed',
     prop: 'closed',
     type: QFilterDefType.BOOL
+  }, {
+    name: 'all indexes',
+    filter: {
+      target: { $in: ['000001.ZICN', '000016.ZICN', '399905.ZICN', '399005.ZICN', '399006.ZICN', '399300.ZICN', '399001.ZICN'] }
+    },
+    type: QFilterDefType.REPLACE
+  }, {
+    name: 'macd-bdev',
+    filter: {
+      rtplanId: {
+        $in: [
+          'stocks-bdev-macd-dea-100-200-80-nhold300-threshold0.4',
+          'stocks-bdev-macd-diff-100-200-80-nhold300-threshold0.4',
+          'stocks-bdev-macd-gcross-100-200-80-nhold300-threshold0.4'
+        ]
+      }
+    },
+    type: QFilterDefType.REPLACE
   }]
 
   pageData: Simulate[];

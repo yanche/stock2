@@ -203,19 +203,24 @@ function getConcerns(envMap: Object, concernarr: Array<def.RtplanConcern>, targe
 
 function resolveConcerns(concernarr: Array<{ name: string, view: string, dp: datapvd.def.DataPvd<any> }>, target: string, rtplanname: string, ts: number, ctx: datapvd.def.DataGetterCtx) {
     return bb.all(concernarr.map(c => {
-        const cret = c.dp.get(ts, ctx);
         let val: bb<any> = null;
-        switch (c.view) {
-            case constant.simconcern.viewtype.raw: {
-                val = bb.resolve(cret);
-                break;
+        if (c.dp.hasDef(ts)) {
+            const cret = c.dp.get(ts, ctx);
+            switch (c.view) {
+                case constant.simconcern.viewtype.raw: {
+                    val = bb.resolve(cret);
+                    break;
+                }
+                case constant.simconcern.viewtype.dropfile: {
+                    val = filestorage.azure.upload(JSON.stringify(cret), [target, rtplanname, c.name, utility.randomStr()].join('_') + '.json', null, config.azurestorage.container.simconcern);
+                    break;
+                }
+                default:
+                    throw new Error(`unknown view type: ${c.view}`);
             }
-            case constant.simconcern.viewtype.dropfile: {
-                val = filestorage.azure.upload(JSON.stringify(cret), [target, rtplanname, c.name, utility.randomStr()].join('_') + '.json', null, config.azurestorage.container.simconcern);
-                break;
-            }
-            default:
-                throw new Error(`unknown view type: ${c.view}`);
+        }
+        else {
+            val = bb.resolve(null);
         }
         return val.then(v => {
             return {

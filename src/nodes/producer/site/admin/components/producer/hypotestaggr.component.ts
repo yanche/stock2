@@ -43,6 +43,18 @@ export class HypoTestAggrProducerComponent implements OnInit {
         this._setTestData(this._haggr.popularDataSet);
     }
 
+    targetIndexes() {
+        this.targets = [
+            '000001.ZICN',
+            '000016.ZICN',
+            '399300.ZICN',
+            '399005.ZICN',
+            '399006.ZICN',
+            '399001.ZICN',
+            '399905.ZICN'
+        ];
+    }
+
     private _setTestData(data: PreparedDataSet) {
         this.reset();
         this.targets = ['000001.XSHE'];

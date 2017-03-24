@@ -10,6 +10,7 @@
     <div class="col-12 mt20">
         <span class="btn btn-danger small" (click)="reset()">Reset</span>
         <span class="btn small" (click)="testData()">Test Data</span>
+        <span class="btn small" (click)="targetIndexes()">Target Indexes</span>
         <action-button class="ml20" [disabled]="targets.length === 0" [waiting]="submitting" [word]="'Submit'" (click)="submit()"></action-button>
     </div>
     <div class="col-12">
