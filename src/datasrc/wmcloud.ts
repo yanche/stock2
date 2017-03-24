@@ -47,11 +47,11 @@ const market = {
     getMktIdxd: genFn<GetMktIdxdParams, GetMktIdxdRet>(),
     //getStockFactorsDateRange: genFn('market', 'getStockFactorsDateRange'),
 }
-const equity = {
-    getEquShare: genFn<GetEquShareParams, GetEquShareRet>(),
-    getEqu: genFn<GetEquParams, GetEquRet>(),
-    getEquIndustry: genFn<GetEquIndustryParams, GetEquIndustryRet>(),
-};
+// const equity = {
+//     getEquShare: genFn<GetEquShareParams, GetEquShareRet>(),
+//     getEqu: genFn<GetEquParams, GetEquRet>(),
+//     getEquIndustry: genFn<GetEquIndustryParams, GetEquIndustryRet>(),
+// };
 const idx = {
     getIdx: genFn<GetIdxParams, GetIdxRet>(),
 };
@@ -59,7 +59,12 @@ const master = {
     getSecID: genFn<GetSecIDParams, GetSecIDRet>(),
 };
 
-export { market, equity, idx, master }
+export {
+    market,
+    // equity,
+    idx,
+    master
+}
 
 function genWMAPIUrl(category: string, subcat: string, input: Array<{ name: string, val: Array<string> | string }>): string {
     const qry = new Array<string>();
