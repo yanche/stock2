@@ -116,7 +116,7 @@ if (ctrl[0] == '-') {
 }
 
 // const wmCloudToken = 'bf1e63e10264f88d3d44541d4057e00981ced9e6042c19ce02c0b738f471c747';
-const wmCloudToken = '1435e205f9d203055d546b1ed7cc991f7363100bbed9c7bf9a3a0f40c5362a91';
+const wmCloudToken = 'f15e84b1cb72b925d37547a27f08682b3f74c464f93b67bd6864362c88dd47b2';
 const wmTrialDays = 180;
 
 let hypotestaggrAnalysisPort = 8083;
