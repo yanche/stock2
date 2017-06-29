@@ -119,16 +119,15 @@ if (ctrl[0] == '-') {
 const wmCloudToken = '7c36897ac49ffa5d337758906e0f2d2c56e164520561a5afcfde4ab65540cdde';
 const wmTrialDays = 180;
 
-let hypotestaggrAnalysisPort = 8083;
-let producerPort = 8081;
-let storageServiceHost = 'yanstock3.chinacloudapp.cn';
-let storageServicePort = 8082;
-let reporterPort = 80;
-let dispatcherPort = 1000;
-let dispatcherHost = 'yanstock3.chinacloudapp.cn';
+let hypotestaggrAnalysisPort = 1341;
+let producerPort = 1340;
+let storageServiceHost = 'hikerjoy.cloudapp.net';
+let reporterPort = 1338;
+let dispatcherPort = 1339;
+let dispatcherHost = 'hikerjoy.cloudapp.net';
 
 if (dev) {
-    reporterPort = 8080;
+    // reporterPort = 1337;
     storageServiceHost = '127.0.0.1';
     dispatcherHost = '127.0.0.1';
     azurestorage.container.temp = 'tempdev';
@@ -138,6 +137,6 @@ if (dev) {
 export {
     rawDataFolder, azurestorage, localStoragePath, rawDataExpiryInMS, maintainIdx,
     maxRawDataCached, dispatcherMongoUrl, dbCols, conditionCheckFreq, jobSchedulerCheckFreq, jobScheduleTime,
-    hypotestaggrAnalysisPort, producerPort, storageServiceHost, storageServicePort, reporterPort, dispatcherHost, dispatcherPort, dev, useFiddler,
+    hypotestaggrAnalysisPort, producerPort, storageServiceHost, reporterPort, dispatcherHost, dispatcherPort, dev, useFiddler,
     scheduledTask, useLocalRaw, useLocalTempStore, timeoutCheckFreq, wmCloudToken, wmTrialDays
 }
