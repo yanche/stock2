@@ -4,9 +4,9 @@
 const rawDataFolder = 'D:\\stock raw data3';
 
 const azurestorage = {
-    host: 'stockanalysis.blob.core.chinacloudapi.cn',
-    account: 'stockanalysis',
-    key: 'DCJWuN5xcBQv/m8SHiCdhTLY5y/35eTXsGsFqLW1jjKWoz5eKHYid6rwK2aY2ypECU1q5rnruuD0+iFd9rA+gQ==',
+    host: 'yanstorage0609.blob.core.windows.net',
+    account: 'yanstorage0609',
+    key: 'HXTpjyrLqZZ2XnJ0r8sFB8JxPYg9GoXBoT3jmkUdrys4I43iR6XZM9BH1jXVgmzbD9EukAPgtSGcRGDG5Wtzvw==',
     container: {
         static: 'newsysstatic',
         raw: 'newsysraw',
@@ -116,7 +116,7 @@ if (ctrl[0] == '-') {
 }
 
 // const wmCloudToken = 'bf1e63e10264f88d3d44541d4057e00981ced9e6042c19ce02c0b738f471c747';
-const wmCloudToken = '7c36897ac49ffa5d337758906e0f2d2c56e164520561a5afcfde4ab65540cdde';
+const wmCloudToken = 'b71447597b422cbd6154e4d49feaa00f57536e5abb533909db232c29c9973c13';
 const wmTrialDays = 180;
 
 let hypotestaggrAnalysisPort = 1341;
