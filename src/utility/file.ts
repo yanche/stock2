@@ -32,3 +32,14 @@ export function writeFile(filename: string, data: Buffer | string, append?: bool
         })
     });
 }
+
+export function loadDir(folder: string): bb<string[]> {
+    return new bb<string[]>((res, rej) => {
+        fs.readdir(folder, (err, files) => {
+            if (err)
+                rej(err);
+            else
+                res(files);
+        });
+    });
+}

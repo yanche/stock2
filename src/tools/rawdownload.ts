@@ -20,7 +20,7 @@ bb.all([
             return datasrc.mine.targetData.get(target)
                 .then(data => {
                     if (data.statusCode !== 200) throw `raw not found for ${target}, ${data.statusCode}`;
-                    return utility.file.writeFile(path.join(dir, `${target}.json`), JSON.stringify(data.data), false);
+                    return utility.file.writeFile(path.join(dir, `${target.toLowerCase()}.json`), JSON.stringify(data.data), false);
                 })
                 .then(() => console.log(`${target} downloaded`))
                 .catch(err => {
