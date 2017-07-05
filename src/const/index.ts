@@ -1,4 +1,36 @@
 
+import { def } from "lavria";
+import * as _ from "lodash";
+
+export const verb = _.extend<{}, {
+    CREATEMUL: string;
+    CREATEONE: string;
+    GETMUL: string;
+    GETONE: string;
+    REPORT: string;
+    DISPATCH: string;
+    UPGRADE: string;
+    CLOSE: string;
+    RENEW: string;
+    MAKEREADY: string;
+    // not for dispatcher
+    GETALL: string;
+    REMOVE: string;
+    UPDATE: string;
+    UPSERT: string;
+    BULKUPSERT: string;
+    BULKUPDATE: string;
+    GETORCREATE: string;
+}>({
+    GETALL: "GETALL",
+    REMOVE: "REMOVE",
+    UPDATE: "UPDATE",
+    UPSERT: "UPSERT",
+    BULKUPSERT: "BULKUPSERT",
+    BULKUPDATE: "BULKUPDATE",
+    GETORCREATE: "GETORCREATE"
+}, def.verb);
+
 export const action = {
     rawInspect: 'rawinspect',
     rawSync: 'rawsync',

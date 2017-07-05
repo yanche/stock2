@@ -14,7 +14,7 @@ export class StorageProxyService {
     get<T>(container: string, path: string) {
         return this._http.request(this._url.storage('storageproxy'), {
             method: this._const.http.post,
-            headers: new Headers({ verb: 'GET' }),
+            headers: new Headers({ verb: verb.GETONE }),
             search: `_ts=${new Date().getTime()}`,
             body: {
                 storage: 'azure',

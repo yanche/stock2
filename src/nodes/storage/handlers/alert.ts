@@ -6,6 +6,7 @@ import * as db from '../db';
 import * as hutil from './util';
 import * as d from '../../def';
 import * as mongo from 'mongodb';
+import { verb } from "../../../const";
 
 export function handler(h: utility.http.HttpPack): bb<void> {
     return bb.resolve().then(() => {
@@ -40,10 +41,10 @@ class AlertCreateModel implements hutil.HandlerDataModel {
 }
 
 const handlermap = new Map<string, (h: utility.http.HttpPack) => bb<void>>();
-handlermap.set('GET', hutil.genGetOneHandler(db.alert));
-handlermap.set('GETMUL', hutil.genGetMulHandler(db.alert));
-handlermap.set('GETALL', hutil.genGetAllHandler(db.alert));
-handlermap.set('CREATE', hutil.genCreateOneHandler(db.alert, (httpbody: any) => new AlertCreateModel(httpbody)));
-handlermap.set('CREATEMUL', hutil.genCreateMulHandler(db.alert, (httpbody: any) => new AlertCreateModel(httpbody)));
-handlermap.set('UPDATE', hutil.genUpdateAllHandler(db.alert, false));
-handlermap.set('BULKUPDATE', hutil.genBulkUpdateHandler(db.alert, false));
+handlermap.set(verb.GETONE, hutil.genGetOneHandler(db.alert));
+handlermap.set(verb.GETMUL, hutil.genGetMulHandler(db.alert));
+handlermap.set(verb.GETALL, hutil.genGetAllHandler(db.alert));
+handlermap.set(verb.CREATEONE, hutil.genCreateOneHandler(db.alert, (httpbody: any) => new AlertCreateModel(httpbody)));
+handlermap.set(verb.CREATEMUL, hutil.genCreateMulHandler(db.alert, (httpbody: any) => new AlertCreateModel(httpbody)));
+handlermap.set(verb.UPDATE, hutil.genUpdateAllHandler(db.alert, false));
+handlermap.set(verb.BULKUPDATE, hutil.genBulkUpdateHandler(db.alert, false));

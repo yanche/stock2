@@ -4,8 +4,9 @@ import * as log from '../../../log';
 import * as bb from 'bluebird';
 import * as db from '../db';
 import * as hutil from './util';
+import { verb } from "../../../const";
 
-export function handler(h: utility.http.HttpPack):bb<void> {
+export function handler(h: utility.http.HttpPack): bb<void> {
     return bb.resolve().then(() => {
         const verb = (h.getReqHeader('verb') || '').toUpperCase();
         const fn = handlermap.get(verb);
@@ -31,5 +32,5 @@ function getOrCreateHandler(hpack: utility.http.HttpPack): bb<void> {
 
 const handlermap = new Map<string, (h: utility.http.HttpPack) => bb<void>>();
 // handlermap.set('GETORCREATE', getOrCreateHandler);
-handlermap.set('UPDATE', hutil.genUpdateAllHandler(db.simtrack, false));
-handlermap.set('GETORCREATE', getOrCreateHandler);
+handlermap.set(verb.UPDATE, hutil.genUpdateAllHandler(db.simtrack, false));
+handlermap.set(verb.GETORCREATE, getOrCreateHandler);

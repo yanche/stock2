@@ -4,6 +4,7 @@ import * as utility from '../../utility';
 import * as bb from 'bluebird';
 import * as path from 'path';
 import * as config from '../../config';
+import * as constant from '../../const';
 
 const filenameAdmin = 'admin';
 const filenameUser = 'user';
@@ -28,7 +29,8 @@ const env = {
         allindexes: config.azurestorage.files.indexes.all.txt,
         allstocksJson: config.azurestorage.files.stocks.all.json,
         allindexesJson: config.azurestorage.files.indexes.all.json
-    }
+    },
+    verb: constant.verb
 };
 
 bb.resolve()

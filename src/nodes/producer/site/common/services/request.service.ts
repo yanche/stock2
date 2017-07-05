@@ -13,7 +13,7 @@ export class RequestService {
     constructor(private _http: Http, private _url: UrlService, private _const: ConstService, private _utility: UtilityService) { }
 
     getMul<T>(resource: string, page: number, pageSize: number, filter?: Object, fields?: Object, orderby?: Object): Promise<GetMulReturn<T>> {
-        return this._reqJson<GetMulReturn<T>>(resource, 'GETMUL', {
+        return this._reqJson<GetMulReturn<T>>(resource, verb.GETMUL, {
             page: page,
             pageSize: pageSize,
             filter: filter,
@@ -23,7 +23,7 @@ export class RequestService {
     }
 
     getAll<T>(resource: string, filter?: Object, fields?: Object, orderby?: Object): Promise<GetAllReturn<T>> {
-        return this._reqJson<GetAllReturn<T>>(resource, 'GETALL', {
+        return this._reqJson<GetAllReturn<T>>(resource, verb.GETALL, {
             filter: filter,
             fields: fields,
             orderby: orderby
@@ -31,14 +31,14 @@ export class RequestService {
     }
 
     create<Ti>(resource: string, data: Ti): Promise<{ _id: string }> {
-        return this._reqJson<{ _id: string }>(resource, 'CREATE', data);
+        return this._reqJson<{ _id: string }>(resource, verb.CREATEONE, data);
     }
 
     createMul<Ti>(resource: string, data: Array<Ti>): Promise<{ list: Array<string> }> {
         let startIdx = 0, ret: Array<Array<string>> = [];
         return this._utility.whileLoop(() => Promise.resolve(startIdx < data.length), () => {
             const endIdx = startIdx + 200;
-            return this._reqJson<{ list: Array<string> }>(resource, 'CREATEMUL', { list: data.slice(startIdx, endIdx) })
+            return this._reqJson<{ list: Array<string> }>(resource, verb.CREATEMUL, { list: data.slice(startIdx, endIdx) })
                 .then(r => {
                     startIdx = endIdx;
                     ret.push(r.list);

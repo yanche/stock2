@@ -5,8 +5,9 @@ import * as bb from 'bluebird';
 import * as db from '../db';
 import * as hutil from './util';
 import * as d from '../../def';
+import { verb } from "../../../const";
 
-export function handler(h: utility.http.HttpPack):bb<void> {
+export function handler(h: utility.http.HttpPack): bb<void> {
     return bb.resolve().then(() => {
         const verb = (h.getReqHeader('verb') || '').toUpperCase();
         const fn = handlermap.get(verb);
@@ -47,10 +48,10 @@ class RtprogOutCreateModel implements hutil.HandlerDataModel {
 }
 
 const handlermap = new Map<string, (h: utility.http.HttpPack) => bb<void>>();
-handlermap.set('GET', hutil.genGetOneHandler(db.rtprogout));
-handlermap.set('GETMUL', hutil.genGetMulHandler(db.rtprogout));
-handlermap.set('GETALL', hutil.genGetAllHandler(db.rtprogout));
-handlermap.set('REMOVE', hutil.genRemoveAllHandler(db.rtprogout));
-handlermap.set('BULKUPDATE', hutil.genBulkUpdateHandler(db.rtprogout, false));
-handlermap.set('CREATE', hutil.genCreateOneHandler(db.rtprogout, (httpbody: any) => new RtprogOutCreateModel(httpbody)));
-handlermap.set('CREATEMUL', hutil.genCreateMulHandler(db.rtprogout, (httpbody: any) => new RtprogOutCreateModel(httpbody)));
+handlermap.set(verb.GETONE, hutil.genGetOneHandler(db.rtprogout));
+handlermap.set(verb.GETMUL, hutil.genGetMulHandler(db.rtprogout));
+handlermap.set(verb.GETALL, hutil.genGetAllHandler(db.rtprogout));
+handlermap.set(verb.REMOVE, hutil.genRemoveAllHandler(db.rtprogout));
+handlermap.set(verb.BULKUPDATE, hutil.genBulkUpdateHandler(db.rtprogout, false));
+handlermap.set(verb.CREATEONE, hutil.genCreateOneHandler(db.rtprogout, (httpbody: any) => new RtprogOutCreateModel(httpbody)));
+handlermap.set(verb.CREATEMUL, hutil.genCreateMulHandler(db.rtprogout, (httpbody: any) => new RtprogOutCreateModel(httpbody)));

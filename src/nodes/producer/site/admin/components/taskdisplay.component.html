@@ -2,19 +2,19 @@
     <display-log [log]="log"></display-log>
 </div>
 <div *ngIf="!displayLog">
-    <rawinspect-task-display [task]="task" [quickview]="task.result" *ngIf="task.action.type === constant.action.rawInspect"></rawinspect-task-display>
-    <rawsync-task-display [task]="task" [quickview]="task.result" *ngIf="task.action.type === constant.action.rawSync"></rawsync-task-display>
-    <rawdata-task-display [task]="task" [quickview]="task.result" *ngIf="task.action.type === constant.action.rawData"></rawdata-task-display>
-    <stocklist-task-display [task]="task" [quickview]="task.result" *ngIf="task.action.type === constant.action.stockList"></stocklist-task-display>
-    <simulate-task-display [task]="task" [quickview]="task.result" *ngIf="task.action.type === constant.action.simulate"></simulate-task-display>
-    <simall-task-display [task]="task" [quickview]="task.result" *ngIf="task.action.type === constant.action.simAll"></simall-task-display>
-    <hypotest-task-display [task]="task" [quickview]="task.result" *ngIf="task.action.type === constant.action.hypoTest"></hypotest-task-display>
-    <hypotestaggr-task-display [task]="task" [quickview]="task.result" *ngIf="task.action.type === constant.action.hypoTestAggr"></hypotestaggr-task-display>
-    <genrtprog-task-display [task]="task" [quickview]="task.result" *ngIf="task.action.type === constant.action.genRtProg"></genrtprog-task-display>
-    <genrtprogall-task-display [task]="task" [quickview]="task.result" *ngIf="task.action.type === constant.action.genRtProgAll"></genrtprogall-task-display>
-    <lastend-task-display [task]="task" [quickview]="task.result" *ngIf="task.action.type === constant.action.lastend"></lastend-task-display>
-    <alert-task-display [task]="task" [quickview]="task.result" *ngIf="task.action.type === constant.action.alert"></alert-task-display>
-    <alertsall-task-display [task]="task" [quickview]="task.result" *ngIf="task.action.type === constant.action.alertsAll"></alertsall-task-display>
+    <rawinspect-task-display [task]="task" [result]="task.result" *ngIf="task.action.type === constant.action.rawInspect"></rawinspect-task-display>
+    <rawsync-task-display [task]="task" [result]="task.result" *ngIf="task.action.type === constant.action.rawSync"></rawsync-task-display>
+    <rawdata-task-display [task]="task" [result]="task.result" *ngIf="task.action.type === constant.action.rawData"></rawdata-task-display>
+    <stocklist-task-display [task]="task" [result]="task.result" *ngIf="task.action.type === constant.action.stockList"></stocklist-task-display>
+    <simulate-task-display [task]="task" [result]="task.result" *ngIf="task.action.type === constant.action.simulate"></simulate-task-display>
+    <simall-task-display [task]="task" [result]="task.result" *ngIf="task.action.type === constant.action.simAll"></simall-task-display>
+    <hypotest-task-display [task]="task" [result]="task.result" *ngIf="task.action.type === constant.action.hypoTest"></hypotest-task-display>
+    <hypotestaggr-task-display [task]="task" [result]="task.result" *ngIf="task.action.type === constant.action.hypoTestAggr"></hypotestaggr-task-display>
+    <genrtprog-task-display [task]="task" [result]="task.result" *ngIf="task.action.type === constant.action.genRtProg"></genrtprog-task-display>
+    <genrtprogall-task-display [task]="task" [result]="task.result" *ngIf="task.action.type === constant.action.genRtProgAll"></genrtprogall-task-display>
+    <lastend-task-display [task]="task" [result]="task.result" *ngIf="task.action.type === constant.action.lastend"></lastend-task-display>
+    <alert-task-display [task]="task" [result]="task.result" *ngIf="task.action.type === constant.action.alert"></alert-task-display>
+    <alertsall-task-display [task]="task" [result]="task.result" *ngIf="task.action.type === constant.action.alertsAll"></alertsall-task-display>
     <none-task-display *ngIf="task.action.type === constant.action.lastendAll"></none-task-display>
     <none-task-display *ngIf="task.action.type === constant.action.afterRawInspect"></none-task-display>
     <none-task-display *ngIf="task.action.type === constant.action.delay"></none-task-display>

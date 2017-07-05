@@ -5,8 +5,9 @@ import * as db from '../db';
 import * as bb from 'bluebird';
 import * as hutil from './util';
 import * as d from '../../def';
+import { verb } from "../../../const";
 
-export function handler(h: utility.http.HttpPack):bb<void> {
+export function handler(h: utility.http.HttpPack): bb<void> {
     return bb.resolve().then(() => {
         const verb = (h.getReqHeader('verb') || '').toUpperCase();
         const fn = handlermap.get(verb);
@@ -53,11 +54,11 @@ class SimulateCreateModel implements hutil.HandlerDataModel {
 }
 
 const handlermap = new Map<string, (h: utility.http.HttpPack) => bb<void>>();
-handlermap.set('REMOVE', hutil.genRemoveAllHandler(db.simulate));
-handlermap.set('BULKUPDATE', hutil.genBulkUpdateHandler(db.simulate, false));
-handlermap.set('UPDATE', hutil.genUpdateAllHandler(db.simulate, false));
-handlermap.set('GET', hutil.genGetOneHandler(db.simulate));
-handlermap.set('GETMUL', hutil.genGetMulHandler(db.simulate));
-handlermap.set('GETALL', hutil.genGetAllHandler(db.simulate));
-handlermap.set('CREATE', hutil.genCreateOneHandler(db.simulate, (httpbody: any) => new SimulateCreateModel(httpbody)));
-handlermap.set('CREATEMUL', hutil.genCreateMulHandler(db.simulate, (httpbody: any) => new SimulateCreateModel(httpbody)));
+handlermap.set(verb.REMOVE, hutil.genRemoveAllHandler(db.simulate));
+handlermap.set(verb.BULKUPDATE, hutil.genBulkUpdateHandler(db.simulate, false));
+handlermap.set(verb.UPDATE, hutil.genUpdateAllHandler(db.simulate, false));
+handlermap.set(verb.GETONE, hutil.genGetOneHandler(db.simulate));
+handlermap.set(verb.GETMUL, hutil.genGetMulHandler(db.simulate));
+handlermap.set(verb.GETALL, hutil.genGetAllHandler(db.simulate));
+handlermap.set(verb.CREATEONE, hutil.genCreateOneHandler(db.simulate, (httpbody: any) => new SimulateCreateModel(httpbody)));
+handlermap.set(verb.CREATEMUL, hutil.genCreateMulHandler(db.simulate, (httpbody: any) => new SimulateCreateModel(httpbody)));

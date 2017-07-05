@@ -1,6 +1,7 @@
 
 import * as utility from '../../utility';
 import * as config from '../../config';
+import { verb } from '../../const';
 import * as bb from 'bluebird';
 import * as co from 'co';
 import * as _ from 'lodash';
@@ -42,37 +43,37 @@ export function req(method: string, resx: string, body: Object | Buffer | Array<
 
 export function genGetAll<T>(resx: string) {
     return function (filter: Object, fields?: Object, orderby?: Object) {
-        return expectJson<{ list: Array<T> }>('POST', resx, { filter: filter, fields: fields, orderby: orderby }, 1, { verb: 'GETALL' }).then(d => d.list);
+        return expectJson<{ list: Array<T> }>('POST', resx, { filter: filter, fields: fields, orderby: orderby }, 1, { verb: verb.GETALL }).then(d => d.list);
     }
 }
 
 export function genGetMul<T>(resx: string) {
     return function (filter: Object, page: number, pageSize: number, fields?: Object, orderby?: Object) {
-        return expectJson<{ list: Array<T>, page: number, pageSize: number, total: number }>('POST', resx, { filter: filter, fields: fields, page: page, pageSize: pageSize, orderby: orderby }, 1, { verb: 'GETMUL' });
+        return expectJson<{ list: Array<T>, page: number, pageSize: number, total: number }>('POST', resx, { filter: filter, fields: fields, page: page, pageSize: pageSize, orderby: orderby }, 1, { verb: verb.GETMUL });
     }
 }
 
 export function genGetOne<T>(resx: string) {
     return function (filter: Object, fields?: Object, orderby?: Object) {
-        return expectJson<T>('POST', resx, { filter: filter, fields: fields, orderby: orderby }, 1, { verb: 'GET' });
+        return expectJson<T>('POST', resx, { filter: filter, fields: fields, orderby: orderby }, 1, { verb: verb.GETONE });
     }
 }
 
 export function genRemove(resx: string) {
     return function (filter: Object) {
-        return expectJson<{ removed: number }>('POST', resx, { filter: filter }, 0, { verb: 'REMOVE' });
+        return expectJson<{ removed: number }>('POST', resx, { filter: filter }, 0, { verb: verb.REMOVE });
     }
 }
 
 export function genUpdate(resx: string) {
     return function (filter: Object, update: Object) {
-        return expectJson<{ updated: number }>('POST', resx, { filter: filter, update: update }, 0, { verb: 'UPDATE' });
+        return expectJson<{ updated: number }>('POST', resx, { filter: filter, update: update }, 0, { verb: verb.UPDATE });
     }
 }
 
 export function genUpsert(resx: string) {
     return function (filter: Object, update: Object) {
-        return expectJson<{ insertedId: string, updated: number }>('POST', resx, { filter: filter, update: update }, 0, { verb: 'UPSERT' });
+        return expectJson<{ insertedId: string, updated: number }>('POST', resx, { filter: filter, update: update }, 0, { verb: verb.UPSERT });
     }
 }
 
@@ -85,7 +86,7 @@ export function genBulkUpdate(resx: string, upsert: boolean, pagesize: number) {
                 if (list.length === 0) return;
                 const maxidx = Math.floor((list.length - 1) / pagesize);
                 for (var i = 0; i <= maxidx; ++i) {
-                    yield expectRaw('POST', resx, { list: list.slice(i * pagesize, (i + 1) * pagesize) }, 0, { verb: upsert ? 'BULKUPSERT' : 'BULKUPDATE' });
+                    yield expectRaw('POST', resx, { list: list.slice(i * pagesize, (i + 1) * pagesize) }, 0, { verb: upsert ? verb.BULKUPSERT : verb.BULKUPDATE });
                 }
             }).then(() => { res(null); }, rej);
         });
@@ -94,7 +95,7 @@ export function genBulkUpdate(resx: string, upsert: boolean, pagesize: number) {
 
 export function genCreate<T>(resx: string) {
     return function (data: T) {
-        return expectJson<{ _id: string }>('POST', resx, data, 0, { verb: 'CREATE' });
+        return expectJson<{ _id: string }>('POST', resx, data, 0, { verb: verb.CREATEONE });
     }
 }
 
@@ -108,7 +109,7 @@ export function genCreateMul<T>(resx: string, pagesize: number) {
                 if (list.length === 0) return;
                 const maxidx = Math.floor((list.length - 1) / pagesize);
                 for (var i = 0; i <= maxidx; ++i) {
-                    const x: { list: Array<string> } = yield expectJson<{ list: Array<string> }>('POST', resx, { list: list.slice(i * pagesize, (i + 1) * pagesize) }, 0, { verb: 'CREATEMUL' });
+                    const x: { list: Array<string> } = yield expectJson<{ list: Array<string> }>('POST', resx, { list: list.slice(i * pagesize, (i + 1) * pagesize) }, 0, { verb: verb.CREATEMUL });
                     ret.push(x.list);
                 }
             }).then(() => {

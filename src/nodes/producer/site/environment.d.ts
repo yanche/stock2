@@ -20,3 +20,24 @@ declare const resources: {
     allstocksJson: string;
     allindexesJson: string;
 }
+
+declare const verb: {
+    CREATEMUL: string;
+    CREATEONE: string;
+    GETMUL: string;
+    GETONE: string;
+    REPORT: string;
+    DISPATCH: string;
+    UPGRADE: string;
+    CLOSE: string;
+    RENEW: string;
+    MAKEREADY: string;
+    // not for dispatcher
+    GETALL: string;
+    REMOVE: string;
+    UPDATE: string;
+    UPSERT: string;
+    BULKUPSERT: string;
+    BULKUPDATE: string;
+    GETORCREATE: string;
+};
