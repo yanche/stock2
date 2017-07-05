@@ -4,6 +4,7 @@ import * as utility from '../utility';
 import * as azure from './azure';
 import * as local from './local';
 import * as config from '../config';
+import * as path from "path";
 
 interface FileStorage {
     storage: FileStorageLocation,
@@ -34,7 +35,7 @@ export function getJson<T>(drop: FileStorage): bb<T> {
 
 export function writeTempBytes(bytes: Buffer | string, fname: string): bb<FileStorage> {
     if (config.useLocalTempStore)
-        return local.write(bytes, fname, false);
+        return local.write(bytes, path.join(config.localStoragePath, fname).toLowerCase(), false);
     else
         return azure.upload(bytes, fname, null, config.azurestorage.container.temp);
 };
