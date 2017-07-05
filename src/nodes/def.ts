@@ -2,25 +2,6 @@
 import * as mongo from 'mongodb';
 import * as dp from '../datapvd';
 
-export interface Task {
-    _id?: mongo.ObjectID | string;
-    locality?: Object;
-    condition?: { type: string; pack?: any };
-    action?: { type: string; pack?: any };
-    postAction?: Object;
-    constraints?: { ttl?: number; conditionCheckInterval?: number; timeoutLevel?: number };
-    comments?: string;
-    statusId?: number;
-    createdTs?: number;
-    processLog?: Array<{ msg: string; ts: number; err?: string }>;
-    lastProcessTs?: number;
-    nextConditionCheckTs?: number;
-    lastConditionCheckTs?: number;
-    quickview?: Object;
-    priority?: number;
-    assigned?: number;
-}
-
 export interface Simulate {
     _id?: mongo.ObjectID | string;
     closed?: boolean;
@@ -46,11 +27,6 @@ export interface SimTrack {
     target?: string;
     rtplanId?: string;
     lastSimDateTs?: number;
-}
-
-export interface SysTrack {
-    _id?: string;
-    pack?: any;
 }
 
 export interface Rtprog {

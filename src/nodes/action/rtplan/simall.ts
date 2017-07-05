@@ -10,6 +10,7 @@ import * as config from '../../../config';
 import * as constant from '../../../const';
 import * as sim from './simulate';
 import * as rtprogact from '../rtprog';
+import { client, def } from "lavria";
 
 export interface SimAllInput {
     targets: Array<string>;
@@ -53,10 +54,10 @@ export const action = new Action<SimAllInput, SimAllInput, SimAllOutput>({
                 }));
 
                 const simTaskIdList = new Array<string>();
-                return (dataset.length > 0 ? <bb<any>>dclient.task.createMul(_.flatten(dataset.map(d => {
+                return (dataset.length > 0 ? dclient.task.createMul(_.flatten(dataset.map(d => {
                     const taskId = utility.mongo.newId();
                     simTaskIdList.push(taskId.toHexString());
-                    const ret: Array<dclient.task.TaskCreation> = [{
+                    const ret: Array<client.TaskCreation> = [{
                         _id: taskId,
                         action: { type: constant.action.simulate, pack: <sim.SimulateInput>{ rtplanId: d.rtplanId, target: d.target, redo: input.redo } },
                         locality: { target: d.target }
@@ -65,11 +66,11 @@ export const action = new Action<SimAllInput, SimAllInput, SimAllOutput>({
                         ret.push({
                             action: { type: constant.action.genRtProg, pack: <rtprogact.genrtprog.GenRtProgInput>{ target: d.target, rtplanId: d.rtplanId } },
                             locality: { target: d.target },
-                            condition: { type: constant.dispatcherCond.success, pack: taskId }
+                            condition: { type: def.cond.success, pack: taskId }
                         });
                     }
                     return ret;
-                }))) : bb.resolve())
+                }))) : Promise.resolve<{ list: string[] }>(null))
                     .then(() => {
                         return {
                             simulateTaskIdList: simTaskIdList,

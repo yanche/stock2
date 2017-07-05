@@ -51,7 +51,7 @@ export class RawInspectTaskDisplayComponent {
     @Input()
     task: Task;
     @Input()
-    quickview: any;
+    result: any;
 }
 
 @Component({
@@ -63,7 +63,7 @@ export class RawSyncTaskDisplayComponent {
     @Input()
     task: Task;
     @Input()
-    quickview: any;
+    result: any;
 }
 
 @Component({
@@ -75,7 +75,7 @@ export class RawDataTaskDisplayComponent {
     @Input()
     task: Task;
     @Input()
-    quickview: any;
+    result: any;
 }
 
 @Component({
@@ -87,7 +87,7 @@ export class StockListTaskDisplayComponent {
     @Input()
     task: Task;
     @Input()
-    quickview: any;
+    result: any;
 }
 
 @Component({
@@ -99,7 +99,7 @@ export class SimulateTaskDisplayComponent {
     @Input()
     task: Task;
     @Input()
-    quickview: any;
+    result: any;
 }
 
 @Component({
@@ -111,7 +111,7 @@ export class SimAllTaskDisplayComponent {
     @Input()
     task: Task;
     @Input()
-    quickview: any;
+    result: any;
 }
 
 @Component({
@@ -123,7 +123,7 @@ export class HypoTestTaskDisplayComponent {
     @Input()
     task: Task;
     @Input()
-    quickview: any;
+    result: any;
 }
 
 @Component({
@@ -135,7 +135,7 @@ export class HypoTestAggrTaskDisplayComponent {
     @Input()
     task: Task;
     @Input()
-    quickview: any;
+    result: any;
 }
 
 @Component({
@@ -147,7 +147,7 @@ export class GenRtProgTaskDisplayComponent {
     @Input()
     task: Task;
     @Input()
-    quickview: any;
+    result: any;
 }
 
 @Component({
@@ -159,7 +159,7 @@ export class GenRtProgAllTaskDisplayComponent {
     @Input()
     task: Task;
     @Input()
-    quickview: any;
+    result: any;
 }
 
 @Component({
@@ -171,7 +171,7 @@ export class LastendTaskDisplayComponent {
     @Input()
     task: Task;
     @Input()
-    quickview: any;
+    result: any;
 }
 
 @Component({
@@ -183,7 +183,7 @@ export class AlertsAllTaskDisplayComponent {
     @Input()
     task: Task;
     @Input()
-    quickview: any;
+    result: any;
 }
 
 @Component({
@@ -195,7 +195,7 @@ export class AlertTaskDisplayComponent {
     @Input()
     task: Task;
     @Input()
-    quickview: any;
+    result: any;
 }
 
 @Component({

@@ -2,7 +2,7 @@
     <div>
         <span>标的</span><span class="ml5">{{task.action.pack.target}}</span>
     </div>
-    <div *ngFor="let n of quickview.drops">
+    <div *ngFor="let n of result.drops">
         <span>{{n.name}}</span><drop *ngIf="n.drop != null" class="ml5" [drop]="n.drop"></drop><span *ngIf="n.drop == null">无命中数据</span>
     </div>
 </div>

@@ -5,6 +5,7 @@ import * as constants from '../../const';
 import * as datapvd from '../../datapvd';
 import * as dclient from '../dclient';
 import * as action from '../action';
+import { def } from "lavria";
 
 class Idol {
     private _idols = [0, 5000, 20000];
@@ -79,7 +80,7 @@ function work(limit: Object) {
                 idol.hurry();
                 return action.resolve(task.action, task)
                     .then(qv => {
-                        return dclient.task.report({ processTs: task.lastProcessTs, statusId: constants.task.status.success, _id: <string>task._id, quickview: qv })
+                        return dclient.task.report({ processTs: task.lastProcessTs, statusId: def.status.success, _id: <string>task._id, result: qv })
                             .then(() => {
                                 log.info(`task finished: ${task._id}, ${task.comments}`);
                             }, (err: Error) => {
@@ -88,7 +89,7 @@ function work(limit: Object) {
                             });
                     }, (err: Error) => {
                         log.error(err.stack);
-                        return dclient.task.report({ processTs: task.lastProcessTs, statusId: constants.task.status.failed, errmsg: err.stack, _id: <string>task._id, recoverable: (<any>err).code === 'ETIMEDOUT' })
+                        return dclient.task.report({ processTs: task.lastProcessTs, statusId: def.status.failed, errmsg: err.stack, _id: <string>task._id, recoverable: (<any>err).code === 'ETIMEDOUT' })
                             .then(() => {
                                 log.info(`task failed: ${task._id}, ${task.comments}`);
                             }, (err: Error) => {

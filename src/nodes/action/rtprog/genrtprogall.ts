@@ -51,12 +51,12 @@ export const action = new Action<GenRtProgAllInput, GenRtProgAllInput, GenRtProg
                     return ret;
                 }));
 
-                return (dataset.length > 0 ? <bb<any>>dclient.task.createMul(dataset.map(d => {
+                return (dataset.length > 0 ? dclient.task.createMul(dataset.map(d => {
                     return {
                         action: { type: constant.action.genRtProg, pack: { rtplanId: d.rtplanId, target: d.target } },
                         locality: { target: d.target }
                     };
-                })) : bb.resolve())
+                })) : Promise.resolve<{ list: string[] }>(null))
                     .then(() => {
                         return {
                             targetsCount: targets.length,

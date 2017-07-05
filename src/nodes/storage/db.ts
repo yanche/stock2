@@ -5,25 +5,6 @@ import * as d from '../def';
 
 const dbc = new utility.mongo.DbClient(config.dispatcherMongoUrl);
 
-const taskFields = {
-    _id: 1,
-    locality: 1,
-    condition: 1,
-    action: 1,
-    postAction: 1,
-    constraints: 1, //timeout level(timeoutLevel), pre condition check interval(conditionCheckInterval), time to live(retry quota left, ttl)
-    comments: 1,
-    statusId: 1,
-    createdTs: 1,
-    processLog: 1,
-    lastProcessTs: 1,
-    nextConditionCheckTs: 1,
-    lastConditionCheckTs: 1,
-    quickview: 1,
-    priority: 1,
-    assigned: 1, //count of assignment
-}
-
 const simulateFields = {
     _id: 1,
     target: 1,
@@ -105,11 +86,6 @@ const rtpriceFields = {
     priceUpdateTs: 1,
 };
 
-const systrackFields = {
-    _id: 1,
-    pack: 1,
-};
-
 const alertplanFields = {
     _id: 1,
     name: 1,
@@ -127,15 +103,13 @@ const alertFields = {
     new: 1
 }
 
-const task = dbc.getCollClient<d.Task>(config.dbCols.task, taskFields);
 const simulate = dbc.getCollClient<d.Simulate>(config.dbCols.simulate, simulateFields);
 const simtrack = dbc.getCollClient<d.SimTrack>(config.dbCols.simtrack, simtrackFields);
 const rtplan = dbc.getCollClient<d.Rtplan>(config.dbCols.rtplan, rtplanFields);
 const rtprog = dbc.getCollClient<d.Rtprog>(config.dbCols.rtprog, rtprogFields);
 const rtprogout = dbc.getCollClient<d.RtprogOut>(config.dbCols.rtprogout, rtprogOutFields);
 const rtprice = dbc.getCollClient<d.Rtprice>(config.dbCols.rtprice, rtpriceFields);
-const systrack = dbc.getCollClient<d.SysTrack>(config.dbCols.systrack, systrackFields);
-const alertplan = dbc.getCollClient<d.SysTrack>(config.dbCols.alertplan, alertplanFields);
-const alert = dbc.getCollClient<d.SysTrack>(config.dbCols.alert, alertFields);
+const alertplan = dbc.getCollClient<d.AlertPlan>(config.dbCols.alertplan, alertplanFields);
+const alert = dbc.getCollClient<d.Alert>(config.dbCols.alert, alertFields);
 
-export { task, simulate, simtrack, rtplan, rtprog, rtprogout, rtprice, systrack, alertplan, alert };
+export { simulate, simtrack, rtplan, rtprog, rtprogout, rtprice, alertplan, alert };

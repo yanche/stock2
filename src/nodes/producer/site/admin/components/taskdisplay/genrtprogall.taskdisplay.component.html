@@ -1,13 +1,13 @@
 <div>
     <div>
-        <span>标的数量</span><span class="ml5">{{quickview.targetsCount}}</span>
+        <span>标的数量</span><span class="ml5">{{result.targetsCount}}</span>
     </div>
     <div>
-        <span>rtplan数量</span><span class="ml5">{{quickview.rtplansCount}}</span>
+        <span>rtplan数量</span><span class="ml5">{{result.rtplansCount}}</span>
     </div>
     <div>
         <div>每个rtplan对应的标的数量</div>
-        <div *ngFor="let m of quickview.rtplansMatch">
+        <div *ngFor="let m of result.rtplansMatch">
             <div>
                 <span>rtplanId</span><span class="ml5">{{m.rtplanId}}</span>
             </div>
@@ -17,6 +17,6 @@
         </div>
     </div>
     <div>
-        <span>总数</span><span class="ml5">{{quickview.total}}</span>
+        <span>总数</span><span class="ml5">{{result.total}}</span>
     </div>
 </div>

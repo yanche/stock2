@@ -1,11 +1,11 @@
 <div>
-    <div *ngFor="let n of quickview.drops">
+    <div *ngFor="let n of result.drops">
         <span>{{n.name}}</span><drop class="ml5" [drop]="n.drop"></drop>
     </div>
     <div>
-        <span>总数</span><span>{{quickview.meta.total}}</span>
+        <span>总数</span><span>{{result.meta.total}}</span>
     </div>
     <div>
-        <span>有效数</span><span>{{quickview.meta.validTotal}}</span>
+        <span>有效数</span><span>{{result.meta.validTotal}}</span>
     </div>
 </div>

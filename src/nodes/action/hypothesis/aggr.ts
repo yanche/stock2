@@ -9,6 +9,7 @@ import * as dclient from '../../dclient';
 import * as hutil from './util';
 import * as test from './test';
 import * as mods from '../../../mods';
+import { def } from "lavria";
 
 export interface AggrInput {
     ids: Array<string>;
@@ -33,9 +34,9 @@ export const action = new Action<AggrInput, AggrInput, AggrOutput>({
             && (input.filename == null || utility.validate.isStr(input.filename));
     },
     resolve: (input: AggrInput): bb<AggrOutput> => {
-        return dclient.task.getAll({ _id: { $in: input.ids } }, { quickview: 1 })
-            .then(tasks => {
-                const qvarr = tasks.filter(t => t.quickview != null).map(t => <test.HypoTestOutput>t.quickview), bufmap = new Map<string, { fname: string, bufs: Array<Buffer> }>();
+        return bb.resolve().then(() => dclient.task.getAllById(input.ids, { result: 1 }))
+            .then(data => {
+                const qvarr = data.list.filter(t => t.result != null).map(t => <test.HypoTestOutput>t.result), bufmap = new Map<string, { fname: string, bufs: Array<Buffer> }>();
                 for (let cpoutname of input.cpoutNames) {
                     const fname = `hypoaggr/${(input.filename || '').trim() || utility.randomStr()}_${cpoutname}.csv`;
                     bufmap.set(cpoutname, { fname: fname, bufs: [new Buffer([0xef, 0xbb, 0xbf]), new Buffer(hutil.reportHeaders(input.paramNames, input.envNames) + '\r\n')] });
@@ -44,7 +45,7 @@ export const action = new Action<AggrInput, AggrInput, AggrOutput>({
                 return mods.roll(qvarr, (qv): bb<void> => {
                     return bb.all(qv.drops.map(d => {
                         const bufcache = bufmap.get(d.name);
-                        if (bufcache == null) throw new Error(`dpout name in hypotest quickview does not match input of hypoaggr: ${d.name}`);
+                        if (bufcache == null) throw new Error(`dpout name in hypotest result does not match input of hypoaggr: ${d.name}`);
                         return d.drop == null ? bb.resolve(0) : filestorage.common.getBytes(d.drop).then(bytes => bufcache.bufs.push(bytes));
                     }))
                         .catch((err: Error) => {

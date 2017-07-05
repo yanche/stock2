@@ -2,18 +2,18 @@
     <div>
         <span>标的</span><span class="ml5">{{task.action.pack.target}}</span>
     </div>
-    <div *ngIf="quickview">
+    <div *ngIf="result">
         <div>
-            <span>最后一个交易日</span><span class="ml5">{{quickview.lastDts | dts2datekey}}</span>
+            <span>最后一个交易日</span><span class="ml5">{{result.lastDts | dts2datekey}}</span>
         </div>
         <div>
-            <span>最后一天收盘价（后复权）</span><span class="ml5">{{quickview.lastEnd}}</span>
+            <span>最后一天收盘价（后复权）</span><span class="ml5">{{result.lastEnd}}</span>
         </div>
         <div>
-            <span>更新时间</span><span class="ml5">{{quickview.lastEndUpdateTs | datetime}}</span>
+            <span>更新时间</span><span class="ml5">{{result.lastEndUpdateTs | datetime}}</span>
         </div>
     </div>
-    <div *ngIf="!quickview">
+    <div *ngIf="!result">
         新股
     </div>
 </div>

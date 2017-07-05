@@ -7,10 +7,11 @@ import * as dclient from '../../dclient';
 import * as wmact from '../wmcloud';
 import * as constant from '../../../const';
 import * as config from '../../../config';
+import { def } from "lavria";
 
 export interface DelayInput {
     delayMs: number;
-    tasks: Array<dclient.task.TaskCreation>;
+    tasks: Array<dclient.TaskCreation>;
 }
 
 export interface DelayOutput {
@@ -26,8 +27,8 @@ export const action = new Action<DelayInput, DelayInput, DelayOutput>({
         return bb.resolve(new Date().getTime() + input.delayMs)
             .then(time => {
                 return dclient.task.createMul(input.tasks.map(task => {
-                    let cond = { type: constant.dispatcherCond.timer, pack: <any>time };
-                    if (task.condition) cond = { type: 'and', pack: [task.condition, cond] };
+                    let cond: def.Condition = { type: def.cond.timer, pack: time };
+                    if (task.condition) cond = { type: def.cond.and, pack: [task.condition, cond] };
                     task.condition = cond;
                     return task;
                 }))

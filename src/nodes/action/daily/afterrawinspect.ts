@@ -8,6 +8,7 @@ import * as constant from '../../../const';
 import * as config from '../../../config';
 import * as ctrlact from '../control';
 import * as simact from '../rtplan';
+import { def } from "lavria";
 
 export interface AfterRawInspectInput {
     rawinspectId: string;
@@ -19,11 +20,12 @@ export const action = new Action<AfterRawInspectInput, AfterRawInspectInput, voi
         return utility.mongo.convObjId(input.rawinspectId) != null;
     },
     resolve: (input: AfterRawInspectInput): bb<void> => {
-        return dclient.task.get({ _id: input.rawinspectId }, { statusId: 1, quickview: 1 })
+        return bb.resolve()
+            .then(() => dclient.task.getOne({ _id: input.rawinspectId }, { statusId: 1, result: 1 }))
             .then(task => {
-                if (task.statusId !== constant.task.status.success) throw new Error(`${constant.action.rawInspect} task status not success: ${task.statusId}`);
-                const qv = <wmact.inspect.RawInspectOutput>task.quickview;
-                if (!Array.isArray(qv.rawSyncIdList)) throw new Error(`quickview of ${constant.action.rawInspect} not recognizable`);
+                if (task.statusId !== def.status.success) throw new Error(`${constant.action.rawInspect} task status not success: ${task.statusId}`);
+                const qv = <wmact.inspect.RawInspectOutput>task.result;
+                if (!Array.isArray(qv.rawSyncIdList)) throw new Error(`result of ${constant.action.rawInspect} not recognizable`);
                 const simAllId = utility.mongo.newId();
                 return dclient.task.createTasksHasManyPrecedence([{
                     action: {
@@ -58,8 +60,6 @@ export const action = new Action<AfterRawInspectInput, AfterRawInspectInput, voi
                     }
                 }], qv.rawSyncIdList)
             })
-            .then(() => {
-                return;
-            });
+            .then(() => { return; });
     }
 });

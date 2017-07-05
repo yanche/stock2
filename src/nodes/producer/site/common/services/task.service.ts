@@ -38,7 +38,6 @@ export interface Task {
     locality?: Object;
     condition?: { type: string, pack?: any };
     action?: { type: string, pack?: any };
-    postAction?: Object;
     constraints?: { ttl?: number, conditionCheckInterval?: number, timeoutLevel?: number };
     comments?: string;
     statusId?: number;
@@ -47,7 +46,7 @@ export interface Task {
     lastProcessTs?: number;
     nextConditionCheckTs?: number;
     lastConditionCheckTs?: number;
-    quickview?: Object;
+    result?: Object;
     priority?: number;
     assigned?: number;
 }

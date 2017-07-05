@@ -5,6 +5,7 @@ import Action from '../action';
 import * as dclient from '../../dclient';
 import * as rtplan from '../rtplan';
 import * as constant from '../../../const';
+import { def } from "lavria";
 
 export interface AfterSimAllInput {
     simAllId: string;
@@ -16,15 +17,13 @@ export const action = new Action<AfterSimAllInput, AfterSimAllInput, void>({
         return utility.mongo.convObjId(input.simAllId) != null;
     },
     resolve: (input: AfterSimAllInput): bb<void> => {
-        return dclient.task.get({ _id: input.simAllId }, { statusId: 1, quickview: 1 })
+        return bb.resolve().then(() => dclient.task.getOne({ _id: input.simAllId }, { statusId: 1, result: 1 }))
             .then(task => {
-                if (task.statusId !== constant.task.status.success) throw new Error(`${constant.action.simAll} task status not success: ${task.statusId}`);
-                const qv = <rtplan.simall.SimAllOutput>task.quickview;
-                if (!Array.isArray(qv.simulateTaskIdList)) throw new Error(`quickview of ${constant.action.simAll} not recognizable`);
+                if (task.statusId !== def.status.success) throw new Error(`${constant.action.simAll} task status not success: ${task.statusId}`);
+                const qv = <rtplan.simall.SimAllOutput>task.result;
+                if (!Array.isArray(qv.simulateTaskIdList)) throw new Error(`result of ${constant.action.simAll} not recognizable`);
                 return dclient.task.createTasksHasManyPrecedence([{ action: { type: constant.action.alertsAll } }], qv.simulateTaskIdList);
             })
-            .then(() => {
-                return;
-            });
+            .then(() => { return; });
     }
 });

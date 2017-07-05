@@ -1,5 +1,5 @@
 
-import * as def from '../def';
+import { def } from 'lavria';
 import * as bb from 'bluebird';
 import Action from './action';
 import * as wm from './wmcloud';
