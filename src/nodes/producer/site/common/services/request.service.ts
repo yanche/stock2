@@ -51,7 +51,7 @@ export class RequestService {
     }
 
     private _reqJson<T>(resource: string, verb: string, body: any) {
-        return this._http.request(this._url.dispatcher(resource), {
+        return this._http.request(resource === "task" ? this._url.dispatcher() : this._url.storage(resource), {
             method: this._const.http.post,
             headers: new Headers({ verb: verb.toUpperCase() }),
             search: `_ts=${new Date().getTime()}`,

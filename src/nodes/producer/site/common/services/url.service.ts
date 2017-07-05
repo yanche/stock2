@@ -6,9 +6,14 @@ import { Http } from '@angular/http';
 
 @Injectable()
 export class UrlService {
-    dispatcher(resource: string) {
+    dispatcher() {
         const port = (environment.dispatcher.port && environment.dispatcher.port !== 80) ? (':' + environment.dispatcher.port) : '';
-        return `http://${environment.dispatcher.host}${port}/${resource}`;
+        return `http://${environment.dispatcher.host}${port}/`;
+    }
+    
+    storage(resource: string) {
+        const port = (environment.storage.port && environment.storage.port !== 80) ? (':' + environment.storage.port) : '';
+        return `http://${environment.storage.host}${port}/${resource}`;
     }
 
     blob(blobname: string, container?: string) {

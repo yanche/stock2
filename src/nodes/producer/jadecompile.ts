@@ -14,6 +14,10 @@ const env = {
             host: config.dispatcherHost,
             port: config.dispatcherPort
         },
+        storage: {
+            host: config.storageHost,
+            port: config.storagePort
+        },
         azurestorage: config.azurestorage.host,
         containers: {
             static: config.azurestorage.container.static

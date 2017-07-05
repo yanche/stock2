@@ -12,7 +12,7 @@ export class TaskService {
     constructor(private _http: Http, private _url: UrlService, private _req: RequestService) { }
 
     statusUpdate(taskId: string, verb: string): Promise<Response> {
-        return this._http.request(this._url.dispatcher('task'), {
+        return this._http.request(this._url.dispatcher(), {
             method: 'POST',
             headers: new Headers({ verb: verb.toUpperCase() }),
             search: `_ts=${new Date().getTime()}`,

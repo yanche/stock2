@@ -4,6 +4,10 @@ declare const environment: {
         host: string;
         port: number;
     },
+    storage: {
+        host: string;
+        port: number;
+    },
     azurestorage: string;
     containers: {
         static: string

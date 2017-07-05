@@ -34,8 +34,8 @@ export function req(method: string, resx: string, body: Object | Buffer | Array<
         method: method,
         headers: headers,
         path: durl(resx),
-        host: config.dispatcherHost,
-        port: config.dispatcherPort,
+        host: config.storageHost,
+        port: config.storagePort,
         retry: retry
     }, body, false);
 }

@@ -12,7 +12,7 @@ export class StorageProxyService {
     constructor(private _http: Http, private _url: UrlService, private _const: ConstService) { }
 
     get<T>(container: string, path: string) {
-        return this._http.request(this._url.dispatcher('storageproxy'), {
+        return this._http.request(this._url.storage('storageproxy'), {
             method: this._const.http.post,
             headers: new Headers({ verb: 'GET' }),
             search: `_ts=${new Date().getTime()}`,
