@@ -1,25 +1,24 @@
 
 import * as mongodb from 'mongodb';
-import * as mods from '../mods';
-import * as bb from 'bluebird';
 import * as validate from './validate';
+import Hub from "prmhub";
 
 export class CollClient<T> {
-    private _colhub: mods.Hub<mongodb.Collection>;
+    private _colhub: Hub<mongodb.Collection>;
     private _deffields: Object;
 
-    getOne(filter: Object, fields?: Object): bb<T> {
+    getOne(filter: Object, fields?: Object): Promise<T> {
         return this._colhub.get()
-            .then(col => new bb<T>((res, rej) => {
+            .then(col => new Promise<T>((res, rej) => {
                 col.findOne(filter, { fields: fields || this._deffields }, (err: Error, doc: T) => {
                     if (err != null) rej(err);
                     else res(doc);
                 })
             }));
     }
-    getAll(filter: Object, fields?: Object, orderby?: Object): bb<Array<T>> {
+    getAll(filter: Object, fields?: Object, orderby?: Object): Promise<Array<T>> {
         return this._colhub.get()
-            .then(col => new bb<Array<T>>((res, rej) => {
+            .then(col => new Promise<Array<T>>((res, rej) => {
                 var cursor = col.find(filter, fields || this._deffields);
                 if (orderby != null) cursor = cursor.sort(orderby);
                 cursor.toArray((err: Error, docs: Array<T>) => {
@@ -28,9 +27,9 @@ export class CollClient<T> {
                 })
             }));
     }
-    getMul(filter: Object, fields: Object, orderby: Object, skip: number, take: number): bb<Array<T>> {
+    getMul(filter: Object, fields: Object, orderby: Object, skip: number, take: number): Promise<Array<T>> {
         return this._colhub.get()
-            .then(col => new bb<Array<T>>((res, rej) => {
+            .then(col => new Promise<Array<T>>((res, rej) => {
                 var cursor = col.find(filter, fields || this._deffields);
                 if (orderby != null) cursor = cursor.sort(orderby);
                 cursor.limit(take + skip).skip(skip).limit(take).toArray((err: Error, docs: Array<T>) => {
@@ -39,45 +38,45 @@ export class CollClient<T> {
                 })
             }));
     }
-    createOne(doc: Object): bb<mongodb.ObjectID> {
+    createOne(doc: Object): Promise<mongodb.ObjectID> {
         return this._colhub.get()
-            .then(col => new bb<mongodb.ObjectID>((res, rej) => {
+            .then(col => new Promise<mongodb.ObjectID>((res, rej) => {
                 col.insertOne(doc, (err: Error, ret: mongodb.InsertOneWriteOpResult) => {
                     if (err != null) rej(err);
                     else res(ret.insertedId);
                 });
             }));
     }
-    updateAll(filter: Object, update: Object, upsert: boolean): bb<{ updated: number, insertedId: mongodb.ObjectID }> {
+    updateAll(filter: Object, update: Object, upsert: boolean): Promise<{ updated: number, insertedId: mongodb.ObjectID }> {
         return this._colhub.get()
-            .then(col => new bb<{ updated: number, insertedId: mongodb.ObjectID }>((res, rej) => {
+            .then(col => new Promise<{ updated: number, insertedId: mongodb.ObjectID }>((res, rej) => {
                 col.updateMany(filter, update, { upsert: upsert }, (err: Error, ret: mongodb.UpdateWriteOpResult) => {
                     if (err != null) rej(err);
                     else res({ updated: ret.modifiedCount, insertedId: ret.upsertedId && ret.upsertedId._id });
                 });
             }));
     }
-    removeAll(filter: Object): bb<number> {
+    removeAll(filter: Object): Promise<number> {
         return this._colhub.get()
-            .then(col => new bb<number>((res, rej) => {
+            .then(col => new Promise<number>((res, rej) => {
                 col.deleteMany(filter, (err: Error, ret: mongodb.DeleteWriteOpResultObject) => {
                     if (err != null) rej(err);
                     else res(ret.deletedCount);
                 });
             }))
     }
-    count(filter: Object): bb<number> {
+    count(filter: Object): Promise<number> {
         return this._colhub.get()
-            .then(col => new bb<number>((res, rej) => {
+            .then(col => new Promise<number>((res, rej) => {
                 col.count(filter, (err: Error, ct: number) => {
                     if (err != null) rej(err);
                     else res(ct);
                 });
             }))
     }
-    findAndModify(filter: Object, update: Object, fields: Object, returnnew: boolean, upsert: boolean, sort?: Object): bb<Object> {
+    findAndModify(filter: Object, update: Object, fields: Object, returnnew: boolean, upsert: boolean, sort?: Object): Promise<Object> {
         return this._colhub.get()
-            .then(col => new bb<Object>((res, rej) => {
+            .then(col => new Promise<Object>((res, rej) => {
                 col.findOneAndUpdate(filter, update, {
                     sort: sort,
                     returnOriginal: !returnnew,
@@ -89,9 +88,9 @@ export class CollClient<T> {
                 });
             }));
     }
-    bulkUpdate(arr: Array<{ filter: Object, update: Object }>, upsert: boolean): bb<void> {
+    bulkUpdate(arr: Array<{ filter: Object, update: Object }>, upsert: boolean): Promise<void> {
         return this._colhub.get()
-            .then(col => new bb<void>((res, rej) => {
+            .then(col => new Promise<void>((res, rej) => {
                 const bulk = col.initializeUnorderedBulkOp();
                 for (const item of arr) {
                     if (upsert) bulk.find(item.filter).upsert().update(item.update);
@@ -103,9 +102,9 @@ export class CollClient<T> {
                 });
             }))
     }
-    bulkInsert(arr: Array<Object>): bb<Array<mongodb.ObjectID>> {
+    bulkInsert(arr: Array<Object>): Promise<Array<mongodb.ObjectID>> {
         return this._colhub.get()
-            .then(col => new bb<Array<mongodb.ObjectID>>((res, rej) => {
+            .then(col => new Promise<Array<mongodb.ObjectID>>((res, rej) => {
                 const bulk = col.initializeUnorderedBulkOp();
                 for (const item of arr) bulk.insert(item);
                 bulk.execute((err: Error, ret: mongodb.BulkWriteResult) => {
@@ -114,24 +113,24 @@ export class CollClient<T> {
                 })
             }));
     }
-    createIndex(index: Object): bb<void> {
+    createIndex(index: Object): Promise<void> {
         return this._colhub.get()
-            .then(col => new bb<void>((res, rej) => {
+            .then(col => new Promise<void>((res, rej) => {
                 col.createIndex(index, (err: Error, ret: string) => {
                     if (err != null) rej(err);
                     else res();
                 })
             }))
     }
-    constructor(dbhub: mods.Hub<mongodb.Db>, collname: string, deffields: Object) {
-        this._colhub = new mods.Hub<mongodb.Collection>(() => dbhub.get().then(db => db.collection(collname)));
+    constructor(dbhub: Hub<mongodb.Db>, collname: string, deffields: Object) {
+        this._colhub = new Hub<mongodb.Collection>(() => dbhub.get().then(db => db.collection(collname)));
         this._deffields = deffields;
     }
 }
 
 export class DbClient {
     private _connstr: string;
-    private _dbhub: mods.Hub<mongodb.Db>;
+    private _dbhub: Hub<mongodb.Db>;
 
     getCollClient<T>(collname: string, deffields: Object): CollClient<T> {
         return new CollClient<T>(this._dbhub, collname, deffields);
@@ -139,8 +138,8 @@ export class DbClient {
 
     constructor(connstr: string) {
         this._connstr = connstr;
-        this._dbhub = new mods.Hub<mongodb.Db>(() => {
-            return new bb<mongodb.Db>((res, rej) => {
+        this._dbhub = new Hub<mongodb.Db>(() => {
+            return new Promise<mongodb.Db>((res, rej) => {
                 mongodb.MongoClient.connect(connstr, (err: Error, db: mongodb.Db) => {
                     if (err != null) rej(err);
                     else res(db);

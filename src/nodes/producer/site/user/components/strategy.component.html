@@ -11,7 +11,7 @@
     <div class="col-12 dataline" [ngClass]="{selected: showingRtplan === t, 'prev-selected': prevShowingRtplan === t}" (click)="showRtplan(t)">
         <div class="col-3 datacell">{{t.name}}</div>
         <div class="col-3 datacell">{{t.summary}}</div>
-        <div class="col-2 datacell">{{t.targetScope}}</div>
+        <div class="col-2 datacell">{{t.targetScopeName}}</div>
         <div class="col-1 datacell">{{t.glong}}</div>
         <div class="col-2 datacell">{{t.createdTs | datetime}}</div>
         <div class="col-1 datacell"><a target="_blank" href="/history?rtplanId={{t.id}}"><i class="fa fa-info flatbtn"></i></a></div>
@@ -20,7 +20,7 @@
         <div>{{t.name}}</div>
         <div>{{t.summary}}</div>
         <div>{{t.desc}}</div>
-        <div>{{t.targetScope}}</div>
+        <div>{{t.targetScopeName}}</div>
         <div *ngIf="t.doc">
             <a target="_blank" href="{{t.doc}}">testing doc</a>
         </div>

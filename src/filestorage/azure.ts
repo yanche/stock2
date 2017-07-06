@@ -1,13 +1,13 @@
 
 import * as azurestorage from 'azure-storage';
 import * as utility from '../utility';
-import * as mods from '../mods';
 import * as config from '../config';
 import * as bb from 'bluebird';
 import * as c from './common';
 import * as path from 'path';
+import Hub from "prmhub";
 
-const afsHub = new mods.Hub<azurestorage.BlobService>(() => {
+const afsHub = new Hub<azurestorage.BlobService>(() => {
     const afs = azurestorage.createBlobService(config.azurestorage.account, config.azurestorage.key, config.azurestorage.host);
     return bb.all([
         config.azurestorage.container.temp, config.azurestorage.container.static, config.azurestorage.container.raw, config.azurestorage.container.simconcern

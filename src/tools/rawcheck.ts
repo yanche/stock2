@@ -2,7 +2,7 @@
 //检查最新下载的通联数据（2000年开始）和stock1版本的通联+WIND数据是否一致
 
 import * as datasrc from '../datasrc';
-import * as mods from '../mods';
+import roll from "croll";
 import * as bb from 'bluebird';
 import * as filestorage from '../filestorage';
 import * as config from '../config';
@@ -13,8 +13,8 @@ datasrc.mine.meta.stock.getNames()
     .then(allstocks => {
         console.log(`check ${allstocks.length} stocks`);
         const errs: string[] = [];
-        return mods.roll(allstocks, target => {
-            return bb.all([
+        return roll(allstocks, target => {
+            return Promise.all([
                 datasrc.mine.targetData.get(target),
                 filestorage.azure.downloadJson('raw', target + '.json')
             ])

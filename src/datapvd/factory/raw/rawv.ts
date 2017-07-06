@@ -4,12 +4,13 @@ import * as utility from '../../../utility';
 import * as dpm from '../../dpm';
 import * as def from '../../def';
 import * as datadef from '../../../datadef';
+import * as bb from "bluebird";
 
 function facOfFac(ref: string): IFactory<string, number> {
     function dpid(target: string): string { return `${ref}_${target}` }
 
     return {
-        make: (target: string) => dpm.getRawData(target)
+        make: (target: string) => bb.resolve().then(() => dpm.getRawData(target))
             .then(raw => new def.DataPvd<number>({
                 id: dpid(target),
                 hasdef: ts => raw.hasDef(ts),

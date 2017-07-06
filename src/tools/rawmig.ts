@@ -2,7 +2,7 @@
 import * as datasrc from '../datasrc';
 import * as datadef from '../datadef';
 import * as config from '../config';
-import * as mods from '../mods';
+import roll from "croll";
 import * as utility from '../utility';
 import * as path from 'path';
 import * as bb from 'bluebird';
@@ -14,9 +14,10 @@ datasrc.mine.meta.stock.getNames()
     .then(data => data.map(t => { return { target: t, index: false }; }).concat(config.maintainIdx.map(t => { return { target: t, index: true }; })))
     .then(list => {
         const errs: Array<any> = [];
-        return mods.roll(list, item => {
+        return roll(list, item => {
             console.log(`now processing: ${item.target}`);
-            return utility.file.loadJsonFile<{ [key: string]: RawOld }>(path.join(inputDir, `${item.target}.json`))
+            return Promise.resolve()
+                .then(() => utility.file.loadJsonFile<{ [key: string]: RawOld }>(path.join(inputDir, `${item.target}.json`)))
                 .then(data => {
                     let minDts: number = null, maxDts: number = null, ret: datadef.RawData = { data: {}, minDay: null, maxDay: null };
                     for (let ts in data) {

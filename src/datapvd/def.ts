@@ -2,7 +2,6 @@
 import * as co from 'co';
 import * as bb from 'bluebird';
 import * as utility from '../utility';
-import * as mods from '../mods';
 
 interface DataPvdInput<T> {
     id: string;

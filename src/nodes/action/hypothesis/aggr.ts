@@ -8,8 +8,8 @@ import * as filestorage from '../../../filestorage';
 import * as dclient from '../../dclient';
 import * as hutil from './util';
 import * as test from './test';
-import * as mods from '../../../mods';
 import { def } from "lavria";
+import roll from "croll";
 
 export interface AggrInput {
     ids: Array<string>;
@@ -42,8 +42,8 @@ export const action = new Action<AggrInput, AggrInput, AggrOutput>({
                     bufmap.set(cpoutname, { fname: fname, bufs: [new Buffer([0xef, 0xbb, 0xbf]), new Buffer(hutil.reportHeaders(input.paramNames, input.envNames) + '\r\n')] });
                 }
                 const errs = new Array<Error>();
-                return mods.roll(qvarr, (qv): bb<void> => {
-                    return bb.all(qv.drops.map(d => {
+                return roll(qvarr, (qv): Promise<void> => {
+                    return Promise.all(qv.drops.map(d => {
                         const bufcache = bufmap.get(d.name);
                         if (bufcache == null) throw new Error(`dpout name in hypotest result does not match input of hypoaggr: ${d.name}`);
                         return d.drop == null ? bb.resolve(0) : filestorage.common.getBytes(d.drop).then(bytes => bufcache.bufs.push(bytes));

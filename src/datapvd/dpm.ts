@@ -1,19 +1,19 @@
 
-import * as mods from '../mods';
 import * as utility from '../utility';
 import * as config from '../config';
 import * as bb from 'bluebird';
 import * as def from './def';
 import * as datadef from '../datadef';
 import * as datasrc from '../datasrc';
+import Hub from "prmhub";
 
 interface RawDataSlice2 extends datadef.RawDataSlice {
     _datets: number;
     _idx: number;
 }
 
-export function getRawData(target: string): bb<RawDataAggr> {
-    return <bb<RawDataAggr>>retrieve(target).rawHub.get();
+export function getRawData(target: string): Promise<RawDataAggr> {
+    return retrieve(target).rawHub.get();
 }
 
 export function cachedTargets(): Array<string> {
@@ -27,17 +27,17 @@ export function clearCache(targets: Array<string>): void {
     srcCache = targets == null ? [] : srcCache.filter(c => targets.every(t => t !== c.target));
 }
 
-export function getDPCache(target: string): bb<Map<string, mods.Hub<def.DataPvd<any>>>> {
-    return getRawData(target)
+export function getDPCache(target: string): bb<Map<string, Hub<def.DataPvd<any>>>> {
+    return bb.resolve().then(() => getRawData(target))
         .then(r => r.dpCache);
 }
 
 class RawDataAggr {
     private _rawarr: Array<RawDataSlice2>; //at least one
     private _rawmap: Map<number, RawDataSlice2>;
-    private _dpCache: Map<string, mods.Hub<def.DataPvd<any>>>;
+    private _dpCache: Map<string, Hub<def.DataPvd<any>>>;
 
-    public get dpCache(): Map<string, mods.Hub<def.DataPvd<any>>> {
+    public get dpCache(): Map<string, Hub<def.DataPvd<any>>> {
         return this._dpCache;
     }
 
@@ -122,20 +122,20 @@ class RawDataAggr {
     constructor(rawarr: Array<RawDataSlice2>, rawmap: Map<number, RawDataSlice2>) {
         this._rawarr = rawarr;
         this._rawmap = rawmap;
-        this._dpCache = new Map<string, mods.Hub<def.DataPvd<any>>>();
+        this._dpCache = new Map<string, Hub<def.DataPvd<any>>>();
     }
 }
 
 interface CachedItem {
     target: string,
-    rawHub: mods.Hub<RawDataAggr>,
+    rawHub: Hub<RawDataAggr>,
     permanent: boolean,
     lastAccessTs: number
 }
 let srcCache = new Array<CachedItem>();
 
-function genRawDataHub(target: string): mods.Hub<RawDataAggr> {
-    return new mods.Hub<RawDataAggr>(() => {
+function genRawDataHub(target: string): Hub<RawDataAggr> {
+    return new Hub<RawDataAggr>(() => {
         let fname = `${target}.json`;
         return datasrc.mine.targetData.get2(target)
             .then(rawdata => {

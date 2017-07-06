@@ -3,10 +3,10 @@ import * as def from './def';
 import * as bb from 'bluebird';
 import factories from './factory';
 import * as dpm from './dpm';
-import * as mods from '../mods';
 import IFactory from './factory/fac';
 import * as constants from '../const';
 import * as log from '../log';
+import Hub from "prmhub";
 
 var dpToCache = new Set<string>();
 dpToCache.add(constants.dpType.basic.ma)
@@ -56,7 +56,7 @@ export function resolve(ldp: LiteralDP | def.DataPvd<any>): bb<def.DataPvd<any>>
                         var dphub = dpcache.get(dpid);
                         if (dphub == null) {
                             //console.log('create dp and then store in dpcache, ' + dpid);
-                            dphub = new mods.Hub(() => factory.make(pack));
+                            dphub = new Hub(() => factory.make(pack));
                             dpcache.set(dpid, dphub);
                         }
                         // else

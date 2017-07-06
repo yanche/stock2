@@ -3,14 +3,14 @@
 
 import * as path from "path";
 import * as bb from "bluebird";
-import * as mods from "../mods";
 import * as utility from "../utility";
 import * as filestorage from "../filestorage";
+import roll from "croll";
 
 async function uploadFiles(files: string[], folder: string, container: string) {
     const errfiles: string[] = [];
-    await mods.roll(files, f => {
-        return bb.resolve()
+    await roll(files, f => {
+        return Promise.resolve()
             .then(() => utility.file.loadFile(path.join(folder, f)))
             .then(bytes => filestorage.azure.upload(bytes, f, '', container))
             .then(() => console.log(f + ' done'))
