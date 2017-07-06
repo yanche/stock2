@@ -3,7 +3,7 @@ import * as utility from '../../utility';
 import * as config from '../../config';
 import * as d from '../def';
 
-const dbc = new utility.mongo.DbClient(config.dispatcherMongoUrl);
+const dbc = new utility.mongo.DbClient(config.storageMongoUrl);
 
 const simulateFields = {
     _id: 1,
