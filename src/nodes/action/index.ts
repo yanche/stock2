@@ -1,5 +1,5 @@
 
-import { def } from 'lavria';
+import { def, ConsumeAction } from 'lavria';
 import * as bb from 'bluebird';
 import Action from './action';
 import * as wm from './wmcloud';
@@ -10,7 +10,7 @@ import * as constant from '../../const';
 import * as ctrl from './control';
 import * as daily from './daily';
 
-export function resolve(action: { type: string, pack?: any }, task: def.Task): bb<any> {
+export function resolve(action: def.Action, task: def.Task): bb<any> {
     return bb.resolve()
         .then(() => {
             const acthandler = actmap.get(action.type);
@@ -19,7 +19,7 @@ export function resolve(action: { type: string, pack?: any }, task: def.Task): b
         });
 }
 
-export function validate(action: { type: string, pack?: any }): boolean {
+export function validate(action: def.Action): boolean {
     const acthandler = actmap.get(action.type);
     return acthandler != null && acthandler.validate(action.pack);
 }
