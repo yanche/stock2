@@ -1,27 +1,27 @@
 
-import { def, ConsumeAction } from 'lavria';
-import * as bb from 'bluebird';
-import Action from './action';
-import * as wm from './wmcloud';
-import * as rtplan from './rtplan';
-import * as hypo from './hypothesis';
-import * as rtprog from './rtprog';
-import * as constant from '../../const';
-import * as ctrl from './control';
-import * as daily from './daily';
+import { def } from "lavria";
+import * as bb from "bluebird";
+import Action from "./action";
+import * as wm from "./wmcloud";
+import * as rtplan from "./rtplan";
+import * as hypo from "./hypothesis";
+import * as rtprog from "./rtprog";
+import * as constant from "../../const";
+import * as ctrl from "./control";
+import * as daily from "./daily";
 
 export function resolve(action: def.Action, task: def.Task): bb<any> {
     return bb.resolve()
         .then(() => {
             const acthandler = actmap.get(action.type);
-            if (acthandler == null) return bb.reject(new Error(`action not found for type: ${action.type}`));
+            if (!acthandler) return bb.reject(new Error(`action not found for type: ${action.type}`));
             else return acthandler.resolve(action.pack);
         });
 }
 
 export function validate(action: def.Action): boolean {
     const acthandler = actmap.get(action.type);
-    return acthandler != null && acthandler.validate(action.pack);
+    return acthandler && acthandler.validate(action.pack);
 }
 
 const actmap = new Map<string, Action<any, any, any>>();
