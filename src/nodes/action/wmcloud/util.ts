@@ -154,7 +154,7 @@ function wmStock(target: string, startDayTs: number, endDayTs: number): bb<{
                     throw new Error(`bad value: ${target}, ${datekey}, ${JSON.stringify(tsdata)}`);
                 if (prevdatekey != null) {
                     const prevData = vmap[prevdatekey];
-                    if (prevData.s === tsdata.s && prevData.e === tsdata.e && prevData.h === tsdata.h && prevData.l === tsdata.l && utility.num.numDiffLessThan(prevData.v, tsdata.v, 0.001) && !exactlySameDataExceptions(datekey, target))
+                    if (prevData.s === tsdata.s && prevData.e === tsdata.e && prevData.h === tsdata.h && prevData.l === tsdata.l && utility.num.numDiffLessThan(prevData.v, tsdata.v, 0.00001) && !exactlySameDataExceptions(datekey, target))
                         throw new Error(`${target}: exactly same data in ${prevdatekey} and ${datekey}`);
                 }
                 vmap[datekey] = tsdata;
