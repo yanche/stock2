@@ -121,7 +121,7 @@ let reporterPort = 1338;
 let dispatcherPort = 1339;
 let dispatcherHost = "127.0.0.1";
 let storageHost = dispatcherHost;
-let storagePort = 1339;
+let storagePort = 1342;
 
 if (!dev) {
     dispatcherHost = config.get<string>("dispatcherHost");

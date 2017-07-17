@@ -2,6 +2,7 @@
 import * as mongodb from 'mongodb';
 import * as bb from 'bluebird';
 import * as utility from '../src/utility';
+import * as config from '../src/config';
 import * as def from '../src/nodes/def';
 
 function importFromFile_AllScope(fullpath: string, dbcol: mongodb.Collection) {
@@ -41,7 +42,7 @@ function importFromFile_AllScope(fullpath: string, dbcol: mongodb.Collection) {
 
 function getDbCol() {
     return new bb<mongodb.Collection>((res, rej) => {
-        mongodb.MongoClient.connect('mongodb://127.0.0.1:27017/stock?w=majority', (err, db) => {
+        mongodb.MongoClient.connect(config.storageMongoUrl, (err, db) => {
             if (err)
                 rej(err);
             else
