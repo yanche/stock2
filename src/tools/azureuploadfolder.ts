@@ -4,20 +4,35 @@
 import * as path from "path";
 import * as bb from "bluebird";
 import * as utility from "../utility";
-import * as filestorage from "../filestorage";
+import * as config from "../config";
+import * as azure from "azure-storage";
 import roll from "croll";
+
+const afs = azure.createFileService(config.azurestorage.account, config.azurestorage.key);
 
 async function uploadFiles(files: string[], folder: string, container: string) {
     const errfiles: string[] = [];
     await roll(files, f => {
         return Promise.resolve()
-            .then(() => utility.file.loadFile(path.join(folder, f)))
-            .then(bytes => filestorage.azure.upload(bytes, f, '', container))
+            .then(() => createAzureFile(container, f, path.join(folder, f)))
             .then(() => console.log(f + ' done'))
-            .catch(() => errfiles.push(f));
+            .catch((err: Error) => { console.error(err.stack); errfiles.push(f) });
     }, Math.min(files.length, 10));
     return errfiles;
 };
+
+function createAzureFile(container: string, file: string, localfilepath: string): Promise<void> {
+    return new Promise<void>((res, rej) => {
+        afs.createFileFromLocalFile(container, "", file, localfilepath, (err) => {
+            if (err) {
+                rej(err);
+            }
+            else {
+                res();
+            }
+        })
+    });
+}
 
 async function uploadFolder() {
     const folder = process.argv[2], container = process.argv[3];
